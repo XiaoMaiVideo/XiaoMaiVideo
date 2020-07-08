@@ -16,7 +16,10 @@ public class DashboardViewModel extends ViewModel {
     public LiveData<String> getmText() {
         return mText;
     }
-
+    public void setMsg(){
+        md=new  model("测试");
+        mText.setValue(md);
+    }
     public void setMsg(){
         mText.setValue("测试");
     }
