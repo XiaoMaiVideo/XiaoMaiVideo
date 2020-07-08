@@ -1,21 +1,15 @@
-package com.edu.whu.xiaomaivideo.ui.notifications;
+package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.databinding.FragmentHomeBinding;
 import com.edu.whu.xiaomaivideo.databinding.FragmentNotificationsBinding;
-import com.edu.whu.xiaomaivideo.ui.home.HomeViewModel;
+import com.edu.whu.xiaomaivideo.ui.viewModel.NotificationsViewModel;
 
 public class NotificationsFragment extends Fragment {
 

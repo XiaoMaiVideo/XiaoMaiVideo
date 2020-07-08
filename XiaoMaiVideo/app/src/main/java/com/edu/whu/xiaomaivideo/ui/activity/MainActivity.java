@@ -1,7 +1,8 @@
-package com.edu.whu.xiaomaivideo;
+package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.os.Bundle;
 
+import com.edu.whu.xiaomaivideo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

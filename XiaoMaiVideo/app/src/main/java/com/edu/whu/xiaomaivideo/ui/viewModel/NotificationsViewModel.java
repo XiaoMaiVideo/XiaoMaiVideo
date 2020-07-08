@@ -1,4 +1,4 @@
-package com.edu.whu.xiaomaivideo.ui.notifications;
+package com.edu.whu.xiaomaivideo.ui.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,4 +1,4 @@
-package com.edu.whu.xiaomaivideo.ui.dashboard;
+package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentDashboardBinding;
+import com.edu.whu.xiaomaivideo.ui.viewModel.DashboardViewModel;
 
 public class DashboardFragment extends Fragment {
 

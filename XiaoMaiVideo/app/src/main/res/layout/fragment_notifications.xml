@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.ui.notifications.NotificationsViewModel" />
+            type="com.edu.whu.xiaomaivideo.ui.viewModel.NotificationsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.notifications.NotificationsFragment">
+        tools:context=".ui.fragment.NotificationsFragment">
 
         <TextView
             android:id="@+id/text_notifications"

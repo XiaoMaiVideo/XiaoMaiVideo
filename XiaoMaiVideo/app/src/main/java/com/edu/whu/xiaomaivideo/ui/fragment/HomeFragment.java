@@ -1,19 +1,17 @@
-package com.edu.whu.xiaomaivideo.ui.home;
+package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHomeBinding;
+import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
+import com.edu.whu.xiaomaivideo.ui.viewModel.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
@@ -26,6 +24,13 @@ public class HomeFragment extends Fragment {
         fragmentHomeBinding=FragmentHomeBinding.inflate(inflater);
         fragmentHomeBinding.setViewmodel(homeViewModel);
         fragmentHomeBinding.setLifecycleOwner(this);
+        fragmentHomeBinding.button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         return fragmentHomeBinding.getRoot();
     }
 }
