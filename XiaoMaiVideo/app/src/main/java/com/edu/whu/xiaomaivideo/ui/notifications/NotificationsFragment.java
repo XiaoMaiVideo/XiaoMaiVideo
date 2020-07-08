@@ -13,23 +13,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.databinding.FragmentHomeBinding;
+import com.edu.whu.xiaomaivideo.databinding.FragmentNotificationsBinding;
+import com.edu.whu.xiaomaivideo.ui.home.HomeViewModel;
 
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    FragmentNotificationsBinding fragmentNotificationsBinding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        notificationsViewModel=new NotificationsViewModel();
+        fragmentNotificationsBinding= FragmentNotificationsBinding.inflate(inflater);
+        fragmentNotificationsBinding.setViewmodel(notificationsViewModel);
+        fragmentNotificationsBinding.setLifecycleOwner(this);
+        return fragmentNotificationsBinding.getRoot();
     }
 }

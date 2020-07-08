@@ -14,32 +14,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.databinding.FragmentDashboardBinding;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
-    private Button button;
+    private FragmentDashboardBinding fragmentDashboardBinding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        button=root.findViewById(R.id.button);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<DashboardModel>() {
-            @Override
-            public void onChanged(DashboardModel dashboardModel) {
-                textView.setText(dashboardModel.getMsg());
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dashboardViewModel.setMsg("测试");
-            }
-        });
-        return root;
+        dashboardViewModel=new DashboardViewModel();
+        fragmentDashboardBinding = FragmentDashboardBinding.inflate(inflater);
+        fragmentDashboardBinding.setViewmodel(dashboardViewModel);
+        fragmentDashboardBinding.setLifecycleOwner(this);
+        return fragmentDashboardBinding.getRoot();
     }
 }

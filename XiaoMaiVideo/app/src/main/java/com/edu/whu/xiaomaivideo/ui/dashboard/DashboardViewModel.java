@@ -6,20 +6,18 @@ import androidx.lifecycle.ViewModel;
 
 public class DashboardViewModel extends ViewModel {
 
-    private MutableLiveData<DashboardModel> mText;
-    DashboardModel dashboardModel;
+    public MutableLiveData<String> mText;
 
     public DashboardViewModel() {
         mText = new MutableLiveData<>();
-        dashboardModel=new DashboardModel("This is dashboard fragment");
-        mText.setValue(dashboardModel);
+        mText.setValue("This is dashboard fragment");
     }
-    public LiveData<DashboardModel> getText() {
+
+    public LiveData<String> getmText() {
         return mText;
     }
 
-    public void setMsg(String msg){
-        dashboardModel=new DashboardModel(msg);
-        mText.setValue(dashboardModel);
+    public void setMsg(){
+        mText.setValue("测试");
     }
 }
