@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-
+import androidx.lifecycle.ViewModelProvider;
+import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentDashboardBinding;
-import com.edu.whu.xiaomaivideo.ui.viewModel.DashboardViewModel;
+import com.edu.whu.xiaomaivideo.viewModel.DashboardViewModel;
+
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
@@ -18,11 +22,10 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        dashboardViewModel=new DashboardViewModel();
-        fragmentDashboardBinding = FragmentDashboardBinding.inflate(inflater);
+        dashboardViewModel= new ViewModelProvider(Objects.requireNonNull(getActivity())).get(DashboardViewModel.class);
+        fragmentDashboardBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard,container,false);
         fragmentDashboardBinding.setViewmodel(dashboardViewModel);
-        fragmentDashboardBinding.setLifecycleOwner(this);
+        fragmentDashboardBinding.setLifecycleOwner(getActivity());
         return fragmentDashboardBinding.getRoot();
     }
 }

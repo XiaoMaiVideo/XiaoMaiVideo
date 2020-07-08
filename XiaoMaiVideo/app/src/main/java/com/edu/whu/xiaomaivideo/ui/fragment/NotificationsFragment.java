@@ -6,10 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentNotificationsBinding;
-import com.edu.whu.xiaomaivideo.ui.viewModel.NotificationsViewModel;
+import com.edu.whu.xiaomaivideo.viewModel.NotificationsViewModel;
+
+import java.util.Objects;
 
 public class NotificationsFragment extends Fragment {
 
@@ -18,10 +23,10 @@ public class NotificationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel=new NotificationsViewModel();
-        fragmentNotificationsBinding= FragmentNotificationsBinding.inflate(inflater);
+        notificationsViewModel= new ViewModelProvider(Objects.requireNonNull(getActivity())).get(NotificationsViewModel.class);
+        fragmentNotificationsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_notifications,container,false);
         fragmentNotificationsBinding.setViewmodel(notificationsViewModel);
-        fragmentNotificationsBinding.setLifecycleOwner(this);
+        fragmentNotificationsBinding.setLifecycleOwner(getActivity());
         return fragmentNotificationsBinding.getRoot();
     }
 }

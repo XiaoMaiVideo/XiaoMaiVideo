@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.ui.viewModel.DashboardViewModel" />
+            type="com.edu.whu.xiaomaivideo.viewModel.DashboardViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
