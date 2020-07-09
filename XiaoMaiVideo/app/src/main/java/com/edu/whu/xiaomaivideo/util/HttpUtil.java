@@ -37,6 +37,36 @@ public class HttpUtil {
         call.enqueue(callback);
     }
 
+    // 发带参数Delete请求
+    public static void sendDeleteRequest(String url, RequestBody requestBody, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发不带参数Delete请求
+    public static void sendDeleteRequest(String url, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发Put请求
+    public static void sendPutRequest(String url, RequestBody requestBody, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
     // TODO: 发视频的请求，这个函数没做完，要改一下
     public static void sendPhotoRequest(int userId, String imagePath, String description, Callback callback) {
         String url = BASEURL + "ReceivePhotoServlet";
