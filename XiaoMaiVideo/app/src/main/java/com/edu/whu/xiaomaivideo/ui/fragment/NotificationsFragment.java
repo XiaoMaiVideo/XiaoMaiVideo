@@ -1,5 +1,6 @@
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentNotificationsBinding;
+import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.viewModel.NotificationsViewModel;
 
 import java.util.Objects;
@@ -27,6 +29,13 @@ public class NotificationsFragment extends Fragment {
         fragmentNotificationsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_notifications,container,false);
         fragmentNotificationsBinding.setViewmodel(notificationsViewModel);
         fragmentNotificationsBinding.setLifecycleOwner(getActivity());
+        fragmentNotificationsBinding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent().setClass(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         return fragmentNotificationsBinding.getRoot();
     }
 }
