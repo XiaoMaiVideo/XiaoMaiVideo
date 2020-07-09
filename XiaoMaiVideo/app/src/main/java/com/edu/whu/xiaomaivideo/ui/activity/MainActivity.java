@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.ui.dashboard.DashboardFragment;
-import com.edu.whu.xiaomaivideo.ui.home.HomeFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.notifications.NotificationsFragment;
 import com.edu.whu.xiaomaivideo.ui.test.TestFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
