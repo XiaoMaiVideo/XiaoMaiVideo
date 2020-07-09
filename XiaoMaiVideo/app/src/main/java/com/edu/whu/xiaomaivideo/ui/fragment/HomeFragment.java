@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHomeBinding;
 import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
         new TabLayoutMediator(mTabLayout, mViewPager2, true,new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                //这里需要根据position修改tab的样式和文字等
+                // 这里需要根据position修改tab的样式和文字等
                 switch (position) {
                     default:
                     case 0:
@@ -75,6 +76,8 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).attach();
+        Glide.with(getActivity()).load(android.R.drawable.ic_media_play).into(fragmentHomeBinding.imageView3);
+        Glide.with(getActivity()).load(android.R.drawable.ic_media_ff).into(fragmentHomeBinding.imageView4);
 //        fragmentHomeBinding.button2.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

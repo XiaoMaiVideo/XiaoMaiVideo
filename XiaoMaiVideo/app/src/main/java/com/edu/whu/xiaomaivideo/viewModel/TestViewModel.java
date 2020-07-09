@@ -1,4 +1,4 @@
-package com.edu.whu.xiaomaivideo.ui.test;
+package com.edu.whu.xiaomaivideo.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
