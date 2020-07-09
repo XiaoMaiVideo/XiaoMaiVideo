@@ -23,7 +23,7 @@ public class UserController {
     AjaxResponse saveUser(@RequestBody User user) {
         user.setUserId(null);
         User user1= userRestService.saveUser(user);
-        return  AjaxResponse.success(user1);
+        return AjaxResponse.success(user1);
     }
 
     @DeleteMapping("/user/{id}")
