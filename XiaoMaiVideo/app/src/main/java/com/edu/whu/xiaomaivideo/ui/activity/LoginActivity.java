@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,12 +49,58 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextInputLayout=findViewById(R.id.passwordTextInputLayout);
         rePasswordTextInputLayout=findViewById(R.id.rePasswordTextInputLayout);
         textView=findViewById(R.id.textView2);
+
+        edit_rePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                rePasswordTextInputLayout.setError("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edit_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                passwordTextInputLayout.setError("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edit_username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                accountTextInputLayout.setError("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accountTextInputLayout.setError("");
-                passwordTextInputLayout.setError("");
-                rePasswordTextInputLayout.setError("");
                 username = edit_username.getText().toString().trim();
                 password = edit_password.getText().toString();
                 if (username.isEmpty()) accountTextInputLayout.setError("用户名不能为空");

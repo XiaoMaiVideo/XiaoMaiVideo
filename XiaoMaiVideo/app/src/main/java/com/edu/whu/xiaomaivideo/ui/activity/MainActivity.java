@@ -3,6 +3,7 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.edu.whu.xiaomaivideo.R;
@@ -27,6 +28,7 @@ public class MainActivity extends FragmentActivity {
     private List<Fragment> mFragments;
     private FragmentPagerAdapter mAdapter;
     private TabLayout mTabLayout;
+    private Long exitTime=0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,20 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(
+                    getApplication(),
+                    "再按一次退出",
+                    Toast.LENGTH_SHORT
+            ).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 
     public class MyAdapter extends FragmentPagerAdapter {

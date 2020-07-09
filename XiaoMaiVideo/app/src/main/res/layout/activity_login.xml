@@ -32,14 +32,16 @@
         app:layout_constraintBottom_toTopOf="@id/passwordTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView1">
+        app:layout_constraintTop_toBottomOf="@id/textView1"
+        app:startIconDrawable="@drawable/ic_action_person"
+        app:startIconTintMode="src_atop">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="用户名"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
             android:textSize="16sp" />
@@ -57,7 +59,9 @@
         app:layout_constraintEnd_toEndOf="@id/accountTextInputLayout"
         app:layout_constraintStart_toStartOf="@id/accountTextInputLayout"
         app:layout_constraintTop_toBottomOf="@id/accountTextInputLayout"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_action_lock"
+        app:startIconTintMode="src_atop">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_password"
@@ -77,13 +81,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:helperText="请再次输入您的密码"
         android:visibility="gone"
+        app:helperText="请再次输入您的密码"
         app:layout_constraintBottom_toTopOf="@id/loginBtn"
         app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
         app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
         app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_action_lock"
+        app:startIconTintMode="src_atop">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_rePassword"
