@@ -16,7 +16,7 @@ spring:
       max-request-size: 100MB
 
 server:
-  port: 8080
+  port: 8088
   max-http-header-size: 102400000
   tomcat:
     max-http-post-size: 102400000
