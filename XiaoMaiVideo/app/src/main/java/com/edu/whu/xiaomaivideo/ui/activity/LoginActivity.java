@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.edu.whu.xiaomaivideo.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 
 public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sp;
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private String username;
     private String password;
     private String rePassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         try {
             if (sp.getString("password","") != null) {
                 edit_password.setText(sp.getString("password",""));
