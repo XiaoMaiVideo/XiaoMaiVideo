@@ -1,4 +1,4 @@
-package com.edu.whu.xiaomaivideo.ui.test;
+package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.viewModel.TestViewModel;
 
 public class TestFragment extends Fragment {
 

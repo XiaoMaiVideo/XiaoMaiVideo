@@ -1,17 +1,16 @@
-package com.edu.whu.xiaomaivideo;
+package com.edu.whu.xiaomaivideo.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.edu.whu.xiaomaivideo.ui.dashboard.DashboardFragment;
-import com.edu.whu.xiaomaivideo.ui.home.HomeFragment;
-import com.edu.whu.xiaomaivideo.ui.notifications.NotificationsFragment;
-import com.edu.whu.xiaomaivideo.ui.test.TestFragment;
+
+import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.NotificationsFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.TestFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;

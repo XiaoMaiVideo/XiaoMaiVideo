@@ -1,16 +1,15 @@
-package com.edu.whu.xiaomaivideo.ui.notifications;
+package com.edu.whu.xiaomaivideo.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
-
+public class TestViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public TestViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is test fragment");
     }
 
     public LiveData<String> getText() {

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.edu.whu.xiaomaivideo.ui.home.HomeFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.edu.whu.xiaomaivideo.ui.dashboard.DashboardFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.edu.whu.xiaomaivideo.ui.notifications.NotificationsFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.fragment.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

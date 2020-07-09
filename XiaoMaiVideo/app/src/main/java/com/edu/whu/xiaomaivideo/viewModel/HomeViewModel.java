@@ -1,4 +1,4 @@
-package com.edu.whu.xiaomaivideo.ui.home;
+package com.edu.whu.xiaomaivideo.viewModel;
 
 import android.content.Intent;
 import android.os.Looper;
@@ -24,7 +24,7 @@ import okhttp3.Response;
 
 public class HomeViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    public  MutableLiveData<String> mText;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
