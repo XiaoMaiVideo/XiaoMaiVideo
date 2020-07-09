@@ -67,15 +67,15 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="126dp"
+                    android:layout_height="121dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_launcher_background"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/ic_launcher_background" />
 
                 <TextView
                     android:id="@+id/textView3"

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
-import com.edu.whu.xiaomaivideo.ui.notifications.NotificationsFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.NotificationsFragment;
 import com.edu.whu.xiaomaivideo.ui.test.TestFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
