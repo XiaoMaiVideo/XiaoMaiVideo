@@ -7,9 +7,9 @@ import android.widget.Toast;
 
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.MyInfoFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
@@ -43,9 +43,9 @@ public class MainActivity extends FragmentActivity {
         mFragments = new ArrayList<>(5);
         mFragments.add(new HomeFragment()); // 第一个tab
         mFragments.add(new MessageFragment()); // 第二个tab
-        mFragments.add(new MyInfoFragment()); // 没用，占个位置
+        mFragments.add(new MeFragment()); // 没用，占个位置
         mFragments.add(new FindFragment()); // 第三个tab
-        mFragments.add(new MyInfoFragment()); // 第四个tab
+        mFragments.add(new MeFragment()); // 第四个tab
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

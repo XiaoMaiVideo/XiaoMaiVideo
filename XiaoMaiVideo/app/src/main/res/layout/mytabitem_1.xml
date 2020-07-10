@@ -2,21 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="48dp"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:gravity="center">
     <ImageView
         android:layout_gravity="center"
         android:id="@+id/icon1"
-        android:src="@drawable/ic_dashboard_black_24dp"
-        android:layout_width="24dp"
-        android:layout_height="24dp" />
+        android:src="@drawable/home"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/text1"
         android:gravity="center"
-        android:textSize="12sp"
-        android:layout_marginStart="5dp"
-        android:text="Tab1"
+        android:textSize="14sp"
+        android:layout_marginStart="0dp"
+        android:text="首页"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 </LinearLayout>
