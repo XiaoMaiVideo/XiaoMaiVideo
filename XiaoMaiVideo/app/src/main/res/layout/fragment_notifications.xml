@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.viewModel.NotificationsViewModel" />
+            type="com.edu.whu.xiaomaivideo.viewModel.CenterViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -53,7 +53,7 @@
                         android:layout_height="36dp"
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="44dp"
-                        android:text="username"
+                        android:text="@{viewmodel.username}"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/imageButton"
                         app:layout_constraintTop_toTopOf="parent" />
