@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.edu.whu.xiaomaivideo.ui.fragment.MyInfoFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity"
         android:label="@string/title_notifications"
-        tools:layout="@layout/my_info_fragment" />
+        tools:layout="@layout/activity_user_info" />
 </navigation>

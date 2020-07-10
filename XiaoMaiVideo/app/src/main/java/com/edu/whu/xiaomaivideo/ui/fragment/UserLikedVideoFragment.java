@@ -13,26 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.viewModel.MyLikedVideoViewModel;
+import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
 
-public class MyLikedVideoFragment extends Fragment {
+public class UserLikedVideoFragment extends Fragment {
 
-    private MyLikedVideoViewModel mViewModel;
+    private UserLikedVideoViewModel mViewModel;
 
-    public static MyLikedVideoFragment newInstance() {
-        return new MyLikedVideoFragment();
+    public static UserLikedVideoFragment newInstance() {
+        return new UserLikedVideoFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.my_liked_video_fragment, container, false);
+        return inflater.inflate(R.layout.user_liked_video_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MyLikedVideoViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(UserLikedVideoViewModel.class);
         // TODO: Use the ViewModel
     }
 
