@@ -1,11 +1,13 @@
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -34,8 +36,12 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
 
         //        if (getItemViewType(i) == 0)
-        ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_action_person);
+        ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_launcher_background);
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
+        ((SettingsViewHolder)viewHolder).videoView.setVideoURI(Uri.parse("https://v-cdn.zjol.com.cn/280443.mp4"));
+
+        ((SettingsViewHolder)viewHolder).videoView.start();
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -49,7 +55,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 10;
     }
     class SettingsViewHolder extends RecyclerView.ViewHolder
     {
