@@ -1,6 +1,7 @@
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -39,8 +41,14 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
         ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_launcher_background);
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
         ((SettingsViewHolder)viewHolder).videoView.setVideoURI(Uri.parse("https://v-cdn.zjol.com.cn/280443.mp4"));
-
-        ((SettingsViewHolder)viewHolder).videoView.start();
+        MediaController mediaController = new MediaController(mContext);
+        ((SettingsViewHolder)viewHolder).videoView.setMediaController(mediaController);
+        ((SettingsViewHolder)viewHolder).videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(mContext, "视频播放完毕", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener()
         {
