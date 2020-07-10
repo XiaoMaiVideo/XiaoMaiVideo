@@ -14,13 +14,7 @@ public class CenterViewModel extends AndroidViewModel {
     private MutableLiveData<String> username;
 
     public MutableLiveData<String> getUsername() {
-        try {
-            if (sp.getString("password","") != null&&sp.getString("username","") != null) {
-                username.setValue(sp.getString("username",""));
-            }
-        } catch (Exception e) {
-
-        }
+        username.setValue(sp.getString("username",""));
         return username;
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.edu.whu.xiaomaivideo.viewModel.LoginViewModel" />
@@ -11,10 +12,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.activity.LoginActivity">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:layout_marginTop="80dp"
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,10 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="用户名"
-                android:text="@{viewmodel.username}"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
+                android:text="@{viewmodel.username}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -80,8 +81,8 @@
                 android:hint="密码"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:text="@{viewmodel.password}"
                 android:maxLines="1"
+                android:text="@{viewmodel.password}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -124,9 +125,9 @@
             android:text="登陆"
             android:textSize="18sp"
             app:iconGravity="textStart"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textView2"
             app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
             app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout" />
 
