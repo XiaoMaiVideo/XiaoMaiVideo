@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
                 switch (position) {
                     default:
                     case 0:
-                        fragment = new BlankFragment();
+                        fragment = new FriendFragment();
                         break;
                     case 1:
                         fragment = new BlankFragment();
