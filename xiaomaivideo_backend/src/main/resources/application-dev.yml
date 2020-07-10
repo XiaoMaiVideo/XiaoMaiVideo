@@ -20,3 +20,7 @@ server:
   max-http-header-size: 102400000
   tomcat:
     max-http-post-size: 102400000
+
+constant:
+  base-url: "http://127.0.0.1:8080"
+  pic-file-resource-path: "C:/Users/79918/Desktop/work/"

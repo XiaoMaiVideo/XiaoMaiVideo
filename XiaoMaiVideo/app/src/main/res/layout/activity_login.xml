@@ -1,127 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.LoginActivity">
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XiaoMai"
-        android:textColor="?attr/colorPrimaryDark"
-        android:textSize="80sp"
-        app:layout_constraintBottom_toTopOf="@id/accountTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382"
-        app:layout_constraintVertical_chainStyle="packed" />
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/accountTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:endIconMode="clear_text"
-        app:helperText="请输入您的用户名"
-        app:layout_constraintBottom_toTopOf="@id/passwordTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView1">
+    <data>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_username"
-            android:layout_width="match_parent"
+        <variable
+            name="viewmodel"
+            type="com.edu.whu.xiaomaivideo.viewModel.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="80dp"
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="用户名"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textSize="16sp" />
+            android:text="XiaoMai"
+            android:textColor="?attr/colorPrimaryDark"
+            android:textSize="80sp"
+            app:layout_constraintBottom_toTopOf="@id/accountTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.382"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:helperText="请输入您的密码"
-        app:layout_constraintBottom_toTopOf="@id/rePasswordTextInputLayout"
-        app:layout_constraintEnd_toEndOf="@id/accountTextInputLayout"
-        app:layout_constraintStart_toStartOf="@id/accountTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@id/accountTextInputLayout"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_password"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/accountTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="密码"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textSize="16sp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:endIconMode="clear_text"
+            app:helperText="请输入您的用户名"
+            app:layout_constraintBottom_toTopOf="@id/passwordTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            app:startIconDrawable="@drawable/ic_action_person"
+            app:startIconTintMode="src_atop">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="用户名"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:text="@{viewmodel.username}"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/rePasswordTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:helperText="请再次输入您的密码"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/loginBtn"
-        app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
-        app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
-        app:passwordToggleEnabled="true">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_rePassword"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="与上密码相同"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textSize="16sp" />
+            android:layout_marginTop="8dp"
+            app:helperText="请输入您的密码"
+            app:layout_constraintBottom_toTopOf="@id/rePasswordTextInputLayout"
+            app:layout_constraintEnd_toEndOf="@id/accountTextInputLayout"
+            app:layout_constraintStart_toStartOf="@id/accountTextInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/accountTextInputLayout"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_action_lock"
+            app:startIconTintMode="src_atop">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="密码"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:text="@{viewmodel.password}"
+                android:textSize="16sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginBtn"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="?attr/colorPrimary"
-        android:text="登陆"
-        android:textSize="18sp"
-        app:iconGravity="textStart"
-        app:layout_constraintBottom_toTopOf="@id/textView2"
-        app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/rePasswordTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:helperText="请再次输入您的密码"
+            app:layout_constraintBottom_toTopOf="@id/loginBtn"
+            app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
+            app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_action_lock"
+            app:startIconTintMode="src_atop">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_rePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="与上密码相同"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginBtn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?attr/colorPrimary"
+            android:text="登陆"
+            android:textSize="18sp"
+            app:iconGravity="textStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView2"
+            app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
+            app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout" />
 
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="没有账号？"
-        android:textColor="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="@id/loginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="没有账号？"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

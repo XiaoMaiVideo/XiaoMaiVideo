@@ -3,13 +3,14 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.NotificationsFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.TestFragment;
+import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,6 +28,7 @@ public class MainActivity extends FragmentActivity {
     private List<Fragment> mFragments;
     private FragmentPagerAdapter mAdapter;
     private TabLayout mTabLayout;
+    private Long exitTime=0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,11 @@ public class MainActivity extends FragmentActivity {
         mViewPager = findViewById(R.id.viewPager);
         mTabLayout = findViewById(R.id.tab_layout);
         mFragments = new ArrayList<>(5);
-        mFragments.add(new DashboardFragment()); // 第一个tab
-        mFragments.add(new HomeFragment()); // 第二个tab
-        mFragments.add(new NotificationsFragment()); // 没用，占个位置
-        mFragments.add(new NotificationsFragment()); // 第三个tab
-        mFragments.add(new TestFragment()); // 第四个tab
+        mFragments.add(new HomeFragment()); // 第一个tab
+        mFragments.add(new MessageFragment()); // 第二个tab
+        mFragments.add(new MeFragment()); // 没用，占个位置
+        mFragments.add(new FindFragment()); // 第三个tab
+        mFragments.add(new MeFragment()); // 第四个tab
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -72,6 +74,20 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(
+                    getApplication(),
+                    "再按一次退出",
+                    Toast.LENGTH_SHORT
+            ).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 
     public class MyAdapter extends FragmentPagerAdapter {

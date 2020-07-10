@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TestViewModel extends ViewModel {
+public class FindViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public TestViewModel() {
+    public FindViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is test fragment");
+        mText.setValue("这是发现页面");
     }
 
     public LiveData<String> getText() {

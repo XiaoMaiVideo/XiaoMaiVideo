@@ -43,6 +43,12 @@ public class AjaxResponse {
 
     }
 
+    public AjaxResponse(int code, String message, boolean isOk) {
+        this.code = code;
+        this.message = message;
+        this.isok = isOk;
+    }
+
     public static AjaxResponse success() {
         AjaxResponse resultBean = new AjaxResponse();
         resultBean.setIsok(true);
@@ -60,5 +66,12 @@ public class AjaxResponse {
         return resultBean;
     }
 
+    public static AjaxResponse failure() {
+        AjaxResponse resultBean = new AjaxResponse();
+        resultBean.setIsok(false);
+        resultBean.setCode(400);
+        resultBean.setMessage("failure");
+        return resultBean;
+    }
 
 }
