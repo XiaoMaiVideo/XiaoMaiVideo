@@ -4,13 +4,13 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.viewModel.DashboardViewModel" />
+            type="com.edu.whu.xiaomaivideo.viewModel.MessageViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.DashboardFragment">
+        tools:context=".ui.fragment.MessageFragment">
 
         <TextView
             android:id="@+id/text_dashboard"

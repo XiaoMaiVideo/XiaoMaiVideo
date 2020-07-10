@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.edu.whu.xiaomaivideo.ui.fragment.DashboardFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/message_fragment" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.edu.whu.xiaomaivideo.ui.fragment.NotificationsFragment"
+        android:name="com.edu.whu.xiaomaivideo.ui.fragment.MyInfoFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/my_info_fragment" />
 </navigation>

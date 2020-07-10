@@ -12,13 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 
-public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+import java.util.List;
+
+public class EditUserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
 
     private Context mContext;
     private OnItemClickListener mListener;
+    private String[] infos= new String[]{"昵称", "性别","头像","个人简介"};
 
-    public SettingsAdapter(Context context, OnItemClickListener listener)
+    public EditUserInfoAdapter(Context context, OnItemClickListener listener)
     {
         this.mContext = context;
         this.mListener = listener;
@@ -28,15 +31,15 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
     {
-        return new SettingsViewHolder(LayoutInflater.from(mContext).inflate(R.layout.setting_item, viewGroup, false));
+        return new EditUserInfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.edit_user_info_item, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i)
     {
-        ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_action_lock);
-        ((SettingsViewHolder)viewHolder).imageView2.setImageResource(R.drawable.ic_action_go);
-        ((SettingsViewHolder)viewHolder).textView.setText("黑夜给了我黑色的眼睛。。。");
+        ((EditUserInfoViewHolder)viewHolder).editInfo.setText(infos[i]);
+        ((EditUserInfoViewHolder)viewHolder).num.setText(String.valueOf(i+1));
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -50,22 +53,20 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount()
     {
-        return 20;
+        return infos.length;
     }
 
-    class SettingsViewHolder extends RecyclerView.ViewHolder
+    class EditUserInfoViewHolder extends RecyclerView.ViewHolder
     {
 
-        private TextView textView;
-        private ImageView imageView;
-        private ImageView imageView2;
+        private TextView editInfo;
+        private TextView num;
 
-        public SettingsViewHolder(@NonNull View itemView)
+        public EditUserInfoViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            textView = itemView.findViewById(R.id.settingText);
-            imageView = itemView.findViewById(R.id.settingImage);
-            imageView2=itemView.findViewById(R.id.settingIcon);
+            editInfo = itemView.findViewById(R.id.edit_info_textview);
+            num = itemView.findViewById(R.id.edit_info_num);
         }
     }
 
@@ -74,4 +75,3 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void onClick(int pos);
     }
 }
-

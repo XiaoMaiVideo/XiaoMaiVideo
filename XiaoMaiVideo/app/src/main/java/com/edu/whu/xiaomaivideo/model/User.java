@@ -1,9 +1,14 @@
 package com.edu.whu.xiaomaivideo.model;
 
+
 public class User {
     private long userId;
     private String username;
     private String password;
+    private String sex;
+    private String nickname;
+    private String avatar;
+    private String description;
 
     public User(long id) {
         userId = id;
@@ -35,5 +40,37 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

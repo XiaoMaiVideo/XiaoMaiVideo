@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-public class CenterViewModel extends AndroidViewModel {
+public class MyInfoViewModel extends AndroidViewModel {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private MutableLiveData<String> username;
@@ -18,7 +18,7 @@ public class CenterViewModel extends AndroidViewModel {
         return username;
     }
 
-    public CenterViewModel(@NonNull Application application) {
+    public MyInfoViewModel(@NonNull Application application) {
         super(application);
         username=new MutableLiveData<>();
         sp = getApplication().getSharedPreferences("data", Context.MODE_PRIVATE);
