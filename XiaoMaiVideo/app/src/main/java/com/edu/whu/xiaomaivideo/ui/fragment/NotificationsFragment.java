@@ -3,7 +3,6 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.content.Intent;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
