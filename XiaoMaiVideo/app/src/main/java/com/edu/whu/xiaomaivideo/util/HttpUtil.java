@@ -1,8 +1,12 @@
 package com.edu.whu.xiaomaivideo.util;
 
+import android.util.Xml;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -16,10 +20,22 @@ import static com.edu.whu.xiaomaivideo.util.Constant.BASEURL;
 
 public class HttpUtil {
     // 全局OKHttpClient对象
-    static OkHttpClient okHttpClient = new OkHttpClient();
+    private static OkHttpClient okHttpClient = new OkHttpClient();
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    // 发Post请求
+    // 发Post请求，传表单
     public static void sendPostRequest(String url, RequestBody requestBody, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发Post请求，传json串
+    public static void sendPostRequest(String url, String json, Callback callback) {
+        RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
@@ -32,6 +48,36 @@ public class HttpUtil {
     public static void sendGetRequest(String url, Callback callback) {
         Request request = new Request.Builder()
                 .url(url)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发带参数Delete请求
+    public static void sendDeleteRequest(String url, RequestBody requestBody, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发不带参数Delete请求
+    public static void sendDeleteRequest(String url, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
+    }
+
+    // 发Put请求
+    public static void sendPutRequest(String url, RequestBody requestBody, Callback callback) {
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(callback);

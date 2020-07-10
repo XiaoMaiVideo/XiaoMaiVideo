@@ -66,26 +66,25 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/userAvatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="fitCenter"
+                    android:id="@+id/imageView"
+                    android:layout_width="126dp"
+                    android:layout_height="121dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    tools:srcCompat="@drawable/ic_launcher_background" />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="21dp"
+                    android:layout_marginStart="20dp"
                     android:text="username"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/userAvatar"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
