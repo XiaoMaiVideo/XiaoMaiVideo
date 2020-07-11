@@ -1,5 +1,6 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -21,6 +24,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends FragmentActivity {
 
@@ -35,6 +40,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        checkPermission();
     }
 
     private void initView() {
@@ -74,6 +80,28 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    private void checkPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance
+        rxPermissions
+                .requestEach(
+                        android.Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+
+                        }
+                        else if (permission.shouldShowRequestPermissionRationale) {
+                            // Toast.makeText(MainActivity.this, "求求你给个权限吧", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            // Toast.makeText(MainActivity.this, "不给就算了", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @Override

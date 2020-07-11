@@ -7,24 +7,26 @@
     android:layout_marginTop="7dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="7dp">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_user_info_item_text_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:endIconMode="clear_text"
-                app:helperText="性别"
-                app:startIconTintMode="src_atop">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_user_info_item_edit_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="未填写"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="16sp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_user_info_item_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconMode="clear_text"
+        app:helperText="性别"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:startIconTintMode="src_atop">
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_user_info_item_edit_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="未填写"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

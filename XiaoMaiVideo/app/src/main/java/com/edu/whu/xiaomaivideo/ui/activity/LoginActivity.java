@@ -14,6 +14,9 @@ import android.view.View;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLoginBinding;
+import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
 
 import java.util.Objects;
@@ -87,50 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.responseCode.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer aInteger) {
-                if (aInteger != -1) {
-                    loginViewModel.responseCode.postValue(-1);
-                    // 在注册页面
-                    if (activityLoginBinding.textView2.getText().equals("已有账号？")) {
-                        // 注册成功
-                        if (aInteger == Constant.RESULT_SUCCESS) {
-                            activityLoginBinding.textView2.performClick();
-                        }
-                        // 用户已存在
-                        else if (aInteger == Constant.USER_ALREADY_EXISTS) {
-                            // 发个Toast
-                            activityLoginBinding.accountTextInputLayout.setError("用户名已存在");
-                        }
-                        // 注册失败
-                        else {
-
-                        }
-                    }
-                    // 在登录页面
-                    else {
-                        // 登录成功
-                        if (aInteger == Constant.RESULT_SUCCESS) {
-                            setResult(RESULT_OK);
-                            LoginActivity.this.finish();
-                        }
-                        // 账户不存在
-                        else if (aInteger == Constant.USER_NOT_EXISTS) {
-                            // 发个Toast
-                            activityLoginBinding.accountTextInputLayout.setError("不存在该用户");
-                        }
-                        // 密码错误
-                        else {
-                            // 发个Toast
-                            activityLoginBinding.passwordTextInputLayout.setError("密码错误");
-                        }
-                    }
-                }
-            }
-        });
-
-        activityLoginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.loginBtn.setButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 username = activityLoginBinding.editUsername.getText().toString().trim();
@@ -154,14 +114,57 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     // 注册
                     else {
-                        loginViewModel.sendRegisterRequest(username,password);
+                        User user = new User();
+                        user.setUsername(username);
+                        user.setPassword(password);
+                        UserRestService.addUser(user, new UserRestCallback() {
+                            @Override
+                            public void onSuccess(int resultCode) {
+                                super.onSuccess(resultCode);
+                                activityLoginBinding.loginBtn.onStopLoading();
+                                if (resultCode == Constant.RESULT_SUCCESS) {
+                                    // 成功
+                                    activityLoginBinding.textView2.performClick();
+                                }
+                                else if (resultCode == Constant.USER_ALREADY_EXISTS) {
+                                    // 用户已存在
+                                    activityLoginBinding.accountTextInputLayout.setError("用户名已存在");
+                                }
+                                else {
+                                    // 注册失败
+                                }
+                            }
+                        });
                     }
                 }
                 // 登录
                 else {
-                    loginViewModel.sendLoginRequest(username,password);
+                    User user = new User();
+                    user.setUsername(username);
+                    user.setPassword(password);
+                    UserRestService.verifyUser(user, new UserRestCallback() {
+                        @Override
+                        public void onSuccess(int resultCode, User user) {
+                            super.onSuccess(resultCode);
+                            activityLoginBinding.loginBtn.onStopLoading();
+                            if (resultCode == Constant.RESULT_SUCCESS) {
+                                // 成功
+                                Constant.CurrentUser = user;
+                                setResult(RESULT_OK);
+                                LoginActivity.this.finish();
+                            }
+                            else if (resultCode == Constant.USER_NOT_EXISTS) {
+                                // 用户不存在
+                                activityLoginBinding.accountTextInputLayout.setError("不存在该用户");
+                            }
+                            else {
+                                // 密码错误
+                                activityLoginBinding.passwordTextInputLayout.setError("密码错误");
+                            }
+                        }
+                    });
                 }
-
+                activityLoginBinding.loginBtn.onStartLoading();
             }
         });
 
@@ -170,18 +173,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (activityLoginBinding.textView2.getText().equals("没有账号？")){
                     activityLoginBinding.rePasswordTextInputLayout.setVisibility(0);
-                    activityLoginBinding.loginBtn.setText("注册");
+                    activityLoginBinding.loginBtn.setButtonText("注册");
                     activityLoginBinding.textView2.setText("已有账号？");
                     activityLoginBinding.editPassword.setText("");
                     activityLoginBinding.editUsername.setText("");
                 }
                 else {
                     activityLoginBinding.rePasswordTextInputLayout.setVisibility(8);
-                    activityLoginBinding.loginBtn.setText("登陆");
+                    activityLoginBinding.loginBtn.setButtonText("登陆");
                     activityLoginBinding.textView2.setText("没有账号？");
                 }
             }
         });
-
     }
 }

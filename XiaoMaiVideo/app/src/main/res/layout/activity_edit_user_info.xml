@@ -40,8 +40,8 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_marginStart="36dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,25 +49,27 @@
                     app:srcCompat="@drawable/add"
                     tools:srcCompat="@tools:sample/avatars" />
 
-                <Button
+                <de.mustafagercek.library.LoadingButton
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
                     android:layout_marginTop="36dp"
-                    android:text="更换头像"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    android:layout_marginEnd="36dp"
+                    app:buttonColor="@color/colorPrimary"
+                    app:buttonText="更换头像"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
+                <de.mustafagercek.library.LoadingButton
                     android:id="@+id/button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="36dp"
                     android:layout_marginBottom="36dp"
-                    android:text="修改信息"
+                    app:buttonColor="@color/colorPrimary"
+                    app:buttonText="修改信息"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -81,6 +83,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />

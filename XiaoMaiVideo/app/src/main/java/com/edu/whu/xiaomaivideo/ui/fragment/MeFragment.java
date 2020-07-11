@@ -1,10 +1,8 @@
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -123,7 +118,7 @@ public class MeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.LOGIN_SUCCESS_RESULT) {
             if (resultCode == RESULT_OK) {
-                Constant.CurrentUser.setAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594446309411&di=95ec8df149f572361cbe0a8b3ad60113&imgtype=0&src=http%3A%2F%2Fwww.jf258.com%2Fuploads%2F2014-08-16%2F224526452.jpg");
+                // Constant.CurrentUser.setAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594446309411&di=95ec8df149f572361cbe0a8b3ad60113&imgtype=0&src=http%3A%2F%2Fwww.jf258.com%2Fuploads%2F2014-08-16%2F224526452.jpg");
                 meViewModel.setUser(Constant.CurrentUser);
                 menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
                 menuItems.add(new Pair<>("退出登录", R.drawable.logout));

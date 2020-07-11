@@ -115,14 +115,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <!--style="@style/Widget.MaterialComponents.Button.UnelevatedButton"-->
+        <de.mustafagercek.library.LoadingButton
             android:id="@+id/loginBtn"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="?attr/colorPrimary"
-            android:text="登陆"
+            app:buttonColor="?attr/colorPrimary"
+            app:textColor="@android:color/white"
+            app:buttonText="登录"
             android:textSize="18sp"
             app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"

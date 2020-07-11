@@ -9,12 +9,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class EditUserInfoViewModel extends AndroidViewModel {
-    static final String[] USER_ALL_INFO={"昵称", "性别","头像","个人简介"};
+    static final String[] USER_ALL_INFO={"昵称", "性别", "个人简介"};
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -30,15 +28,15 @@ public class EditUserInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<InfoMap>> getAllUserInfo() {
         List<InfoMap> list=new ArrayList<>();
-        for (int i =0;i<USER_ALL_INFO.length;i++){
-            InfoMap infoMap=new InfoMap(USER_ALL_INFO[i],sp.getString(USER_ALL_INFO[i],""));
+        for (int i = 0; i < USER_ALL_INFO.length; i++) {
+            InfoMap infoMap = new InfoMap(USER_ALL_INFO[i], sp.getString(USER_ALL_INFO[i], ""));
             list.add(infoMap);
         }
         userInfoList.setValue(list);
         return userInfoList;
     }
 
-    public static class InfoMap{
+    public static class InfoMap {
         public String key;
         public String value;
 

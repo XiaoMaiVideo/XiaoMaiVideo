@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -48,7 +46,7 @@ public class LoginViewModel extends AndroidViewModel {
         password=new MutableLiveData<>();
         username.setValue(sp.getString("username",""));
         password.setValue(sp.getString("password",""));
-        editor=sp.edit();
+        editor = sp.edit();
     }
 
     public void sendLoginRequest(final String username, final String password) {

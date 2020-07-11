@@ -45,9 +45,8 @@ public class UserController {
 
     @PutMapping("/user")
     public @ResponseBody AjaxResponse updateUser(@RequestBody User user) {
-
         userRestService.updateUser(user);
-        return AjaxResponse.success(user);
+        return AjaxResponse.success();
     }
 
     @GetMapping( "/user/get")
@@ -65,22 +64,19 @@ public class UserController {
     }
 
     @PostMapping(value = "/user/verify")
-    public @ResponseBody AjaxResponse verifyUser(@RequestBody Map map) {
-        String username = String.valueOf(map.get("username"));
-        String password = String.valueOf(map.get("password"));
-        User user = userRestService.getUser(username);
-        if (user == null) {
+    public @ResponseBody AjaxResponse verifyUser(@RequestBody User user) {
+        User user1 = userRestService.getUser(user.getUsername());
+        if (user1 == null) {
             // 没有注册
             return new AjaxResponse(1, "The user not exists", false);
         }
-        else if (!password.equals(user.getPassword())) {
+        else if (!user1.getPassword().equals(user.getPassword())) {
             // 密码不正确
             return new AjaxResponse(2, "Incorrect Password", false);
         }
         else {
             // 登录成功
-            user.setPassword("");
-            return AjaxResponse.success(user);
+            return AjaxResponse.success(user1);
         }
     }
 }
