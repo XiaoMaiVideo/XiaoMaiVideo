@@ -38,12 +38,6 @@ public class MeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(MeViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         Button button = getActivity().findViewById(R.id.btnToUserInfo);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +47,12 @@ public class MeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 }
