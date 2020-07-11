@@ -45,7 +45,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(EditUserInfoActivity.this, "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         },true);
         editUserInfoAdapter2=new EditUserInfoAdapter(EditUserInfoActivity.this, new EditUserInfoAdapter.OnItemClickListener()
@@ -53,7 +52,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(EditUserInfoActivity.this, "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         },false);
         recyclerView.setAdapter(editUserInfoAdapter2);

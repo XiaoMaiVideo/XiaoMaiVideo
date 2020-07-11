@@ -122,7 +122,6 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(UserInfoActivity.this, "这是一个标签", Toast.LENGTH_SHORT).show();
             }
         }));
     }
