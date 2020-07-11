@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     else {
                         // 登录成功
                         if (aInteger == Constant.RESULT_SUCCESS) {
-                            setResult(Constant.LOGIN_SUCCESS_RESULT);
+                            setResult(RESULT_OK);
                             LoginActivity.this.finish();
                         }
                         // 账户不存在
