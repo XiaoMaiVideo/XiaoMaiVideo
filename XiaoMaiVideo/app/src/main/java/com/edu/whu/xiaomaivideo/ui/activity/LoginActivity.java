@@ -2,14 +2,12 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.edu.whu.xiaomaivideo.R;
@@ -114,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     // 注册
                     else {
-                        User user = new User();
+                        final User user = new User();
                         user.setUsername(username);
                         user.setPassword(password);
                         UserRestService.addUser(user, new UserRestCallback() {
@@ -125,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (resultCode == Constant.RESULT_SUCCESS) {
                                     // 成功
                                     activityLoginBinding.textView2.performClick();
+                                    loginViewModel.commit(username,password);
                                 }
                                 else if (resultCode == Constant.USER_ALREADY_EXISTS) {
                                     // 用户已存在

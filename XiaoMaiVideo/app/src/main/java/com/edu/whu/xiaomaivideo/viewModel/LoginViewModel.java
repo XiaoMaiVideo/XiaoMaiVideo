@@ -49,57 +49,9 @@ public class LoginViewModel extends AndroidViewModel {
         editor = sp.edit();
     }
 
-    public void sendLoginRequest(final String username, final String password) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", username);
-        jsonObject.put("password", password);
-        String json = jsonObject.toJSONString();
-        String url = Constant.BASEURL+"user/verify";
-        HttpUtil.sendPostRequest(url, json, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // 请求失败的回调
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                // 请求成功的回调，已经导入了fastjson包用于处理JSON
-                String responseData = response.body().string();
-                JSONObject jsonObject = JSON.parseObject(responseData);
-                int responseNum = jsonObject.getInteger("code");
-                if (responseNum == Constant.RESULT_SUCCESS) {
-                    Constant.CurrentUser = jsonObject.getObject("data", User.class);
-                }
-                responseCode.postValue(responseNum);
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.apply();
-            }
-        });
-    }
-
-    public void sendRegisterRequest(final String username, final String password) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", username);
-        jsonObject.put("password", password);
-        String json = jsonObject.toJSONString();
-        String url = Constant.BASEURL+"user";
-        HttpUtil.sendPostRequest(url, json, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // 请求失败的回调
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                // 请求成功的回调，已经导入了fastjson包用于处理JSON
-                String responseData = response.body().string();
-                JSONObject jsonObject = JSON.parseObject(responseData);
-                responseCode.postValue(jsonObject.getInteger("code"));
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.apply();
-            }
-        });
+    public void commit(String username,String password){
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.apply();
     }
 }
