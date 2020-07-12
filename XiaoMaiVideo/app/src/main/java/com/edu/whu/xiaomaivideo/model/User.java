@@ -1,21 +1,25 @@
 package com.edu.whu.xiaomaivideo.model;
 
-
 public class User {
     private long userId;
     private String username;
     private String password;
-    private String sex;
+    private String gender;
     private String nickname;
     private String avatar;
     private String description;
 
-    public User(long id) {
-        userId = id;
-    }
-
     public User() {
 
+    }
+
+    // 未登录的游客
+    public static User Visitor() {
+        User user = new User();
+        user.setUserId(0);
+        user.setUsername("尚未登录...");
+        user.setAvatar("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1093847288,3038136586&fm=26&gp=0.jpg");
+        return user;
     }
 
     public String getUsername() {
@@ -42,12 +46,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getNickname() {
@@ -73,4 +77,5 @@ public class User {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

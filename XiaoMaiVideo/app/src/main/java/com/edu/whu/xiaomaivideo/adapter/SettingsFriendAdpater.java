@@ -79,7 +79,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
         {
             super(itemView);
             textView = itemView.findViewById(R.id.friendText);
-            imageView = itemView.findViewById(R.id.firendImage);
+            imageView = itemView.findViewById(R.id.friendImage);
             videoView=itemView.findViewById(R.id.friendVideo);
             like = itemView.findViewById(R.id.friendLike);
             comment = itemView.findViewById(R.id.friendComment);

@@ -3,6 +3,7 @@ package com.edu.whu.xiaomaivideo.util;
 import android.util.Xml;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -15,6 +16,7 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static com.edu.whu.xiaomaivideo.util.Constant.BASEURL;
 
@@ -23,17 +25,7 @@ public class HttpUtil {
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    // 发Post请求，传表单
-    public static void sendPostRequest(String url, RequestBody requestBody, Callback callback) {
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(callback);
-    }
-
-    // 发Post请求，传json串
+    // 发Post异步请求，传json串
     public static void sendPostRequest(String url, String json, Callback callback) {
         RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -42,6 +34,56 @@ public class HttpUtil {
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(callback);
+    }
+
+    public static String sendPostRequest(String url, String json) {
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            String responseData = response.body().string();
+            return responseData;
+        }
+        catch (IOException e) {
+            return Constant.RESPONSE_ERROR;
+        }
+    }
+
+    public static String sendPutRequest(String url, String json) {
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            String responseData = response.body().string();
+            return responseData;
+        }
+        catch (IOException e) {
+            return Constant.RESPONSE_ERROR;
+        }
+    }
+
+    public static String sendGetRequest(String url) {
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            String responseData = response.body().string();
+            return responseData;
+        }
+        catch (IOException e) {
+            return Constant.RESPONSE_ERROR;
+        }
     }
 
     // 发Get请求
@@ -73,13 +115,22 @@ public class HttpUtil {
         call.enqueue(callback);
     }
 
-    // 发Put请求
-    public static void sendPutRequest(String url, RequestBody requestBody, Callback callback) {
+    public static void sendProfileRequest(String imagePath, Callback callback) {
+        String url = BASEURL+"api";
+        File file = new File(imagePath);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                        "file",
+                        file.getName(),
+                        RequestBody.create(MediaType.parse("image/jpg"), file)
+                );
+        RequestBody requestBody = builder.build();
         Request request = new Request.Builder()
                 .url(url)
-                .put(requestBody)
+                .post(requestBody)
                 .build();
-        Call call = okHttpClient.newCall(request);
+        Call call =  okHttpClient.newCall(request);
         call.enqueue(callback);
     }
 

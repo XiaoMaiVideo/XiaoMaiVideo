@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsAdapter;
+import com.edu.whu.xiaomaivideo.adapter.UserVideoWorksAdapter;
 import com.edu.whu.xiaomaivideo.databinding.UserVideoWorksFragmentBinding;
 import com.edu.whu.xiaomaivideo.viewModel.UserVideoWorksViewModel;
 
@@ -41,7 +42,7 @@ public class UserVideoWorksFragment extends Fragment {
         userVideoWorksFragmentBinding.setLifecycleOwner(getActivity());
 
         userVideoWorksFragmentBinding.myVideoWorksFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        userVideoWorksFragmentBinding.myVideoWorksFragmentRecyclerView.setAdapter(new SettingsAdapter(getActivity(), new SettingsAdapter.OnItemClickListener()
+        userVideoWorksFragmentBinding.myVideoWorksFragmentRecyclerView.setAdapter(new UserVideoWorksAdapter(getActivity(), new SettingsAdapter.OnItemClickListener()
         {
             @Override
             public void onClick(int pos)
