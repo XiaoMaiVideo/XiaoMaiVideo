@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪、张俊杰
+ * Create Time: 2020/7/9
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.BindingAdapter;

@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/8
+ */
+
 package com.edu.whu.xiaomaivideo.util;
 
 import java.security.MessageDigest;

@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰、叶俊豪
+ * Create Time: 2020/7/10
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.viewModel;
 
 import android.app.Application;
