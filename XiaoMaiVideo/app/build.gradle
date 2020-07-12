@@ -48,6 +48,9 @@ dependencies {
     implementation 'com.mapzen:on-the-road:0.8.1'
     // 图片压缩库
     implementation 'com.jkt:tcompress:1.2.3'
+    // Parcelable框架
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
