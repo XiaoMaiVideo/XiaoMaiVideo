@@ -1,5 +1,8 @@
 package com.edu.whu.xiaomaivideo.model;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class User {
     private long userId;
     private String username;
