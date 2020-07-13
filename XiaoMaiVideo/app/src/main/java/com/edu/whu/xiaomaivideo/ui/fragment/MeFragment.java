@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪、张俊杰
+ * Create Time: 2020/7/9
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.BindingAdapter;
@@ -30,6 +36,8 @@ import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +88,7 @@ public class MeFragment extends Fragment {
                     // 设置个人信息
                     if (pos == Constant.SETTING_ITEM_COUNT) {
                         Intent intent = new Intent(getActivity(), EditUserInfoActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, Constant.SET_USER_INFO);
                     }
                     // 退出登录
                     else if (pos == Constant.SETTING_ITEM_COUNT + 1) {
@@ -104,6 +112,7 @@ public class MeFragment extends Fragment {
                 // 已登录，跳转到用户个人信息
                 else {
                     Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                    intent.putExtra("user", Parcels.wrap(User.class, Constant.CurrentUser));
                     startActivity(intent);
                 }
             }
@@ -119,10 +128,19 @@ public class MeFragment extends Fragment {
         if (requestCode == Constant.LOGIN_SUCCESS_RESULT) {
             if (resultCode == RESULT_OK) {
                 // Constant.CurrentUser.setAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594446309411&di=95ec8df149f572361cbe0a8b3ad60113&imgtype=0&src=http%3A%2F%2Fwww.jf258.com%2Fuploads%2F2014-08-16%2F224526452.jpg");
+                if (Constant.CurrentUser.getAvatar() == null || Constant.CurrentUser.getAvatar().equals("")) {
+                    // 没有头像的，就设置一个游客的头像
+                    Constant.CurrentUser.setAvatar(User.Visitor().getAvatar());
+                }
                 meViewModel.setUser(Constant.CurrentUser);
                 menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
                 menuItems.add(new Pair<>("退出登录", R.drawable.logout));
                 mAdapter.notifyDataSetChanged();
+            }
+        }
+        else if (requestCode == Constant.SET_USER_INFO) {
+            if (resultCode == RESULT_OK) {
+                meViewModel.setUser(Constant.CurrentUser);
             }
         }
     }

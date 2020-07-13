@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰、叶俊豪
+ * Create Time: 2020/7/10
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 
@@ -5,12 +11,14 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 
 import androidx.annotation.NonNull;
 
 import androidx.annotation.Nullable;
 
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -19,15 +27,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.UserInfoLabelAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityUserInfoBinding;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserLikedVideoFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserVideoWorksFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.VideoNewsFragment;
 import com.edu.whu.xiaomaivideo.viewModel.UserInfoViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import org.parceler.Parcels;
 
 import java.util.Objects;
 
@@ -36,24 +50,27 @@ public class UserInfoActivity extends FragmentActivity {
     private UserInfoViewModel userInfoViewModel;
     ActivityUserInfoBinding activityUserInfoBinding;
 
+    @BindingAdapter("app:avatarSrc")
+    public static void setAvatar(ImageView imageView, String url) {
+        // 用户圆形头像
+        Glide.with(imageView.getContext())
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(imageView);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // userInfoViewModel = new ViewModelProvider(Objects.requireNonNull(this)).get(UserInfoViewModel.class);
         userInfoViewModel = new ViewModelProvider(Objects.requireNonNull(this)).get(UserInfoViewModel.class);
 
+        User user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        userInfoViewModel.setUser(user);
 
         activityUserInfoBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_info);
         activityUserInfoBinding.setViewmodel(userInfoViewModel);
         activityUserInfoBinding.setLifecycleOwner(this);
-        activityUserInfoBinding.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent().setClass(UserInfoActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         ViewPager2 mViewPager2 = activityUserInfoBinding.viewPage2;
         TabLayout mTabLayout = activityUserInfoBinding.tabLayout;
@@ -102,16 +119,6 @@ public class UserInfoActivity extends FragmentActivity {
                 }
             }
         }).attach();
-
-
-
-        activityUserInfoBinding.editInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent().setClass(UserInfoActivity.this, EditUserInfoActivity.class);
-                startActivity(intent);
-            }
-        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

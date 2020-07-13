@@ -1,3 +1,9 @@
+/**
+ * Author: 李季东、张俊杰
+ * Create Time: 2020/7/10
+ * Update Time: 2020/7/11
+ */
+
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.os.Bundle;
@@ -50,12 +56,5 @@ public class FriendFragment extends Fragment {
             }
         }));
         return fragmentFriendBinding.getRoot();
-    }
-    @Nullable
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // ImageView imageView = getActivity().findViewById(R.id.userAvatar);
-        //Glide.with(getActivity()).load().into(imageView);
     }
 }

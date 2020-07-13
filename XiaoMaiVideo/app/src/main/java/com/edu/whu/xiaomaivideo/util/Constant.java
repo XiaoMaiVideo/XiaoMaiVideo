@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.util;
 
 import com.edu.whu.xiaomaivideo.model.User;
@@ -17,5 +23,8 @@ public class Constant {
     public static final int LOGIN_SUCCESS_RESULT = 3;
     public static final int USER_ALREADY_EXISTS = 4;
 
+    public static final int SET_USER_INFO = 5;
+
     public static final int SETTING_ITEM_COUNT = 1;
+
 }

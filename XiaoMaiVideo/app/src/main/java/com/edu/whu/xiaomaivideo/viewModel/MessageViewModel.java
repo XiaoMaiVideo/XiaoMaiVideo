@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰
+ * Create Time: 2020/7/11
+ * Update Time: 2020/7/11
+ */
+
 package com.edu.whu.xiaomaivideo.viewModel;
 
 import androidx.lifecycle.LiveData;
