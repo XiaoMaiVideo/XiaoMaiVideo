@@ -154,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                             activityLoginBinding.loginBtn.onStopLoading();
                             if (resultCode == Constant.RESULT_SUCCESS) {
                                 // 成功
+                                loginViewModel.commit(username,password);
                                 Constant.CurrentUser = user;
                                 setResult(RESULT_OK);
                                 LoginActivity.this.finish();
