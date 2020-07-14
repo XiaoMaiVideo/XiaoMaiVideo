@@ -1,5 +1,6 @@
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 
 
 import java.util.Objects;
-
+/**
+ * Author: 李季东
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/14
+ * 视频详情页面
+ */
 public class FriendFragment extends Fragment {
 
     private  FriendViewModel friendViewModel;
@@ -46,7 +53,9 @@ public class FriendFragment extends Fragment {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
+                startActivity(intent);
             }
         }));
         return fragmentFriendBinding.getRoot();
