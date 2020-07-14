@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/10
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.viewModel;
@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.edu.whu.xiaomaivideo.util.Constant;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EditUserInfoViewModel extends AndroidViewModel {
-    static final String[] USER_ALL_INFO={"昵称", "性别", "个人简介"};
+    static final String[] USER_ALL_INFO={"昵称", "个人简介", "工作单位", "性别", "生日", "地区"};
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -33,11 +35,13 @@ public class EditUserInfoViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<InfoMap>> getAllUserInfo() {
-        List<InfoMap> list=new ArrayList<>();
-        for (int i = 0; i < USER_ALL_INFO.length; i++) {
-            InfoMap infoMap = new InfoMap(USER_ALL_INFO[i], sp.getString(USER_ALL_INFO[i], ""));
-            list.add(infoMap);
-        }
+        List<InfoMap> list = new ArrayList<>();
+        list.add(new InfoMap(USER_ALL_INFO[0], Constant.CurrentUser.getNickname()));
+        list.add(new InfoMap(USER_ALL_INFO[1], Constant.CurrentUser.getDescription()));
+        list.add(new InfoMap(USER_ALL_INFO[2], Constant.CurrentUser.getWorkplace()));
+        list.add(new InfoMap(USER_ALL_INFO[3], Constant.CurrentUser.getGender()));
+        list.add(new InfoMap(USER_ALL_INFO[4], Constant.CurrentUser.getBirthday()));
+        list.add(new InfoMap(USER_ALL_INFO[5], Constant.CurrentUser.getArea()));
         userInfoList.setValue(list);
         return userInfoList;
     }

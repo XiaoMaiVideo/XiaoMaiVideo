@@ -1,7 +1,7 @@
 /**
- * Author: 何慷
+ * Author: 何慷、叶俊豪
  * Create Time: 2020/7/12
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.util;
@@ -98,5 +98,9 @@ public class CommonUtils {
             }
         }
         return Math.round(len);
+    }
+
+    public static String getDateString() {
+        return null;
     }
 }
