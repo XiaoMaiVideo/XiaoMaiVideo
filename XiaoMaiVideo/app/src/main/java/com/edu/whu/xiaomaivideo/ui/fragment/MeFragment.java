@@ -37,6 +37,7 @@ import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
+import com.lxj.xpopup.XPopup;
 
 import org.parceler.Parcels;
 
@@ -106,7 +107,14 @@ public class MeFragment extends Fragment {
                 }
                 else if (pos == 5) {
                     // 退出登录
-                    onLogOut();
+                    new XPopup.Builder(getActivity())
+                            .asBottomList("退出登录吗？", new String[]{"是", "否"},
+                                    (position, text) -> {
+                                        if (position == 0) {
+                                            onLogOut();
+                                        }
+                                    })
+                            .show();
                 }
             }
             // 定义每个设置条目的操作

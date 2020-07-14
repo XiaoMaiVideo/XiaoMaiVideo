@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
+import com.lxj.xpopup.XPopup;
 import com.vincent.videocompressor.VideoCompress;
 
 import java.io.File;
@@ -71,44 +73,28 @@ public class TakeVideoActivity extends AppCompatActivity {
         notCompressButton.setVisibility(View.GONE);
 
 
-        takeVideoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TakeVideoActivity.this);
-                builder.setTitle("拍摄视频还是选择视频？");
-                builder.setCancelable(true);
-                final String[] lesson = new String[]{"拍摄视频", "选择视频"};
-                builder.setItems(lesson, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                            //设置视频录制的最长时间
-                            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
-                            //设置视频录制的画质
-                            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(intent, 1);
-                        } else {
-                            selectVideo();
-                        }
-                    }
-                }).create();
-                //设置反面按钮
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();     //创建AlertDialog对象
-                dialog.show();                              //显示对话框
-            }
+        takeVideoButton.setOnClickListener(v -> {
+            new XPopup.Builder(TakeVideoActivity.this)
+                    .asBottomList("拍摄视频还是选择视频？", new String[]{"拍摄视频", "选择视频"},
+                            (position, text) -> {
+                                if (position == 0) {
+                                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                                    //设置视频录制的最长时间
+                                    intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+                                    //设置视频录制的画质
+                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                                    startActivityForResult(intent, 1);
+                                }
+                                else {
+                                    selectVideo();
+                                }
+                            })
+                    .show();
         });
         compressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compress(inputPath, outputPath);
-                upload(outputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
         });
         notCompressButton.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +103,6 @@ public class TakeVideoActivity extends AppCompatActivity {
                 upload(inputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
         });
-//        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                selectVideo();
-//            }
-//        });
     }
 
     @Override
@@ -138,6 +118,7 @@ public class TakeVideoActivity extends AppCompatActivity {
                     path.mkdirs();
                 }
                 outputPath = path.getPath() + "/" + System.currentTimeMillis() + ".mp4";
+                Log.e("TakeVideoActivity", outputPath+"_");
                 compressButton.setVisibility(View.VISIBLE);
                 notCompressButton.setVisibility(View.VISIBLE);
             }
@@ -160,6 +141,7 @@ public class TakeVideoActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 progressBar.setProgress(100);
+                upload(outputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
 
             @Override
@@ -175,6 +157,19 @@ public class TakeVideoActivity extends AppCompatActivity {
     }
 
     private void upload(String path, String description, List<String> selectLabels) {
+        HttpUtil.sendVideoRequest(path, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData = response.body().string();
+                // TODO: 传相关的数据到服务器上
+                Log.e("TakeVideoActivity", responseData);
+            }
+        });
     }
 
     //选择视频
@@ -201,6 +196,5 @@ public class TakeVideoActivity extends AppCompatActivity {
             }
             startActivityForResult(Intent.createChooser(intent, "选择要导入的视频"), 1);
         }
-
     }
 }

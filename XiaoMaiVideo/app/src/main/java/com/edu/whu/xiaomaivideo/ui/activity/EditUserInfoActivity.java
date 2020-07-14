@@ -159,7 +159,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
                         })).show();
             }
         });
-
     }
 
     public void setInfoButtonListener() {
@@ -206,12 +205,9 @@ public class EditUserInfoActivity extends AppCompatActivity {
                     // 性别
                     new XPopup.Builder(EditUserInfoActivity.this)
                             .asBottomList("请选择性别", new String[]{"男", "女"},
-                                    new OnSelectListener() {
-                                        @Override
-                                        public void onSelect(int position, String text) {
-                                            viewHolder.editInfoItem.setText("性别：" + text);
-                                            editUserInfoAdapter1.updateGender(text);
-                                        }
+                                    (position, text) -> {
+                                        viewHolder.editInfoItem.setText("性别：" + text);
+                                        editUserInfoAdapter1.updateGender(text);
                                     })
                             .show();
                 }

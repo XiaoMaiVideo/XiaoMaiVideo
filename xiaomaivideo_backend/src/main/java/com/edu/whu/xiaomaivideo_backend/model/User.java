@@ -25,6 +25,9 @@ public class User {
     private String nickname;
     private String avatar;
     private String description;
+    private String birthday;
+    private String area;
+    private String workplace;
 
     public Long getUserId() {
         return userId;
@@ -80,5 +83,29 @@ public class User {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getWorkplace() {
+        return workplace;
+    }
+
+    public void setWorkplace(String workplace) {
+        this.workplace = workplace;
     }
 }
