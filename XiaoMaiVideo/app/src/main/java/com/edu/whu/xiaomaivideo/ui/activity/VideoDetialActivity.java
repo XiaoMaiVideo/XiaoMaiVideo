@@ -1,6 +1,7 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Author: 李季东
+ * Author: 李季东 张俊杰
  * Create Time: 2020/7/14
  * Update Time: 2020/7/14
  * 视频详情页面
@@ -40,16 +41,15 @@ public class VideoDetialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_detail);
-/*
         videoDatailModel =new ViewModelProvider(Objects.requireNonNull(this)).get(VideoDatailModel.class);
         activityVideoDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_detail);
         activityVideoDetailBinding.setViewmodel(videoDatailModel);
         activityVideoDetailBinding.setLifecycleOwner(this);
+        Bundle bundle = getIntent().getExtras();
+        activityVideoDetailBinding.friendText.setText(bundle.getString("username"));
+        activityVideoDetailBinding.friendVideo.setVideoURI(Uri.parse(bundle.getString("videoUrl")));
+        activityVideoDetailBinding.friendImage.setImageResource(bundle.getInt("userImg"));
         initAdapter();
-        */
-
-
     }
     private void initAdapter() {
         mAdapter=new CommentAdapter(this, new CommentAdapter.OnItemClickListener()
@@ -60,6 +60,8 @@ public class VideoDetialActivity extends AppCompatActivity {
                 Toast.makeText(VideoDetialActivity.this, "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        activityVideoDetailBinding.recyclerView2.setLayoutManager(linearLayoutManager);
         activityVideoDetailBinding.recyclerView2.setAdapter(mAdapter);
     }
 

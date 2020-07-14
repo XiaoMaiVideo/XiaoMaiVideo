@@ -1,7 +1,7 @@
 /**
  * Author: 李季东、张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/11
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
@@ -71,8 +71,8 @@ public class FriendFragment extends Fragment {
             {
                 //点击item发生的事情
                 //Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
-                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
-                startActivity(intent);
+//                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
+//                startActivity(intent);
             }
         });
         fragmentFriendBinding.recyclerView.setAdapter(mAdapter);
