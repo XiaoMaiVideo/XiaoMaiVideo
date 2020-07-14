@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/rest")
+@RequestMapping("/rest") // 通过服务器URL/rest http://……:8088/rest/
 public class FileController {
     @Value("${constant.base-url}")
     private String url;
@@ -25,7 +25,7 @@ public class FileController {
     private String path;
 
     @CrossOrigin
-    @PostMapping("api")
+    @PostMapping("api") // http://……:8088/rest/api 发POST请求 参数名file
     public @ResponseBody
     String fileUpload(@RequestParam(value = "file")MultipartFile file) throws Exception {
         File Folder = new File(path);

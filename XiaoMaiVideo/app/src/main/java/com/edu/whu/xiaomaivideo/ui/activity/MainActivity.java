@@ -153,7 +153,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void tryLogin(){
+    private void tryLogin() {
         SharedPreferences sp=this.getSharedPreferences("data", Context.MODE_PRIVATE);
         String username=sp.getString("username","");
         String password=sp.getString("password","");
