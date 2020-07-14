@@ -87,13 +87,25 @@ public class MeFragment extends Fragment {
         mAdapter = new SettingsAdapter(getActivity(), pos -> {
             // 已登录
             if (Constant.CurrentUser.getUserId() != 0) {
-                // 设置个人信息
                 if (pos == 0) {
+                    // 设置个人信息
                     Intent intent = new Intent(getActivity(), EditUserInfoActivity.class);
                     startActivityForResult(intent, Constant.SET_USER_INFO);
                 }
-                // 退出登录
+                else if (pos == 1) {
+                    // 我的收藏
+                }
+                else if (pos == 2) {
+                    // 隐私设置
+                }
+                else if (pos == 3) {
+                    // 通知设置
+                }
+                else if (pos == 4) {
+                    // 清除缓存
+                }
                 else if (pos == 5) {
+                    // 退出登录
                     onLogOut();
                 }
             }
