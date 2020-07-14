@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
+import com.edu.whu.xiaomaivideo.adapter.SettingsHotAdpater;
 import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
@@ -34,11 +35,10 @@ public class HotFragment extends Fragment {
         fragmentHotBinding.setViewmodel(hotViewModel);
         fragmentHotBinding.setLifecycleOwner(getActivity());
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentHotBinding.recyclerView.setAdapter(new SettingsFriendAdpater(getActivity(), new SettingsFriendAdpater.OnItemClickListener()
+        fragmentHotBinding.recyclerView.setAdapter(new SettingsHotAdpater(getActivity(), new SettingsHotAdpater.OnItemClickListener()
         {
             @Override
-            public void onClick(int pos)
-            {
+            public void onClick(int pos) {
                 Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         }));

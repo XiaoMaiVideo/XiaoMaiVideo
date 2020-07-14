@@ -21,13 +21,13 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/rest")
+@RequestMapping("/rest") //
 public class UserController {
 
     @Resource(name="userRestJPAServiceImpl")
     UserRestService userRestService;
 
-    @PostMapping("/user")
+    @PostMapping("/user") // http://……:8088/rest/user 发POST请求 参数：User类的对象
     public @ResponseBody AjaxResponse saveUser(@RequestBody User user) {
         user.setUserId(null);
         User user1 = userRestService.getUser(user.getUsername());
@@ -44,7 +44,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/user/{id}") // http://……:8088/rest/user/7
     public @ResponseBody AjaxResponse deleteUser(@PathVariable Long id) {
         userRestService.deleteUser(id);
         return AjaxResponse.success(id);

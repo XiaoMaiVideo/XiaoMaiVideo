@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
                         fragment = new FriendFragment();
                         break;
                     case 1:
-                        fragment = new BlankFragment();
+                        fragment = new HotFragment();
                         break;
                 }
                 return fragment;
