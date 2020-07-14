@@ -24,6 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 
+/**
+ * Author: 李季东
+ * Create Time: 2020/7/14
+ * Update Time: 2020/7/14
+ * 视频详情页面
+ */
 public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context mContext;
