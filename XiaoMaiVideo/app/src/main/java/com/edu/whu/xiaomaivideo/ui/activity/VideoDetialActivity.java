@@ -41,12 +41,14 @@ public class VideoDetialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_detail);
-
+/*
         videoDatailModel =new ViewModelProvider(Objects.requireNonNull(this)).get(VideoDatailModel.class);
         activityVideoDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_detail);
         activityVideoDetailBinding.setViewmodel(videoDatailModel);
         activityVideoDetailBinding.setLifecycleOwner(this);
         initAdapter();
+        */
+
 
     }
     private void initAdapter() {
