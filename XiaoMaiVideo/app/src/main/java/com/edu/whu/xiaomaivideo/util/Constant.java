@@ -1,7 +1,7 @@
 /**
- * Author: 叶俊豪
+ * Author: 叶俊豪 张俊杰
  * Create Time: 2020/7/8
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.util;
@@ -26,5 +26,8 @@ public class Constant {
     public static final int SET_USER_INFO = 5;
 
     public static final int SETTING_ITEM_COUNT = 1;
+
+    public static final String[] LABELS={"音乐","影视","社会","游戏","美食","儿童","生活","体育","文化","时尚","科技"};
+
 
 }
