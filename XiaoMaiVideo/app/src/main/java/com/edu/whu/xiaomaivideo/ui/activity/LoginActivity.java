@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰、叶俊豪
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -148,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                             activityLoginBinding.loginBtn.onStopLoading();
                             if (resultCode == Constant.RESULT_SUCCESS) {
                                 // 成功
+                                loginViewModel.commit(username,password);
                                 Constant.CurrentUser = user;
                                 setResult(RESULT_OK);
                                 LoginActivity.this.finish();

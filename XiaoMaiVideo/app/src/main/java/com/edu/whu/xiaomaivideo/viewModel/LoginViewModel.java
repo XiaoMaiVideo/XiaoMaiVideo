@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪、张俊杰
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.viewModel;
 
 import android.annotation.SuppressLint;

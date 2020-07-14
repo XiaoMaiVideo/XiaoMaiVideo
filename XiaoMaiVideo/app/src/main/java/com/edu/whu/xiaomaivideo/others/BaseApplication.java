@@ -1,3 +1,9 @@
+/**
+ * Author: 何慷
+ * Create Time: 2020/7/12
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.others;
 
 import android.app.Application;

@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰、叶俊豪
+ * Create Time: 2020/7/10
+ * Update Time: 2020/7/12
+ */
+
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +31,7 @@ import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
+import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
 import com.edu.whu.xiaomaivideo.viewModel.EditUserInfoViewModel;
 import com.jkt.tcompress.OnCompressListener;
 import com.jkt.tcompress.TCompress;
@@ -138,14 +145,7 @@ public class EditUserInfoActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
-                String[] filePathColumns = {MediaStore.Images.Media.DATA};
-                Cursor c = this.getContentResolver().query(selectedImage, filePathColumns, null, null, null);
-                c.moveToFirst();
-                int columnIndex = c.getColumnIndex(filePathColumns[0]);
-                String imagePath = c.getString(columnIndex);
-                // String imagePath = FileUtils.getFilePathByUri(this, selectedImage);
-                Log.e("EditUserInfoActivity", imagePath+"_");
-                // DocumentFile documentFile = DocumentFile.fromSingleUri(this, selectedImage);
+                String imagePath= UriToPathUtil.getRealFilePath(this,selectedImage);
                 Glide.with(this).load(selectedImage).into(imageView);
                 // TODO: 压缩图片，上传服务器
                 button.onStartLoading();

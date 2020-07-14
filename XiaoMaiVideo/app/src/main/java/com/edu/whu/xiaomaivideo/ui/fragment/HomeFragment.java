@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰、李季东
+ * Create Time: 2020/7/9
+ * Update Time: 2020/7/10
+ */
+
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.os.Bundle;
