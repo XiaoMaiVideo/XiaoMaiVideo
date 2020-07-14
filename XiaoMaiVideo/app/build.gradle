@@ -21,6 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -51,6 +56,12 @@ dependencies {
     // Parcelable框架
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
+    // 点赞/收藏按钮
+    implementation 'com.sackcentury:shinebutton:1.0.0'
+    // 视频播放器
+    implementation 'cn.jzvd:jiaozivideoplayer:7.4.2'
+    // 类似微博话题的标签
+    implementation 'cn.droidlover:TagEditText:1.0.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

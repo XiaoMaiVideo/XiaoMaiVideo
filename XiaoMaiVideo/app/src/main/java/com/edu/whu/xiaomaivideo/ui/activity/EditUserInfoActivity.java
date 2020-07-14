@@ -148,7 +148,7 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 String imagePath= UriToPathUtil.getRealFilePath(this,selectedImage);
                 Glide.with(this).load(selectedImage).into(imageView);
                 // TODO: 压缩图片，上传服务器
-                button.onStartLoading();
+                button2.onStartLoading();
                 TCompress tCompress = new TCompress.Builder()
                         .setMaxWidth(810)
                         .setMaxHeight(540)
@@ -174,7 +174,7 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(int resultCode) {
                                             super.onSuccess(resultCode);
-                                            button.onStopLoading();
+                                            button2.onStopLoading();
                                             if (resultCode == Constant.RESULT_SUCCESS) {
                                                 // 更改头像成功
                                                 Toast.makeText(EditUserInfoActivity.this, "更改头像成功！", Toast.LENGTH_LONG).show();

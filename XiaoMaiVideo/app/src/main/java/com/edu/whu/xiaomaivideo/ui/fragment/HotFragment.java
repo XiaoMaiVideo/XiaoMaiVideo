@@ -38,8 +38,7 @@ public class HotFragment extends Fragment {
         fragmentHotBinding.recyclerView.setAdapter(new SettingsHotAdpater(getActivity(), new SettingsHotAdpater.OnItemClickListener()
         {
             @Override
-            public void onClick(int pos)
-            {
+            public void onClick(int pos) {
                 Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         }));

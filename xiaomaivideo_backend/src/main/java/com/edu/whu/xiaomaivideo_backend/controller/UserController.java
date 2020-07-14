@@ -52,6 +52,8 @@ public class UserController {
 
     @PutMapping("/user")
     public @ResponseBody AjaxResponse updateUser(@RequestBody User user) {
+        User user1 = userRestService.getUserById(user.getUserId());
+        user.setPassword(user1.getPassword());
         userRestService.updateUser(user);
         return AjaxResponse.success();
     }
