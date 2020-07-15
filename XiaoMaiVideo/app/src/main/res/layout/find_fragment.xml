@@ -45,7 +45,56 @@
                         android:id="@+id/sv_search"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
-                        android:background="@drawable/sv_search" />
+                        android:background="@drawable/sv_search">
+
+                    </SearchView>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="#FFFFFF"
+                        android:clickable="true"
+                        app:tabBackground="@android:color/transparent"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/colorAccent"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabMaxWidth="0dp"
+                        app:tabRippleColor="@android:color/transparent"
+                        app:tabSelectedTextColor="@color/colorPrimary"
+                        app:tabTextColor="@color/colorPrimary">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:id="@+id/tabItem2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout="@layout/search_tab_item_life" />
+
+                        <com.google.android.material.tabs.TabItem
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout="@layout/search_tab_item_sport" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout="@layout/search_tab_item_culture" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout="@layout/search_tab_item_fashion" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="56dp"
+                            android:layout_marginTop="24dp"
+                            android:layout="@layout/search_tab_item_tech" />
+
+                    </com.google.android.material.tabs.TabLayout>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tab_layout"
@@ -126,54 +175,6 @@
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="#FFFFFF"
-                android:clickable="true"
-                app:layout_anchor="@+id/appbar"
-                app:layout_anchorGravity="center"
-                app:tabBackground="@android:color/transparent"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorFullWidth="false"
-                app:tabMaxWidth="0dp"
-                app:tabRippleColor="@android:color/transparent"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabTextColor="@color/colorPrimary">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItem2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/search_tab_item_life" />
-
-                <com.google.android.material.tabs.TabItem
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/search_tab_item_sport" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/search_tab_item_culture" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/search_tab_item_fashion" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="56dp"
-                    android:layout_marginTop="24dp"
-                    android:layout="@layout/search_tab_item_tech" />
-
-            </com.google.android.material.tabs.TabLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </RelativeLayout>
 </layout>

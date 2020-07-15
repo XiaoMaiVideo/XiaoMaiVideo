@@ -165,6 +165,12 @@ public class MeFragment extends Fragment {
         // 去掉设置列表
         menuItems.clear();
         mAdapter.notifyDataSetChanged();
+
+        Intent intent = new Intent();
+        intent.setAction(Constant.SET_WEBSOCKET);
+        intent.putExtra("status", "stop");
+        getActivity().sendBroadcast(intent);
+
     }
 
     // 刚刚登录的操作
@@ -173,6 +179,12 @@ public class MeFragment extends Fragment {
             // 没有头像的，就设置一个游客的头像
             Constant.CurrentUser.setAvatar(User.Visitor().getAvatar());
         }
+
+        Intent intent = new Intent();
+        intent.setAction(Constant.SET_WEBSOCKET);
+        intent.putExtra("status", "start");
+        getActivity().sendBroadcast(intent);
+
         meViewModel.setUser(Constant.CurrentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
         menuItems.add(new Pair<>("我的收藏", R.drawable.star));

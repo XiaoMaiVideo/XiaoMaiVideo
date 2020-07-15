@@ -12,7 +12,9 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
@@ -90,10 +92,35 @@ public class UserRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.e("UserRestService", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
                 userRestCallback.onSuccess(responseNum, user);
+            }
+        }.execute(user);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public static void addUserMovie(final User user, final MovieRestCallback restCallback) {
+        new AsyncTask<User, Integer, String>() {
+            MovieRestCallback movieRestCallback = restCallback;
+            @Override
+            protected String doInBackground(User... users) {
+                // 发同步请求
+                String url = Constant.BASEURL+"userMovies";
+                String json = JSON.toJSONString(users[0]);
+                Log.e("MovieRestService发送", json);
+                return HttpUtil.sendPostRequest(url, json);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                // Log.e("MovieRestService", s);
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                movieRestCallback.onSuccess(responseNum);
             }
         }.execute(user);
     }

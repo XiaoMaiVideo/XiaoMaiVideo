@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
@@ -182,10 +183,13 @@ public class TakeVideoActivity extends AppCompatActivity {
                 movie.setDescription(description);
                 movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
                 movie.setCategories(labelString.toString());
-                MovieRestService.addMovie(movie, new MovieRestCallback() {
+                // 本机用户添加movie
+                User user = Constant.CurrentUser;
+                user.addMovies(movie);
+                UserRestService.addUserMovie(user, new MovieRestCallback() {
                     @Override
-                    public void onSuccess(int resultCode, Movie movie) {
-                        super.onSuccess(resultCode, movie);
+                    public void onSuccess(int resultCode) {
+                        super.onSuccess(resultCode);
                         if (resultCode == Constant.RESULT_SUCCESS) {
                             if (compressButton.isInProgress()) {
                                 compressButton.onStopLoading();
@@ -193,6 +197,7 @@ public class TakeVideoActivity extends AppCompatActivity {
                                 notCompressButton.onStopLoading();
                             }
                             setResult(RESULT_OK);
+                            Constant.CurrentUser = user;
                             TakeVideoActivity.this.finish();
                         }
                     }

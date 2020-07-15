@@ -8,6 +8,7 @@ package com.edu.whu.xiaomaivideo.model;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
@@ -22,6 +23,11 @@ public class User {
     private String birthday;
     private String area;
     private String workplace;
+
+    private List<Message> sendmsgs;
+    private List<Movie> movies;
+    private List<Message> receivemsgs;
+    private List<Movie> likeMovies;
 
     public User() {
 
@@ -114,5 +120,51 @@ public class User {
 
     public void setWorkplace(String workplace) {
         this.workplace = workplace;
+    }
+
+    public List<Message> getSendmsgs() {
+        return sendmsgs;
+    }
+
+    public void setSendmsgs(List<Message> sendmsgs) {
+        this.sendmsgs = sendmsgs;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public List<Message> getReceivemsgs() {
+        return receivemsgs;
+    }
+
+    public void setReceivemsgs(List<Message> receivemsgs) {
+        this.receivemsgs = receivemsgs;
+    }
+
+    public List<Movie> getLikeMovies() {
+        return likeMovies;
+    }
+
+    public void setLikeMovies(List<Movie> likeMovies) {
+        this.likeMovies = likeMovies;
+    }
+
+    public void addLikeMovies(Movie movie) {
+        if (this.likeMovies == null) {
+            likeMovies = new ArrayList<>();
+        }
+        likeMovies.add(movie);
+    }
+
+    public void addMovies(Movie movie) {
+        if (this.movies == null) {
+            movies = new ArrayList<>();
+        }
+        movies.add(movie);
     }
 }

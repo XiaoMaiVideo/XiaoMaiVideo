@@ -7,8 +7,10 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.service.JWebSocketService;
 import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoSuccessDialog;
 import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
@@ -40,6 +43,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +59,44 @@ public class MainActivity extends FragmentActivity {
     private FragmentPagerAdapter mAdapter;
     private TabLayout mTabLayout;
     private Long exitTime=0L;
+    Intent webSocketService;
+    SetWebSocketMessageReceiver setWebSocketMessageReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 注册广播
+        setWebSocketMessageReceiver = new SetWebSocketMessageReceiver();
+        IntentFilter filter = new IntentFilter(Constant.SET_WEBSOCKET);
+        registerReceiver(setWebSocketMessageReceiver, filter);
+
         initView();
         checkPermission();
         tryLogin();
+    }
+
+    private void stopWebSocketService() {
+        // 如果以前登录了，先关闭以前的WebSocket
+        if (webSocketService != null) {
+            stopService(webSocketService);
+            webSocketService = null;
+        }
+    }
+
+    private void startWebSocketService() {
+        // 再开启新的WebSocket
+        if (webSocketService == null) {
+            webSocketService = new Intent(MainActivity.this, JWebSocketService.class);
+            startService(webSocketService);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(setWebSocketMessageReceiver);
     }
 
     private void initView() {
@@ -182,7 +218,7 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences sp=this.getSharedPreferences("data", Context.MODE_PRIVATE);
         String username=sp.getString("username","");
         String password=sp.getString("password","");
-        if (username.equals("")||password.equals("")){
+        if (username.equals("")||password.equals("")) {
             return;
         }
 
@@ -195,6 +231,7 @@ public class MainActivity extends FragmentActivity {
                 super.onSuccess(resultCode);
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     Constant.CurrentUser = user;
+                    startWebSocketService();
                 }
                 else if (resultCode == Constant.USER_NOT_EXISTS) {
                     // 用户不存在
@@ -204,5 +241,18 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    private class SetWebSocketMessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getStringExtra("status");
+            if (result.equals("stop")) {
+                stopWebSocketService();
+            }
+            else if (result.equals("start")) {
+                startWebSocketService();
+            }
+        }
     }
 }

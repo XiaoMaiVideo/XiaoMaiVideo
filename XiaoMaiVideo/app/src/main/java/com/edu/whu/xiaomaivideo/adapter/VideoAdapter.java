@@ -1,7 +1,7 @@
 /**
- * Author: 付浩
+ * Author: 付浩，叶俊豪
  * Create Time: 2020/7/15
- * Update Time:
+ * Update Time: 2020/7/15
  */
 package com.edu.whu.xiaomaivideo.adapter;
 
@@ -21,22 +21,21 @@ import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
 
     public static final String TAG = "AdapterRecyclerView";
     int[] videoIndexs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     private Context context;
+    private VideoAdapter.OnItemClickListener mListener;
 
-    public RecyclerViewAdapter(Context context) {
+    public VideoAdapter(Context context, OnItemClickListener onItemClickListener) {
         this.context = context;
+        this.mListener = onItemClickListener;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                context).inflate(R.layout.video_item, parent,
-                false));
-        return holder;
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.video_item, parent, false));
     }
 
 
@@ -47,6 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.jzvdStd.setUp("https://v-cdn.zjol.com.cn/280443.mp4", "", Jzvd.SCREEN_NORMAL);
         Glide.with(holder.jzvdStd.getContext()).load("https://v-cdn.zjol.com.cn/280443.mp4").into(holder.jzvdStd.posterImageView);
+        holder.itemView.setOnClickListener(view -> mListener.onClick(position));
     }
     @Override
     public int getItemCount() {
@@ -62,4 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
+    public interface OnItemClickListener {
+        void onClick(int pos);
+    }
 }

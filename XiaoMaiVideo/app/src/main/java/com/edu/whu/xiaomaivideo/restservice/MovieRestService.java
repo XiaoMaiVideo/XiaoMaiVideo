@@ -27,7 +27,7 @@ public class MovieRestService {
             @Override
             protected String doInBackground(Movie... movies) {
                 // 发同步请求
-                String url = Constant.BASEURL+"movie";
+                String url = Constant.BASEURL+"userMovies";
                 String json = JSON.toJSONString(movies[0]);
                 return HttpUtil.sendPostRequest(url, json);
             }

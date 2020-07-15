@@ -48,8 +48,13 @@ public class OneToOneWebsocketServer {
     public void onOpen(Session session,@PathParam("userId") Long userId) {
         log.info("有新的客户端上线: {}", userId);
         this.session = session;
-        this.userId=userId;
+        this.userId = userId;
         clients.put(userId, this);
+        try {
+            session.getBasicRemote().sendText("连接成功"+userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClose
@@ -74,7 +79,7 @@ public class OneToOneWebsocketServer {
         MessageVO messageVO= gson.fromJson(message, MessageVO.class);
         User sender = userRestService.getUserById(messageVO.getSenderId());
         User receiver = userRestService.getUserById(messageVO.getReceiverId());
-        switch (messageVO.getMsgType()){
+        switch (messageVO.getMsgType()) {
             case "msg":
                 //发送私信消息以websocket形式
                 Message message1=new Message();

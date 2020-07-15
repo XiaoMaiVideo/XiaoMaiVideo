@@ -22,8 +22,8 @@ public class Movie {
     @GeneratedValue
     private Long movieId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date publishTime;
+    // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private String publishTime;
     private String url;
     private String description;
 
@@ -64,11 +64,11 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public Date getPublishTime() {
+    public String getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(Date publishTime) {
+    public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
 

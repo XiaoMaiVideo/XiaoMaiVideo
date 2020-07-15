@@ -6,7 +6,11 @@
 
 package com.edu.whu.xiaomaivideo.util;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.edu.whu.xiaomaivideo.model.User;
+
+import java.util.Observable;
 
 public class Constant {
     // 云服务器URL
@@ -29,6 +33,6 @@ public class Constant {
     public static final int TAKE_VIDEO = 6;
 
     public static final String[] LABELS = {"音乐","影视","社会","游戏","美食","儿童","生活","体育","文化","时尚","科技"};
-
+    public static final String SET_WEBSOCKET = "SET_WEBSOCKET";
 
 }

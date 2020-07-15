@@ -60,7 +60,7 @@ public class UserController {
         User user1 = userRestService.getUser(user.getUsername());
         List<Movie> movies=user1.getMovies();
         for (Movie movie:user.getMovies()) {
-            movie.setPublishTime(new Date());
+            // movie.setPublishTime(new Date());
             movie.setPublisher(user1);
         }
         movies.addAll(user.getMovies());
@@ -82,7 +82,7 @@ public class UserController {
         User user1 = userRestService.getUser(user.getUsername());
         List<Movie> movies=user1.getLikeMovies();
 
-        for (Movie movie:user.getLikeMovies()){
+        for (Movie movie:user.getLikeMovies()) {
             Movie movie1=movieRestService.getMovieById(movie.getMovieId());
             movies.add(movie1);
         }

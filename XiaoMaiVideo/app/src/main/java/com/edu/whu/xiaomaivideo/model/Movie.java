@@ -1,6 +1,11 @@
 package com.edu.whu.xiaomaivideo.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import org.parceler.Parcel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Parcel
 public class Movie {
@@ -8,8 +13,19 @@ public class Movie {
     private String publishTime;
     private String url;
     private String description;
+
+    @JSONField(serialize = false)
     private User publisher;
     private String categories;
+    private List<User> likers;
+
+    public List<User> getLikers() {
+        return likers;
+    }
+
+    public void setLikers(List<User> likers) {
+        this.likers = likers;
+    }
 
     public Long getMovieId() {
         return movieId;

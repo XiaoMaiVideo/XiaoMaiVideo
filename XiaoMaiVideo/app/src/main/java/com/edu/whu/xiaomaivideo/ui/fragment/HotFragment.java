@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsHotAdpater;
+import com.edu.whu.xiaomaivideo.adapter.VideoAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
 import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 
@@ -29,7 +30,7 @@ public class HotFragment extends Fragment {
 
     private HotViewModel hotViewModel;
     FragmentHotBinding fragmentHotBinding;
-    public int firstVisibleItem=0,lastVisibleItem=0, VisiableCount=0;
+    public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
     public JzvdStd videoView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,20 +39,14 @@ public class HotFragment extends Fragment {
         fragmentHotBinding.setViewmodel(hotViewModel);
         fragmentHotBinding.setLifecycleOwner(getActivity());
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentHotBinding.recyclerView.setAdapter(new SettingsHotAdpater(getActivity(), new SettingsHotAdpater.OnItemClickListener()
-        {
-            @Override
-            public void onClick(int pos) {
-                Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
-            }
-        }));
+        fragmentHotBinding.recyclerView.setAdapter(new VideoAdapter(getActivity(), pos -> Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show()));
         fragmentHotBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                VisiableCount = lastVisibleItem - firstVisibleItem;
+                VisibleCount = lastVisibleItem - firstVisibleItem;
             }
 
             @Override
@@ -78,8 +73,8 @@ public class HotFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void autoPlayVideo(RecyclerView recyclerView){
-        for(int i=0;i<VisiableCount;i++){
+    private void autoPlayVideo(RecyclerView recyclerView) {
+        for(int i=0;i<VisibleCount;i++){
             if(recyclerView != null && recyclerView.getChildAt(i) != null &&recyclerView.getChildAt(i).findViewById(R.id.video) != null){
                 videoView = (JzvdStd) recyclerView.getChildAt(i).findViewById(R.id.video);
                 Rect rect = new Rect();
