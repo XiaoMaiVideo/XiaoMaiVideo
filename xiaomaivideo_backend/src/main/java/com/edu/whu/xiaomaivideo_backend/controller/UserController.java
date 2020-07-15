@@ -103,8 +103,11 @@ public class UserController {
 
     @PutMapping("/user")
     public @ResponseBody AjaxResponse updateUser(@RequestBody User user) {
-        User user1 = userRestService.getUserById(user.getUserId());
-        user.setPassword(user1.getPassword());
+        // 传上来密码是空的，先填个密码
+        if (user.getPassword() == null || "".equals(user.getPassword())) {
+            User user1 = userRestService.getUserById(user.getUserId());
+            user.setPassword(user1.getPassword());
+        }
         userRestService.updateUser(user);
         return AjaxResponse.success();
     }

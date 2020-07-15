@@ -73,10 +73,18 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.4.2'
     // 类似微博话题的标签
     implementation 'cn.droidlover:TagEditText:1.0.0'
+    // 弹出框的第三方库
+    implementation 'com.lxj:xpopup-ext:0.0.3'
+    implementation 'com.lxj:xpopup:2.0.2'
+
+    implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
 }
 

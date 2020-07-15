@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  author:   何慷
+      createTime:  2020/7/14 -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:orientation="vertical"
+    android:gravity="center">
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/iv_life"
+        android:src="@drawable/life"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/tv_life"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginStart="0dp"
+        android:text="life"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+</LinearLayout>

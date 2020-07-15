@@ -2,9 +2,9 @@
 
 <!-- Author：张俊杰、叶俊豪 -->
 <!-- Create Time: 2020/7/10-->
-<!-- Update Time: 2020/7/12-->
+<!-- Update Time: 2020/7/14-->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,29 +24,34 @@
 <!--        app:layout_constraintEnd_toEndOf="@id/button"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/button"-->
 <!--        tools:visibility="gone" />-->
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_on_primary">
+        android:background="@color/design_default_color_on_primary"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:scaleType="fitXY"
             app:cardElevation="10dp"
             app:layout_scrollFlags="scroll|enterAlways">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="36dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +63,7 @@
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="36dp"
                     app:buttonColor="@color/colorPrimary"
                     app:buttonText="更换头像"
@@ -66,13 +71,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.mustafagercek.library.LoadingButton
-                    android:id="@+id/button"
+                    android:id="@+id/button3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="36dp"
-                    android:layout_marginBottom="36dp"
+                    android:layout_marginBottom="20dp"
                     app:buttonColor="@color/colorPrimary"
-                    app:buttonText="修改信息"
+                    app:buttonText="修改密码"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,17 +86,27 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
+    <de.mustafagercek.library.LoadingButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:buttonColor="@color/colorPrimary"
+        app:buttonText="修改信息"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/edit_user_info_recyclerView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
