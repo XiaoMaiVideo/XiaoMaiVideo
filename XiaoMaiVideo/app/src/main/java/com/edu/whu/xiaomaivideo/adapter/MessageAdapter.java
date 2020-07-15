@@ -1,22 +1,30 @@
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.ui.activity.MessageChatActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.MessageMentionedActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.MessageCommentActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.MessageLikeActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.MessageSubscribeActivity;
 
 /**
  * Author:李季东
  * Create Time: 2020/7/15
  * Update Time: 2020/7/15
- * 消息adapter
+ * 消息adapter。
+ * item分为“@我的”，“评论”，“赞”，“订阅消息”和其他用户私聊。
  */
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -40,30 +48,84 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((SettingsViewHolder)viewHolder).textView.setText("@我的");
             ((SettingsViewHolder)viewHolder).image.setImageResource(R.drawable.me);
             ((SettingsViewHolder)viewHolder).icon.setImageResource(R.drawable.ic_action_go);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.onClick(i);
+                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MessageMentionedActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }else if (i==1){
             ((SettingsViewHolder) viewHolder).textView.setText("评论");
             ((SettingsViewHolder) viewHolder).image.setImageResource(R.drawable.message);
             ((SettingsViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.onClick(i);
+                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MessageCommentActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }else if (i==2){
             ((SettingsViewHolder) viewHolder).textView.setText("赞");
             ((SettingsViewHolder) viewHolder).image.setImageResource(R.drawable.like);
             ((SettingsViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
-        }else{
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.onClick(i);
+                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MessageLikeActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+        }else if (i==3){
             ((SettingsViewHolder) viewHolder).textView.setText("订阅消息");
             ((SettingsViewHolder) viewHolder).image.setImageResource(R.drawable.star);
             ((SettingsViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.onClick(i);
+                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MessageSubscribeActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
-
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+        else {
+            ((SettingsViewHolder) viewHolder).textView.setText("雷军");
+            ((SettingsViewHolder) viewHolder).image.setImageResource(R.drawable.ic_launcher_background);
+            ((SettingsViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.onClick(i);
+                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MessageChatActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount()
-    {return 4; }
+    {return 5; }
     //@我的
     class SettingsViewHolder extends RecyclerView.ViewHolder
     {

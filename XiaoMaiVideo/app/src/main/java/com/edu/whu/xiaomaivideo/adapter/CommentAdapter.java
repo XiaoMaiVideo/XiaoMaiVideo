@@ -1,6 +1,7 @@
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import com.edu.whu.xiaomaivideo.R;
 /**
  * Author: 李季东
  * Create Time: 2020/7/14
- * Update Time: 2020/7/14
- * 视频详情页面
+ * Update Time: 2020/7/15
+ * 视频详情评论的adapter
  */
 public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

@@ -30,7 +30,7 @@ import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
 /**
  * Author: 李季东
  * Create Time: 2020/7/14
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/15
  * 视频详情页面
  */
 public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -71,8 +71,9 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
             public void onClick(View view)
             {
                 mListener.onClick(i);
-//                Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, VideoDetialActivity.class);
+                //数据绑定
                 Bundle bundle = new Bundle();
                 bundle.putString("videoUrl","https://v-cdn.zjol.com.cn/280443.mp4");
                 bundle.putString("username","张三");
