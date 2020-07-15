@@ -6,32 +6,23 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.SettingsAdapter;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
-import com.edu.whu.xiaomaivideo.ui.activity.EditUserInfoActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
-import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 
 
-import java.util.ArrayList;
 import java.util.Objects;
 /**
  * Author: 李季东

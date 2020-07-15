@@ -19,7 +19,7 @@
         <activity android:name=".ui.activity.UserInfoActivity" />
         <activity android:name=".ui.activity.EditUserInfoActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.VideoDetialActivity" />
+        <activity android:name=".ui.activity.VideoDetailActivity" />
         <activity android:name=".ui.activity.MessageChatActivity" />
         <activity android:name=".ui.activity.MessageMentionedActivity" />
         <activity android:name=".ui.activity.MessageCommentActivity" />

@@ -1,9 +1,7 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,15 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.CommentAdapter;
-import com.edu.whu.xiaomaivideo.adapter.SettingsAdapter;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.ActivityVideoDetailBinding;
-import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.VideoDatailModel;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -30,7 +23,7 @@ import java.util.Objects;
  * Update Time: 2020/7/15
  * 视频详情页面
  */
-public class VideoDetialActivity extends AppCompatActivity {
+public class VideoDetailActivity extends AppCompatActivity {
 
     VideoDatailModel videoDatailModel;
     ActivityVideoDetailBinding activityVideoDetailBinding;
@@ -57,7 +50,7 @@ public class VideoDetialActivity extends AppCompatActivity {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(VideoDetialActivity.this, "click..." + pos, Toast.LENGTH_SHORT).show();
+                Toast.makeText(VideoDetailActivity.this, "click..." + pos, Toast.LENGTH_SHORT).show();
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

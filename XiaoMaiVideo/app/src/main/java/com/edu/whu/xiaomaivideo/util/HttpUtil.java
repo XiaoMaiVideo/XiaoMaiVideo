@@ -140,7 +140,6 @@ public class HttpUtil {
         call.enqueue(callback);
     }
 
-    // TODO: 发视频的请求，这个函数没做完，要改一下
     public static void sendVideoRequest(String videoPath, Callback callback) {
         String url = BASEURL+"api";
         File file = new File(videoPath);

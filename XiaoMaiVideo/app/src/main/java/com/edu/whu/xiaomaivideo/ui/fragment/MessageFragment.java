@@ -23,6 +23,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MessageAdapter;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.MessageFragmentBinding;
+import com.edu.whu.xiaomaivideo.ui.activity.SearchActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
 import com.edu.whu.xiaomaivideo.viewModel.MessageViewModel;
 
@@ -50,7 +51,7 @@ public class MessageFragment extends Fragment {
         messageFragmentBinding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TakeVideoActivity.class);
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
             }
         });

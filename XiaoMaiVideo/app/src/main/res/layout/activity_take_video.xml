@@ -80,23 +80,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takeVideoButton" />
 
-    <Button
+    <de.mustafagercek.library.LoadingButton
         android:id="@+id/compressButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
         android:layout_marginTop="36dp"
-        android:text="压缩后上传"
+        app:buttonText="压缩后上传"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
-    <Button
+    <de.mustafagercek.library.LoadingButton
         android:id="@+id/notCompressButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="88dp"
-        android:text="不压缩上传"
+        app:buttonText="不压缩上传"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
