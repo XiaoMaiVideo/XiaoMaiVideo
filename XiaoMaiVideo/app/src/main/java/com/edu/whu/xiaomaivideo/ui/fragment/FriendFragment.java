@@ -1,12 +1,14 @@
 /**
  * Author: 李季东、张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/11
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +22,28 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.adapter.SettingsAdapter;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
+import com.edu.whu.xiaomaivideo.ui.activity.EditUserInfoActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
+import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 
 
+import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * Author: 李季东
+ * Create Time: 2020/7/8
+ * Update Time: 2020/7/14
+ * 视频详情页面
+ */
 public class FriendFragment extends Fragment {
 
     private  FriendViewModel friendViewModel;
     FragmentFriendBinding fragmentFriendBinding;
+    SettingsFriendAdpater mAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,16 +58,23 @@ public class FriendFragment extends Fragment {
 //                startActivity(intent);
 //            }
 //        });
-
+        initAdapter();
         fragmentFriendBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentFriendBinding.recyclerView.setAdapter(new SettingsFriendAdpater(getActivity(), new SettingsFriendAdpater.OnItemClickListener()
+
+        return fragmentFriendBinding.getRoot();
+    }
+    private void initAdapter() {
+        mAdapter=new SettingsFriendAdpater(getActivity(), new SettingsFriendAdpater.OnItemClickListener()
         {
             @Override
             public void onClick(int pos)
             {
-                Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
+                //点击item发生的事情
+                //Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
+//                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
+//                startActivity(intent);
             }
-        }));
-        return fragmentFriendBinding.getRoot();
+        });
+        fragmentFriendBinding.recyclerView.setAdapter(mAdapter);
     }
 }

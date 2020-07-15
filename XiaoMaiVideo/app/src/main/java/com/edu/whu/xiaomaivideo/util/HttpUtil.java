@@ -141,24 +141,22 @@ public class HttpUtil {
     }
 
     // TODO: 发视频的请求，这个函数没做完，要改一下
-    public static void sendPhotoRequest(int userId, String imagePath, String description, Callback callback) {
-        String url = BASEURL + "ReceivePhotoServlet";
-        File file = new File(imagePath);
+    public static void sendVideoRequest(String videoPath, Callback callback) {
+        String url = BASEURL+"api";
+        File file = new File(videoPath);
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("userId", String.valueOf(userId))
-                .addFormDataPart("description", getEncodedString(description))
                 .addFormDataPart(
-                        "img",
+                        "file",
                         file.getName(),
-                        RequestBody.create(MediaType.parse("image/jpg"), file)
+                        RequestBody.create(MediaType.parse("application/octet-stream"), file)
                 );
         RequestBody requestBody = builder.build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
-        Call call = okHttpClient.newCall(request);
+        Call call =  okHttpClient.newCall(request);
         call.enqueue(callback);
     }
 

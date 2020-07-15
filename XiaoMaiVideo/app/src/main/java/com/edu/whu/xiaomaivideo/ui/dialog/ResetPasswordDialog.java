@@ -56,7 +56,7 @@ public class ResetPasswordDialog extends BottomPopupView {
 
     @Override
     protected int getMaxHeight() {
-        return (int) (XPopupUtils.getWindowHeight(getContext())*.5f);
+        return (int) (XPopupUtils.getWindowHeight(getContext())*.6f);
     }
 
     public interface OnConfirmButtonClickListener {

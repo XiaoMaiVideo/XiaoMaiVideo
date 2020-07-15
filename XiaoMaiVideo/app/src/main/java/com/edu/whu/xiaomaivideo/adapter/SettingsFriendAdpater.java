@@ -1,14 +1,16 @@
 /**
  * Author: 李季东、张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/11
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
 
+/**
+ * Author: 李季东
+ * Create Time: 2020/7/14
+ * Update Time: 2020/7/14
+ * 视频详情页面
+ */
 public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context mContext;
@@ -63,6 +72,13 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
             {
                 mListener.onClick(i);
 //                Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, VideoDetialActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("videoUrl","https://v-cdn.zjol.com.cn/280443.mp4");
+                bundle.putString("username","张三");
+                bundle.putInt("userImg",R.drawable.ic_launcher_background);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }
