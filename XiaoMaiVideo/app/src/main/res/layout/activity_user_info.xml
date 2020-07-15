@@ -27,14 +27,11 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:scaleType="fitXY"
                 app:cardBackgroundColor="#D3D3D3"
-                app:cardCornerRadius="40dp"
+                app:cardCornerRadius="20dp"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,42 +39,179 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageButton"
+                        android:id="@+id/userAvatar"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginStart="48dp"
+                        android:layout_marginStart="36dp"
                         android:layout_marginTop="16dp"
                         android:src="@drawable/ic_launcher_background"
+                        app:avatarSrc="@{viewmodel.user.avatar}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:avatarSrc="@{viewmodel.user.avatar}"
                         tools:src="@drawable/ic_launcher_background"
                         tools:srcCompat="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/userName"
                         android:layout_width="134dp"
                         android:layout_height="36dp"
-                        android:layout_marginStart="52dp"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="24dp"
                         android:text="@{viewmodel.user.username}"
                         android:textSize="24sp"
-                        app:layout_constraintStart_toEndOf="@+id/imageButton"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatar"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/subscribeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        android:text="取消关注"
+                        app:icon="@drawable/home"
+                        app:iconPadding="5sp"
+                        app:iconSize="15dp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatar"
+                        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/chatButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        android:text="发私信"
+                        app:icon="@drawable/home"
+                        app:iconPadding="5sp"
+                        app:iconSize="15dp"
+                        app:layout_constraintStart_toEndOf="@+id/subscribeButton"
+                        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+                    <TextView
+                        android:id="@+id/userDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
+                        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+                        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/guideline2"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintTop_toBottomOf="@id/userDescription" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/userSFNums"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/guideline3"
+                        app:layout_constraintStart_toStartOf="@id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+
+                        <LinearLayout
+                            android:id="@+id/getLikeNumLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@+id/subscribeNumLayout"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/getLikeNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="5dp"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="获赞"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/subscribeNumLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@+id/followerNumLayout"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/getLikeNumLayout"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/subscribeNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="5dp"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="关注"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/followerNumLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toEndOf="@+id/subscribeNumLayout"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/followerNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="5dp"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="粉丝"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline2"

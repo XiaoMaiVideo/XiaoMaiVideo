@@ -10,6 +10,7 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -130,5 +131,15 @@ public class UserInfoActivity extends FragmentActivity {
             {
             }
         }));
+        setUserSFNumClickListener();
+    }
+
+    private void setUserSFNumClickListener() {
+        activityUserInfoBinding.userSFNums.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 跳转关注和粉丝列表页面
+            }
+        });
     }
 }
