@@ -72,8 +72,8 @@ public class OneToOneWebsocketServer {
     public void onMessage(String message) {
         log.info("收到客户端发来的消息: {}", message);
         MessageVO messageVO= gson.fromJson(message, MessageVO.class);
-        User sender=userRestService.getUserById(messageVO.getSenderId());
-        User receiver=userRestService.getUserById(messageVO.getReceiverId());
+        User sender = userRestService.getUserById(messageVO.getSenderId());
+        User receiver = userRestService.getUserById(messageVO.getReceiverId());
         switch (messageVO.getMsgType()){
             case "msg":
                 //发送私信消息以websocket形式

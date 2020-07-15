@@ -76,8 +76,10 @@ dependencies {
     // 弹出框的第三方库
     implementation 'com.lxj:xpopup-ext:0.0.3'
     implementation 'com.lxj:xpopup:2.0.2'
-
+    // ？？
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    // Websocket框架
+    implementation "org.java-websocket:Java-WebSocket:1.4.0"
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

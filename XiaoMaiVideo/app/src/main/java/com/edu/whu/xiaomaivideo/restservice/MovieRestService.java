@@ -44,41 +44,11 @@ public class MovieRestService {
         }.execute(movie);
     }
 
-    public static void getUserByID(final long userId, final UserRestCallback restCallback) {
-        new AsyncTask<Long, Integer, String>() {
-            UserRestCallback userRestCallback = restCallback;
-            @Override
-            protected String doInBackground(Long... number) {
-                String url = Constant.BASEURL+"user/"+ number[0];
-                return HttpUtil.sendGetRequest(url);
-            }
+    public static void getMovieByID(final long movieId, final UserRestCallback restCallback) {
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                JSONObject jsonObject = JSON.parseObject(s);
-                int responseNum = jsonObject.getInteger("code");
-                User user = jsonObject.getObject("data", User.class);
-                userRestCallback.onSuccess(responseNum, user);
-            }
-        }.execute(userId);
     }
 
     public static void getAllMovies(final UserRestCallback restCallback) {
-        /*new AsyncTask<Long, Integer, String>() {
-            UserRestCallback userRestCallback = restCallback;
-            @Override
-            protected String doInBackground(Long... number) {
-                String url = Constant.BASEURL+"user/"+ number[0];
-                return HttpUtil.sendGetRequest(url);
-            }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                JSONObject jsonObject = JSON.parseObject(s);
-                userRestCallback.onSuccess(jsonObject.getInteger("code"));
-            }
-        }.execute(userId);*/
     }
 }

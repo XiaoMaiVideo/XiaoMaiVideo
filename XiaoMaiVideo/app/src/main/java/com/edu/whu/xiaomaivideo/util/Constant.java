@@ -11,6 +11,8 @@ import com.edu.whu.xiaomaivideo.model.User;
 public class Constant {
     // 云服务器URL
     public static final String BASEURL = "http://139.224.133.166:8088/rest/";
+    // WebSocket URL
+    public static final String WS_URL = "ws://139.224.133.166:8088/ws/";
     public static final String RESPONSE_ERROR = "Response Error!";
 
     public static User CurrentUser = User.Visitor(); // 尚未登录

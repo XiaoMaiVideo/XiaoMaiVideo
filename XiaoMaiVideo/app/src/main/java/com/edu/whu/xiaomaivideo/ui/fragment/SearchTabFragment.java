@@ -33,8 +33,7 @@ public class SearchTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         rootView = inflater.inflate(R.layout.fragment_search_tab,container,false);
-     //   rootView = inflater.inflate(R.layout.activity_search,container,false);
+        rootView = inflater.inflate(R.layout.fragment_search_tab,container,false);
         initWidget();
         return rootView;
     }
