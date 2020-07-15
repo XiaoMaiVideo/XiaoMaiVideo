@@ -29,8 +29,9 @@ public class FileController {
     public @ResponseBody
     String fileUpload(@RequestParam(value = "file")MultipartFile file) throws Exception {
         File Folder = new File(path);
-        File f = new File(Folder, UUID.randomUUID() + file.getOriginalFilename()
-                .substring(file.getOriginalFilename().length() - 4));
+        File f = new File(Folder, UUID.randomUUID()
+                + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+
         if (!f.getParentFile().exists())
             f.getParentFile().mkdirs();
         try {
