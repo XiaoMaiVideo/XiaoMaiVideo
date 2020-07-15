@@ -13,6 +13,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         dataBinding.enabled true
+
+        ndk {
+            //目前已支持 "armeabi-v7a","arm64-v8a","x86","x86_64" 平台架构
+            abiFilters "armeabi-v7a","arm64-v8a","x86","x86_64"
+        }
     }
 
     buildTypes {
@@ -53,8 +58,14 @@ dependencies {
     implementation 'com.mapzen:on-the-road:0.8.1'
     // 图片压缩库
     implementation 'com.jkt:tcompress:1.2.3'
+
+
     // Parcelable框架
     implementation 'org.parceler:parceler-api:1.1.12'
+
+    //视频压缩
+    implementation project(path: ':videocompressor')
+
     annotationProcessor 'org.parceler:parceler:1.1.12'
     // 点赞/收藏按钮
     implementation 'com.sackcentury:shinebutton:1.0.0'
@@ -62,9 +73,18 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.4.2'
     // 类似微博话题的标签
     implementation 'cn.droidlover:TagEditText:1.0.0'
+    // 弹出框的第三方库
+    implementation 'com.lxj:xpopup-ext:0.0.3'
+    implementation 'com.lxj:xpopup:2.0.2'
+
+    implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
 }
+

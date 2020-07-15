@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/10
+ * Update Time: 2020/7/14
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
@@ -33,7 +33,7 @@ public class UserInfoLabelAdapter extends RecyclerView.Adapter<UserInfoLabelAdap
     @Override
     public UserInfoLabelAdapter.UserInfoLabelViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
     {
-        return new UserInfoLabelViewHolder(LayoutInflater.from(mContext).inflate(R.layout.user_info_label_item, viewGroup, false));
+        return new UserInfoLabelViewHolder(LayoutInflater.from(mContext).inflate(R.layout.label_item, viewGroup, false));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserInfoLabelAdapter extends RecyclerView.Adapter<UserInfoLabelAdap
         public UserInfoLabelViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            textView = itemView.findViewById(R.id.user_info_label_item_text);
+            textView = itemView.findViewById(R.id.label_item_text);
         }
     }
 

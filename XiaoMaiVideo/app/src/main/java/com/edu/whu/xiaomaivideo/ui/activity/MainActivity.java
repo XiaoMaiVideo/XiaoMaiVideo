@@ -8,6 +8,7 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,7 +74,7 @@ public class MainActivity extends FragmentActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 2) {
                     // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
-                    Log.e("MainActivity", "点击了中间按钮");
+                    onCenterButtonPressed();
                 }
                 else {
                     // 切换到对应的tab
@@ -90,10 +91,15 @@ public class MainActivity extends FragmentActivity {
             public void onTabReselected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 2) {
                     // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
-                    Log.e("MainActivity", "点击了中间按钮");
+                    onCenterButtonPressed();
                 }
             }
         });
+    }
+
+    private void onCenterButtonPressed() {
+        Intent intent = new Intent(this, TakeVideoActivity.class);
+        startActivity(intent);
     }
 
     private void checkPermission() {

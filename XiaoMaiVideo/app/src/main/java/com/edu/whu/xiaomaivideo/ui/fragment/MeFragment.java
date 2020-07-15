@@ -37,6 +37,7 @@ import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
+import com.lxj.xpopup.XPopup;
 
 import org.parceler.Parcels;
 
@@ -87,14 +88,33 @@ public class MeFragment extends Fragment {
         mAdapter = new SettingsAdapter(getActivity(), pos -> {
             // 已登录
             if (Constant.CurrentUser.getUserId() != 0) {
-                // 设置个人信息
                 if (pos == 0) {
+                    // 设置个人信息
                     Intent intent = new Intent(getActivity(), EditUserInfoActivity.class);
                     startActivityForResult(intent, Constant.SET_USER_INFO);
                 }
-                // 退出登录
+                else if (pos == 1) {
+                    // 我的收藏
+                }
+                else if (pos == 2) {
+                    // 隐私设置
+                }
+                else if (pos == 3) {
+                    // 通知设置
+                }
+                else if (pos == 4) {
+                    // 清除缓存
+                }
                 else if (pos == 5) {
-                    onLogOut();
+                    // 退出登录
+                    new XPopup.Builder(getActivity())
+                            .asBottomList("退出登录吗？", new String[]{"是", "否"},
+                                    (position, text) -> {
+                                        if (position == 0) {
+                                            onLogOut();
+                                        }
+                                    })
+                            .show();
                 }
             }
             // 定义每个设置条目的操作

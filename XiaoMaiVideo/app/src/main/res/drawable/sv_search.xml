@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- author:  何慷
+     createTime:  2020/7/14 -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape ="rectangle">
+    <solid
+        android:color="#D5D5D5"/>
+    <corners
+        android:radius="5dp"/>
+</shape>
