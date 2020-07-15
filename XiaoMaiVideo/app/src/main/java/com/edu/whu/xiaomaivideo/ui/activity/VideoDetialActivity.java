@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Author: 李季东 张俊杰
+ * Author: 李季东 张俊杰 李季东
  * Create Time: 2020/7/14
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/15
  * 视频详情页面
  */
 public class VideoDetialActivity extends AppCompatActivity {
@@ -35,8 +35,6 @@ public class VideoDetialActivity extends AppCompatActivity {
     VideoDatailModel videoDatailModel;
     ActivityVideoDetailBinding activityVideoDetailBinding;
     CommentAdapter mAdapter;
-    //保存视频的URI
-    URI uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +43,12 @@ public class VideoDetialActivity extends AppCompatActivity {
         activityVideoDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_detail);
         activityVideoDetailBinding.setViewmodel(videoDatailModel);
         activityVideoDetailBinding.setLifecycleOwner(this);
+        // 数据绑定
         Bundle bundle = getIntent().getExtras();
         activityVideoDetailBinding.friendText.setText(bundle.getString("username"));
         activityVideoDetailBinding.friendVideo.setVideoURI(Uri.parse(bundle.getString("videoUrl")));
         activityVideoDetailBinding.friendImage.setImageResource(bundle.getInt("userImg"));
+
         initAdapter();
     }
     private void initAdapter() {
