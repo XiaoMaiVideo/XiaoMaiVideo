@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.edu.whu.xiaomaivideo.R;
 
+import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 public class SettingsHotAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
