@@ -1,3 +1,8 @@
+/**
+ * Author: 付浩
+ * Create Time: 2020/7/15
+ * Update Time:
+ */
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.annotation.SuppressLint;
