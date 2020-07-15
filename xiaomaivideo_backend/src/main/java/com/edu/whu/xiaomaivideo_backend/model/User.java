@@ -35,7 +35,31 @@ public class User {
     private String workplace;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher")
-    private Set<Movie> movies=new HashSet<>();
+    private List<Movie> movies=new ArrayList<>();
+
+    @JsonIgnoreProperties(value = {"sender","receiver"})
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
+    private List<Message> sendmsgs=new ArrayList<>();
+
+    public List<Message> getSendmsgs() {
+        return sendmsgs;
+    }
+
+    public void setSendmsgs(List<Message> sendmsgs) {
+        this.sendmsgs = sendmsgs;
+    }
+
+    public List<Message> getReceivemsgs() {
+        return receivemsgs;
+    }
+
+    public void setReceivemsgs(List<Message> receivemsgs) {
+        this.receivemsgs = receivemsgs;
+    }
+
+    @JsonIgnoreProperties(value = {"sender","receiver"})
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "receiver")
+    private List<Message> receivemsgs=new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "like_tabel",joinColumns = @JoinColumn(name = "userId"),inverseJoinColumns = @JoinColumn(name="movieId"))
@@ -49,11 +73,11 @@ public class User {
         this.likeMovies = likeMovies;
     }
 
-    public Set<Movie> getMovies() {
+    public List<Movie> getMovies() {
         return movies;
     }
 
-    public void setMovies(Set<Movie> movies) {
+    public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
 
