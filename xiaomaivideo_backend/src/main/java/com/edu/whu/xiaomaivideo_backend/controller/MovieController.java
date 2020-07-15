@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Controller
 @RequestMapping("/rest")
@@ -48,8 +49,8 @@ public class MovieController {
         return AjaxResponse.success(movie);
     }
 
-    @GetMapping("/getAllMovies")
-    public @ResponseBody AjaxResponse getMovies() {
-        return AjaxResponse.success(movieRestService.getAll());
+    @GetMapping("/getMovies")
+    public @ResponseBody AjaxResponse getMovies(@RequestParam int page, @RequestParam int total) {
+        return AjaxResponse.success(movieRestService.getAll(page,total));
     }
 }

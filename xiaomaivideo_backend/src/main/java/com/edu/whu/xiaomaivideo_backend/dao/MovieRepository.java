@@ -8,8 +8,10 @@
 package com.edu.whu.xiaomaivideo_backend.dao;
 
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface MovieRepository extends JpaRepository<Movie,Long> {
-
+public interface MovieRepository extends PagingAndSortingRepository<Movie,Long> {
+    Page<Movie> findAll(Pageable pageable);
 }

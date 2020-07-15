@@ -10,6 +10,7 @@ package com.edu.whu.xiaomaivideo_backend.service;
 
 
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface MovieRestService {
 
     Movie getMovieById(Long id);
 
-    List<Movie> getAll();
+    Page<Movie> getAll(int page, int total);
 }

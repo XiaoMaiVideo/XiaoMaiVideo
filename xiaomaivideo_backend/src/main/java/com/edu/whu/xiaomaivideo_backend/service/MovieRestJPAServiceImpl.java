@@ -10,6 +10,10 @@ package com.edu.whu.xiaomaivideo_backend.service;
 import com.edu.whu.xiaomaivideo_backend.dao.MovieRepository;
 import com.edu.whu.xiaomaivideo_backend.dao.UserRepository;
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,7 +46,11 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
     }
 
     @Override
-    public List<Movie> getAll() {
-        return movieRepository.findAll();
+    public Page<Movie> getAll(int page, int total) {
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime"));
+        return movieRepository.findAll(pageable);
+//        //将查询结果转换为List
+//        List<Movie> movieList = moviePage.getContent();
+//        return movieList;
     }
 }
