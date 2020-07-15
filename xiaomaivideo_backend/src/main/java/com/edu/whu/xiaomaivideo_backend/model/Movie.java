@@ -1,5 +1,5 @@
 /**
- * Author: 张俊杰
+ * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
  * Update Time: 2020/7/15
  */
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="movie_tabel")
+@Table(name="movie_table")
 public class Movie {
 
     @Id
@@ -37,6 +37,8 @@ public class Movie {
     @JsonIgnoreProperties(value = {"likeMovies","movies"})
     @ManyToMany(cascade = CascadeType.REFRESH,mappedBy = "likeMovies")
     private List<User> likers=new ArrayList<>();
+
+    private String categories;
 
     public List<User> getLikers() {
         return likers;
@@ -84,5 +86,13 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }

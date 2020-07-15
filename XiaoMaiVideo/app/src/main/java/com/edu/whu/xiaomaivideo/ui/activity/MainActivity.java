@@ -20,6 +20,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoSuccessDialog;
 import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
@@ -27,9 +28,12 @@ import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -99,7 +103,7 @@ public class MainActivity extends FragmentActivity {
 
     private void onCenterButtonPressed() {
         Intent intent = new Intent(this, TakeVideoActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, Constant.TAKE_VIDEO);
     }
 
     private void checkPermission() {
@@ -135,6 +139,20 @@ public class MainActivity extends FragmentActivity {
             exitTime = System.currentTimeMillis();
         } else {
             finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.TAKE_VIDEO) {
+            if (resultCode == RESULT_OK) {
+                // 可能需要对刚刚发的视频做一定的操作
+                BasePopupView popupView = new XPopup.Builder(this)
+                                                    .asCustom(new TakeVideoSuccessDialog(this))
+                                                    .show();
+                popupView.delayDismiss(1500);
+            }
         }
     }
 
@@ -176,7 +194,6 @@ public class MainActivity extends FragmentActivity {
                 super.onSuccess(resultCode);
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     Constant.CurrentUser = user;
-                    setResult(RESULT_OK);
                 }
                 else if (resultCode == Constant.USER_NOT_EXISTS) {
                     // 用户不存在

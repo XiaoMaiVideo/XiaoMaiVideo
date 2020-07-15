@@ -1,5 +1,5 @@
 /**
- * Author: 张俊杰
+ * Author: 张俊杰，叶俊豪
  * Create Time: 2020/7/15
  * Update Time: 2020/7/15
  */
@@ -21,6 +21,20 @@ import javax.annotation.Resource;
 public class MovieController {
     @Resource(name="movieRestJPAServiceImpl")
     MovieRestService movieRestService;
+
+    @PostMapping("/movie")
+    public @ResponseBody AjaxResponse saveMovie(@RequestBody Movie movie) {
+        movie.setMovieId(null);
+        movieRestService.saveMovie(movie);
+        // 可能需要进行对类别的处理，但我没想好
+        return AjaxResponse.success(movie);
+    }
+
+    @PutMapping("/movie")
+    public @ResponseBody AjaxResponse updateMovie(@RequestBody Movie movie) {
+        movieRestService.updateMovie(movie);
+        return AjaxResponse.success(movie);
+    }
 
     @DeleteMapping("/movie/{id}")
     public @ResponseBody AjaxResponse deleteMovie(@PathVariable Long id) {

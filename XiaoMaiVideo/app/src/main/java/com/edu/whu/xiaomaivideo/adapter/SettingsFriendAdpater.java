@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.ui.activity.VideoDetialActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 
 /**
  * Author: 李季东
@@ -72,7 +72,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
             {
                 mListener.onClick(i);
 //                Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, VideoDetialActivity.class);
+                Intent intent = new Intent(mContext, VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("videoUrl","https://v-cdn.zjol.com.cn/280443.mp4");
                 bundle.putString("username","张三");
@@ -87,9 +87,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemCount() {
         return 10;
     }
-    class SettingsViewHolder extends RecyclerView.ViewHolder
-    {
-
+    class SettingsViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private ImageView imageView;
         private VideoView videoView;
@@ -97,8 +95,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
         private Button comment;
         private Button forward;
 
-        public SettingsViewHolder(@NonNull View itemView)
-        {
+        public SettingsViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.friendText);
             imageView = itemView.findViewById(R.id.friendImage);
@@ -108,8 +105,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
             forward = itemView.findViewById((R.id.friendForward));
         }
     }
-    public interface OnItemClickListener
-    {
+    public interface OnItemClickListener {
         void onClick(int pos);
     }
 }

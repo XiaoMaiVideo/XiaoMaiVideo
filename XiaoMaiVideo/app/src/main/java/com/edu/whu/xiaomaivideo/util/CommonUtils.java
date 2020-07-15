@@ -1,7 +1,7 @@
 /**
  * Author: 何慷、叶俊豪
  * Create Time: 2020/7/12
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/15
  */
 
 package com.edu.whu.xiaomaivideo.util;
@@ -14,6 +14,9 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,7 +103,8 @@ public class CommonUtils {
         return Math.round(len);
     }
 
-    public static String getDateString() {
-        return null;
+    public static String convertTimeToDateString(long milliSeconds) {
+        DateFormat format = SimpleDateFormat.getDateTimeInstance();
+        return format.format(new Date(milliSeconds));
     }
 }
