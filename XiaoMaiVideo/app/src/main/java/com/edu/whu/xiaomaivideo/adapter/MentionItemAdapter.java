@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 /**
- * Author: 李季东
+ * Author: 李季东,张俊杰
  * Create Time: 2020/7/15
  * Update Time: 2020/7/15
  * 被@到的具体消息item的adapter
@@ -28,7 +28,7 @@ public class MentionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        return new SettingsViewHolder(LayoutInflater.from(mContext).inflate(R.layout.message_item, viewGroup,false));
+        return new SettingsViewHolder(LayoutInflater.from(mContext).inflate(R.layout.activity_mentioned_item, viewGroup,false));
     }
 
     @Override
