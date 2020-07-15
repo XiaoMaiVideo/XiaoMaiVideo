@@ -6,13 +6,9 @@
 
 
 package com.edu.whu.xiaomaivideo_backend.service;
-
-
-import com.edu.whu.xiaomaivideo_backend.model.Movie;
 import com.edu.whu.xiaomaivideo_backend.model.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserRestService {
     User saveUser(User user);

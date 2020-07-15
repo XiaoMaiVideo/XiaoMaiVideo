@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -57,8 +58,9 @@ public class UserController {
     @PostMapping("/userMovies")
     public @ResponseBody AjaxResponse saveUserMovies(@RequestBody User user) {
         User user1 = userRestService.getUser(user.getUsername());
-        Set<Movie> movies=user1.getMovies();
+        List<Movie> movies=user1.getMovies();
         for (Movie movie:user.getMovies()) {
+            movie.setPublishTime(new Date());
             movie.setPublisher(user1);
         }
         movies.addAll(user.getMovies());

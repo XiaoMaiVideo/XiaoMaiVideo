@@ -123,14 +123,13 @@ public class UserInfoActivity extends FragmentActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
         activityUserInfoBinding.recyclerView.setLayoutManager(linearLayoutManager);
-        activityUserInfoBinding.recyclerView.setAdapter(new UserInfoLabelAdapter(this, new UserInfoLabelAdapter.OnItemClickListener()
-        {
+        activityUserInfoBinding.recyclerView.setAdapter(new UserInfoLabelAdapter(this, new UserInfoLabelAdapter.OnItemClickListener() {
             @Override
-            public void onClick(int pos)
-            {
+            public void onClick(int pos) {
             }
-        }));
+        }, userInfoViewModel.getUserLabels()));
         setUserSFNumClickListener();
     }
 

@@ -1,5 +1,5 @@
 /**
- * Author: 张俊杰
+ * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
  * Update Time: 2020/7/15
  */
@@ -11,17 +11,19 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="movie_tabel")
+@Table(name="movie_table")
 public class Movie {
 
     @Id
     @GeneratedValue
     private Long movieId;
 
-    private String publishTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date publishTime;
     private String url;
     private String description;
 
@@ -35,6 +37,8 @@ public class Movie {
     @JsonIgnoreProperties(value = {"likeMovies","movies"})
     @ManyToMany(cascade = CascadeType.REFRESH,mappedBy = "likeMovies")
     private List<User> likers=new ArrayList<>();
+
+    private String categories;
 
     public List<User> getLikers() {
         return likers;
@@ -60,11 +64,11 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public String getPublishTime() {
+    public Date getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(String publishTime) {
+    public void setPublishTime(Date publishTime) {
         this.publishTime = publishTime;
     }
 
@@ -82,5 +86,13 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }

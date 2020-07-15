@@ -28,8 +28,12 @@ import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.util.CommonUtils;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
@@ -40,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import de.mustafagercek.library.LoadingButton;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -48,8 +53,7 @@ public class TakeVideoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     SelectLabelAdapter selectLabelAdapter;
     Button takeVideoButton;
-    Button compressButton;
-    Button notCompressButton;
+    LoadingButton compressButton, notCompressButton;
     String inputPath;
     String outputPath;
     ProgressBar progressBar;
@@ -91,15 +95,16 @@ public class TakeVideoActivity extends AppCompatActivity {
                             })
                     .show();
         });
-        compressButton.setOnClickListener(new View.OnClickListener() {
+        compressButton.setButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compress(inputPath, outputPath);
             }
         });
-        notCompressButton.setOnClickListener(new View.OnClickListener() {
+        notCompressButton.setButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notCompressButton.onStartLoading();
                 upload(inputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
         });
@@ -141,6 +146,7 @@ public class TakeVideoActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 progressBar.setProgress(100);
+                compressButton.onStartLoading();
                 upload(outputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
 
@@ -157,6 +163,10 @@ public class TakeVideoActivity extends AppCompatActivity {
     }
 
     private void upload(String path, String description, List<String> selectLabels) {
+        StringBuilder labelString = new StringBuilder();
+        for (String label: selectLabels) {
+            labelString.append(label).append(";");
+        }
         HttpUtil.sendVideoRequest(path, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -166,8 +176,27 @@ public class TakeVideoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseData = response.body().string();
-                // TODO: 传相关的数据到服务器上
-                Log.e("TakeVideoActivity", responseData);
+                Movie movie = new Movie();
+                movie.setUrl(responseData);
+                movie.setPublisher(Constant.CurrentUser);
+                movie.setDescription(description);
+                movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
+                movie.setCategories(labelString.toString());
+                MovieRestService.addMovie(movie, new MovieRestCallback() {
+                    @Override
+                    public void onSuccess(int resultCode, Movie movie) {
+                        super.onSuccess(resultCode, movie);
+                        if (resultCode == Constant.RESULT_SUCCESS) {
+                            if (compressButton.isInProgress()) {
+                                compressButton.onStopLoading();
+                            } else if (notCompressButton.isInProgress()) {
+                                notCompressButton.onStopLoading();
+                            }
+                            setResult(RESULT_OK);
+                            TakeVideoActivity.this.finish();
+                        }
+                    }
+                });
             }
         });
     }
