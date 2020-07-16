@@ -25,21 +25,24 @@ public class Movie {
     private String publishTime;
     private String url;
     private String description;
+    private String categories;
 
-    //当序列化publisher时，忽略掉{"likeMovies","movies"}两个属性
-    @JsonIgnoreProperties(value = {"likeMovies","movies"})
+
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @ManyToOne
     @JoinColumn(name = "userId")
     private User publisher;
 
     //当序列化likers时，忽略掉{"likeMovies","movies"}两个属性
-    @JsonIgnoreProperties(value = {"likeMovies","movies"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @ManyToMany(cascade = CascadeType.REFRESH,mappedBy = "likeMovies")
     private List<User> likers=new ArrayList<>();
 
     @JsonIgnoreProperties(value = {"movie"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "movie")
     private List<Comment> comments =new ArrayList<>();
+
+
 
     public List<Comment> getComments() {
         return comments;
@@ -48,8 +51,6 @@ public class Movie {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-
-    private String categories;
 
     public List<User> getLikers() {
         return likers;

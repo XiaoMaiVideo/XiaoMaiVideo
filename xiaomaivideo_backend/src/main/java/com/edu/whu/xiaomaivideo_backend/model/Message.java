@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,10 +20,12 @@ public class Message {
     private Long msgId;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @JoinColumn(name = "senderId")
     private User sender;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @JoinColumn(name = "receiverId")
     private User receiver;
 

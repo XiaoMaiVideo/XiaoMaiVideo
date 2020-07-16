@@ -127,6 +127,30 @@ public class OneToOneWebsocketServer {
 
                 }
                 break;
+            case "follow":
+                //follow时，不需要movieId
+                List<User> followerings=sender.getFollowing();
+                followerings.add(receiver);
+                sender.setFollowing(followerings);
+                try{
+                    userRestService.saveUser(sender);
+                    log.info("成功关注{}", messageVO.getText());
+                }catch (Exception e){
+
+                }
+                break;
+            case "unfollow":
+                //unfollow时，不需要movieId
+                List<User> followings1=sender.getFollowing();
+                followings1.remove(receiver);
+                sender.setFollowing(followings1);
+                try{
+                    userRestService.saveUser(sender);
+                    log.info("成功取关{}", messageVO.getText());
+                }catch (Exception e){
+
+                }
+                break;
         }
         this.sendTo(messageVO);
     }

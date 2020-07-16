@@ -20,12 +20,12 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"comments"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @JoinColumn(name = "commenterId")
     private User commenter;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"comments"})
+    @JsonIgnoreProperties(value = {"publisher","likers","comments"})
     @JoinColumn(name = "movieId")
     private Movie movie;
 
