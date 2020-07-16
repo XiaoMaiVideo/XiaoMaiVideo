@@ -1,10 +1,12 @@
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,14 +21,19 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 import com.jiajie.load.LoadingDialog;
 import com.sackcentury.shinebuttonlib.ShineButton;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 import java.util.Objects;
@@ -68,19 +75,23 @@ public class HotFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 // 跳转进入详情页面
+                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                intent.putExtra("movie", Parcels.wrap(Movie.class, movieList.get(pos)));
+                startActivity(intent);
             }
 
             @Override
-            public void onLikeButtonClick(int pos, ShineButton shineButton) {
+            public void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum) {
                 // 按下点赞按钮
                 // 如果用户没点赞，就是点赞
                 if (shineButton.isChecked()) {
                     movieList.get(pos).addLiker(Constant.CurrentUser);
-                    Constant.CurrentUser.addLikeMovies(movieList.get(pos));
-                    UserRestService.addUserLike(Constant.CurrentUser, new RestCallback() {
+                    // Constant.CurrentUser.addLikeMovies(movieList.get(pos));
+                    UserRestService.addUserLike(movieList.get(pos).getMovieId(), new RestCallback() {
                         @Override
                         public void onSuccess(int resultCode) {
-
+                            // 点赞数加1即可
+                            likeNum.setText(movieList.get(pos).getLikers().size()+"");
                         }
                     });
                 }
@@ -91,7 +102,7 @@ public class HotFragment extends Fragment {
             }
 
             @Override
-            public void onStarButtonClick(int pos, ShineButton shineButton) {
+            public void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum) {
                 // 按下收藏按钮
             }
 

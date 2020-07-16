@@ -8,6 +8,6 @@ package com.edu.whu.xiaomaivideo_backend.service;
 
 import com.edu.whu.xiaomaivideo_backend.model.Comment;
 
-public interface CommitRestService {
-    Comment saveCommit(Comment comment);
+public interface CommentRestService {
+    Comment saveComment(Comment comment);
 }

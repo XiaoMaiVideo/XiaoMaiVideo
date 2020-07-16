@@ -39,8 +39,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
     private List<Message> sendmsgs=new ArrayList<>();
 
-    @JsonIgnoreProperties(value = {"commiter"})
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "commiter")
+    @JsonIgnoreProperties(value = {"commenter"})
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "commenter")
     private List<Comment> comments =new ArrayList<>();
 
     public List<Comment> getComments() {

@@ -9,6 +9,6 @@ package com.edu.whu.xiaomaivideo_backend.dao;
 import com.edu.whu.xiaomaivideo_backend.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CommitRepository extends JpaRepository<Comment,Long> {
+public interface CommentRepository extends JpaRepository<Comment,Long> {
 
 }

@@ -6,19 +6,19 @@
 
 package com.edu.whu.xiaomaivideo_backend.service;
 
-import com.edu.whu.xiaomaivideo_backend.dao.CommitRepository;
+import com.edu.whu.xiaomaivideo_backend.dao.CommentRepository;
 import com.edu.whu.xiaomaivideo_backend.model.Comment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class CommitRestJPAServiceImpl implements CommitRestService {
+public class CommentRestJPAServiceImpl implements CommentRestService {
     @Resource
-    private CommitRepository commitRepository;
+    private CommentRepository commentRepository;
 
     @Override
-    public Comment saveCommit(Comment comment) {
-        return commitRepository.save(comment);
+    public Comment saveComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 }

@@ -7,7 +7,7 @@
 package com.edu.whu.xiaomaivideo_backend.config;
 
 import com.edu.whu.xiaomaivideo_backend.controller.OneToOneWebsocketServer;
-import com.edu.whu.xiaomaivideo_backend.service.CommitRestJPAServiceImpl;
+import com.edu.whu.xiaomaivideo_backend.service.CommentRestJPAServiceImpl;
 import com.edu.whu.xiaomaivideo_backend.service.MessageRestJPAServiceImpl;
 import com.edu.whu.xiaomaivideo_backend.service.MovieRestJPAServiceImpl;
 import com.edu.whu.xiaomaivideo_backend.service.UserRestJPAServiceImpl;
@@ -35,8 +35,8 @@ public class WebsocketConfiguration {
     }
 
     @Autowired
-    public void setCommitRestService(CommitRestJPAServiceImpl c){
-        OneToOneWebsocketServer.commitRestService=c;
+    public void setCommitRestService(CommentRestJPAServiceImpl c){
+        OneToOneWebsocketServer.commentRestService=c;
     }
 
     @Autowired

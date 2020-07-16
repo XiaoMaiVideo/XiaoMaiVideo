@@ -180,14 +180,10 @@ public class TakeVideoActivity extends AppCompatActivity {
                 String responseData = response.body().string();
                 Movie movie = new Movie();
                 movie.setUrl(responseData);
-                movie.setPublisher(Constant.CurrentUser);
                 movie.setDescription(description);
                 movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
                 movie.setCategories(labelString.toString());
-                // 本机用户添加movie
-                User user = Constant.CurrentUser;
-                user.addMovies(movie);
-                UserRestService.addUserMovie(user, new RestCallback() {
+                UserRestService.addUserMovie(movie, new RestCallback() {
                     @Override
                     public void onSuccess(int resultCode) {
                         if (resultCode == Constant.RESULT_SUCCESS) {
@@ -197,7 +193,6 @@ public class TakeVideoActivity extends AppCompatActivity {
                                 notCompressButton.onStopLoading();
                             }
                             setResult(RESULT_OK);
-                            Constant.CurrentUser = user;
                             TakeVideoActivity.this.finish();
                         }
                     }
