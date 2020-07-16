@@ -27,7 +27,7 @@ public class CommentDialog extends BottomPopupView {
     Long movieId;
     Long receiverId;
 
-    public CommentDialog(@NonNull Context context,Long movieId,Long receiverId) {
+    public CommentDialog(@NonNull Context context,Long movieId, Long receiverId) {
         super(context);
         this.movieId=movieId;
         this.receiverId=receiverId;

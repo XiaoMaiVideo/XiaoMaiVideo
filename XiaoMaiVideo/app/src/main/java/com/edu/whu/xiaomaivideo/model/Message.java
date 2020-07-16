@@ -13,8 +13,8 @@ import java.util.Date;
 @Parcel
 public class Message {
     private Long msgId;
-    private User sender;
-    private User receiver;
+    private Long senderId;
+    private Long receiverId;
     private Date time;
     private String text;
     private String msgType;
@@ -27,20 +27,20 @@ public class Message {
         this.msgId = msgId;
     }
 
-    public User getSender() {
-        return sender;
+    public Long getSenderId() {
+        return senderId;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
     public Date getTime() {

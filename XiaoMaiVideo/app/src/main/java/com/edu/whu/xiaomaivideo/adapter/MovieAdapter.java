@@ -123,7 +123,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onShareButtonClick(getAdapterPosition());
+                    mListener.onShareButtonClick(getAdapterPosition(), shareButton);
                 }
             });
         }
@@ -133,6 +133,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         void onItemClick(int pos);
         void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum);
         void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum);
-        void onShareButtonClick(int pos);
+        void onShareButtonClick(int pos, ImageView imageView);
     }
 }

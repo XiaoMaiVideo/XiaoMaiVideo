@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪
+ * Create Time: 2020/7/15
+ * Update Time: 2020/7/16
+ */
+
 package com.edu.whu.xiaomaivideo.service;
 
 import android.app.Notification;
@@ -16,8 +22,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.JWebSocketClient;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.java_websocket.handshake.ServerHandshake;
 import org.parceler.Parcels;
 
@@ -29,6 +38,7 @@ public class JWebSocketService extends Service {
     public JWebSocketClient client;
     private JWebSocketClientBinder mBinder = new JWebSocketClientBinder();
     private final static int GRAY_SERVICE_ID = 1001;
+
 
     //灰色保活
     public static class GrayInnerService extends Service {
@@ -68,15 +78,24 @@ public class JWebSocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        EventBus.getDefault().register(this);
         initSocketClient();
-        mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);//开启心跳检测
+        mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE); //开启心跳检测
         return START_STICKY;
     }
 
+    // Service自己是订阅者，别人通知它发消息
+    @Subscribe
+    public void onEventBusMessage(EventBusMessage message) {
+        if (message.getType().equals(Constant.SEND_MESSAGE)) {
+            sendMsg(message.getMessage());
+        }
+    }
 
     @Override
     public void onDestroy() {
         closeConnect();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -89,7 +108,10 @@ public class JWebSocketService extends Service {
             @Override
             public void onMessage(String message) {
                 Log.e("JWebSocketClientService", "收到的消息：" + message);
-                // 处理收到的信息
+                // 消息统一存到本地数据库里，打开消息提醒页面以后再加载。本地数据库配置稍后完成
+
+                // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
+                // EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
             }
 
             @Override

@@ -82,6 +82,8 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     // Websocket框架
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
+    // 通信框架
+    implementation 'org.greenrobot:eventbus:3.2.0'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

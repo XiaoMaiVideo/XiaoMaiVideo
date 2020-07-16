@@ -60,7 +60,7 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
             @Override
             public void onClick(View v) {
                 new XPopup.Builder(mContext)
-                        .asCustom(new CommentDialog(mContext,0L).show());
+                        .asCustom(new CommentDialog(mContext,0L, 1L).show());
             }
         });
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
