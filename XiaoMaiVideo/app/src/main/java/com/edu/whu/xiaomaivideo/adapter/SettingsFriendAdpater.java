@@ -1,7 +1,7 @@
 /**
  * Author: 李季东、张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/16
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
@@ -56,13 +56,6 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
 
         //        if (getItemViewType(i) == 0)
         ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_launcher_background);
-        ((SettingsViewHolder)viewHolder).comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new XPopup.Builder(mContext)
-                        .asCustom(new CommentDialog(mContext,0L, 1L).show());
-            }
-        });
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
         ((SettingsViewHolder)viewHolder).videoView.setVideoURI(Uri.parse("https://v-cdn.zjol.com.cn/280443.mp4"));
         MediaController mediaController = new MediaController(mContext);

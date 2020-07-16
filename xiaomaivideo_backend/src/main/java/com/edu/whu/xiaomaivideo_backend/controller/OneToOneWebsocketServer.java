@@ -20,6 +20,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -103,6 +104,14 @@ public class OneToOneWebsocketServer {
                 break;
             case "like":
                 //点赞使用post+websocket
+                List<Movie> movies=sender.getLikeMovies();
+                movies.add(movieRestService.getMovieById(messageVO.getMovieId()));
+                sender.setLikeMovies(movies);
+                try {
+                    userRestService.saveUser(sender);
+                }
+                catch (Exception e) {
+                }
                 break;
             case "comment":
                 //comment时，需提交movieId
@@ -118,7 +127,6 @@ public class OneToOneWebsocketServer {
 
                 }
                 break;
-
         }
         this.sendTo(messageVO);
     }

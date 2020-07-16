@@ -1,3 +1,10 @@
+/**
+ * Author: 张俊杰
+ * Create Time: 2020/7/16
+ * Update Time: 2020/7/16
+ */
+
+
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.net.Uri;
@@ -70,9 +77,8 @@ public class VideoDetailActivity extends AppCompatActivity {
         activityVideoDetailBinding.friendComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //movieId获得
                 new XPopup.Builder(VideoDetailActivity.this)
-                        .asCustom(new CommentDialog(VideoDetailActivity.this,movie.getMovieId(),movie.getPublisher().getUserId()).show());
+                        .asCustom(new CommentDialog(VideoDetailActivity.this,movie).show());
             }
         });
 

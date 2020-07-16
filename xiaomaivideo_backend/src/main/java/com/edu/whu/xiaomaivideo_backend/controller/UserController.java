@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  */
 
 
@@ -75,26 +75,26 @@ public class UserController {
     }
 
 
-    //用户点赞视频，可以同时多个，外层用户需要用户名
-    //内曾视频需要用户点赞视频的movieId
-    @PostMapping("/userLike")
-    public @ResponseBody AjaxResponse saveUserLike(@RequestBody User user) {
-        User user1 = userRestService.getUser(user.getUsername());
-        List<Movie> movies=user1.getLikeMovies();
-
-        for (Movie movie:user.getLikeMovies()) {
-            Movie movie1=movieRestService.getMovieById(movie.getMovieId());
-            movies.add(movie1);
-        }
-        user1.setLikeMovies(movies);
-        try {
-            userRestService.saveUser(user1);
-            return AjaxResponse.success(user1);
-        }
-        catch (Exception e) {
-            return AjaxResponse.failure();
-        }
-    }
+//    //用户点赞视频，可以同时多个，外层用户需要用户名
+//    //内曾视频需要用户点赞视频的movieId
+//    @PostMapping("/userLike")
+//    public @ResponseBody AjaxResponse saveUserLike(@RequestBody User user) {
+//        User user1 = userRestService.getUser(user.getUsername());
+//        List<Movie> movies=user1.getLikeMovies();
+//
+//        for (Movie movie:user.getLikeMovies()) {
+//            Movie movie1=movieRestService.getMovieById(movie.getMovieId());
+//            movies.add(movie1);
+//        }
+//        user1.setLikeMovies(movies);
+//        try {
+//            userRestService.saveUser(user1);
+//            return AjaxResponse.success(user1);
+//        }
+//        catch (Exception e) {
+//            return AjaxResponse.failure();
+//        }
+//    }
 
 
     @DeleteMapping("/user/{id}")

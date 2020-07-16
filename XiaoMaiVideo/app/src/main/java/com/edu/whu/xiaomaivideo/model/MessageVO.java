@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰
+ * Create Time: 2020/7/16
+ * Update Time: 2020/7/16
+ */
+
 package com.edu.whu.xiaomaivideo.model;
 
 import java.util.Date;

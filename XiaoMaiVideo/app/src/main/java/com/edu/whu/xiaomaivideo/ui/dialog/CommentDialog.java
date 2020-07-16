@@ -15,22 +15,23 @@ import androidx.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.google.android.material.textfield.TextInputEditText;
 import com.lxj.xpopup.core.BottomPopupView;
+import org.greenrobot.eventbus.EventBus;
 
 import de.mustafagercek.library.LoadingButton;
 
 public class CommentDialog extends BottomPopupView {
     LoadingButton loadingButton;
     TextInputEditText textInputEditText;
-    Long movieId;
-    Long receiverId;
+    Movie movie;
 
-    public CommentDialog(@NonNull Context context,Long movieId, Long receiverId) {
+    public CommentDialog(@NonNull Context context, Movie movie) {
         super(context);
-        this.movieId=movieId;
-        this.receiverId=receiverId;
+        this.movie=movie;
     }
 
     @Override
@@ -46,9 +47,14 @@ public class CommentDialog extends BottomPopupView {
         loadingButton.setButtonOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageVO messageVO=new MessageVO(Constant.CurrentUser.getUserId(),receiverId,textInputEditText.getText().toString(),"comment",movieId);
-                String json = JSON.toJSONString(messageVO);
-
+                MessageVO message = new MessageVO();
+                message.setMsgType("comment");
+                message.setSenderId(Constant.CurrentUser.getUserId());
+                message.setReceiverId(movie.getPublisher().getUserId());
+                message.setMovieId(movie.getMovieId());
+                message.setText(textInputEditText.getText().toString());
+                EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+                dismiss();
             }
         });
     }
