@@ -32,6 +32,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.EditUserInfoAdapter;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.dialog.ResetPasswordDialog;
@@ -138,10 +139,9 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                     Constant.CurrentUser.setPassword(newPassword);
                                     LoadingButton loadingButton = dialog.findViewById(R.id.tv_confirm);
                                     loadingButton.onStartLoading();
-                                    UserRestService.modifyUser(Constant.CurrentUser, new UserRestCallback() {
+                                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
                                         @Override
                                         public void onSuccess(int resultCode) {
-                                            super.onSuccess(resultCode);
                                             loadingButton.onStopLoading();
                                             // 改缓存的数据
                                             SharedPreferences sp = getApplication().getSharedPreferences("data", Context.MODE_PRIVATE);;
@@ -172,10 +172,9 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 } else {
                     editUserInfoAdapter1.commit();
                     button.onStartLoading();
-                    UserRestService.modifyUser(Constant.CurrentUser, new UserRestCallback() {
+                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
                         @Override
                         public void onSuccess(int resultCode) {
-                            super.onSuccess(resultCode);
                             button.onStopLoading();
                             button.setButtonText("修改信息");
                             isEdit = false;
@@ -291,10 +290,9 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                 public void onResponse(Call call, Response response) throws IOException {
                                     String responseData = response.body().string();
                                     Constant.CurrentUser.setAvatar(responseData);
-                                    UserRestService.modifyUser(Constant.CurrentUser, new UserRestCallback() {
+                                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
                                         @Override
                                         public void onSuccess(int resultCode) {
-                                            super.onSuccess(resultCode);
                                             button2.onStopLoading();
                                             if (resultCode == Constant.RESULT_SUCCESS) {
                                                 // 更改头像成功

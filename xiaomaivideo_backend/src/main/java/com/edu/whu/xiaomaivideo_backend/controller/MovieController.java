@@ -23,20 +23,6 @@ public class MovieController {
     @Resource(name="movieRestJPAServiceImpl")
     MovieRestService movieRestService;
 
-    @PostMapping("/movie")
-    public @ResponseBody AjaxResponse saveMovie(@RequestBody Movie movie) {
-        movie.setMovieId(null);
-        movieRestService.saveMovie(movie);
-        // 可能需要进行对类别的处理，但我没想好
-        return AjaxResponse.success(movie);
-    }
-
-    @PutMapping("/movie")
-    public @ResponseBody AjaxResponse updateMovie(@RequestBody Movie movie) {
-        movieRestService.updateMovie(movie);
-        return AjaxResponse.success(movie);
-    }
-
     @DeleteMapping("/movie/{id}")
     public @ResponseBody AjaxResponse deleteMovie(@PathVariable Long id) {
         movieRestService.deleteMovie(id);
@@ -51,6 +37,6 @@ public class MovieController {
 
     @GetMapping("/getMovies")
     public @ResponseBody AjaxResponse getMovies(@RequestParam int page, @RequestParam int total) {
-        return AjaxResponse.success(movieRestService.getAll(page,total));
+        return AjaxResponse.success(movieRestService.getAll(page, total));
     }
 }

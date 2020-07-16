@@ -5,10 +5,6 @@ import com.edu.whu.xiaomaivideo.model.Movie;
 import java.util.List;
 
 public class MovieRestCallback {
-    public void onSuccess(int resultCode) {
-
-    }
-
     public void onSuccess(Movie movie) {
 
     }

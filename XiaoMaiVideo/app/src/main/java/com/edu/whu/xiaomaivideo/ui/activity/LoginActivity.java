@@ -19,6 +19,7 @@ import android.view.View;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLoginBinding;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
@@ -120,10 +121,9 @@ public class LoginActivity extends AppCompatActivity {
                         final User user = new User();
                         user.setUsername(username);
                         user.setPassword(password);
-                        UserRestService.addUser(user, new UserRestCallback() {
+                        UserRestService.addUser(user, new RestCallback() {
                             @Override
                             public void onSuccess(int resultCode) {
-                                super.onSuccess(resultCode);
                                 activityLoginBinding.loginBtn.onStopLoading();
                                 if (resultCode == Constant.RESULT_SUCCESS) {
                                     // 成功
@@ -149,7 +149,6 @@ public class LoginActivity extends AppCompatActivity {
                     UserRestService.verifyUser(user, new UserRestCallback() {
                         @Override
                         public void onSuccess(int resultCode, User user) {
-                            super.onSuccess(resultCode);
                             activityLoginBinding.loginBtn.onStopLoading();
                             if (resultCode == Constant.RESULT_SUCCESS) {
                                 // 成功

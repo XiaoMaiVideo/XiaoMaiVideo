@@ -31,6 +31,7 @@ import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
@@ -186,10 +187,9 @@ public class TakeVideoActivity extends AppCompatActivity {
                 // 本机用户添加movie
                 User user = Constant.CurrentUser;
                 user.addMovies(movie);
-                UserRestService.addUserMovie(user, new MovieRestCallback() {
+                UserRestService.addUserMovie(user, new RestCallback() {
                     @Override
                     public void onSuccess(int resultCode) {
-                        super.onSuccess(resultCode);
                         if (resultCode == Constant.RESULT_SUCCESS) {
                             if (compressButton.isInProgress()) {
                                 compressButton.onStopLoading();

@@ -12,18 +12,21 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 
 public class UserRestService {
     @SuppressLint("StaticFieldLeak")
-    public static void addUser(final User user, final UserRestCallback restCallback) {
+    public static void addUser(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
-            UserRestCallback userRestCallback = restCallback;
+            RestCallback callback = restCallback;
             @Override
             protected String doInBackground(User... users) {
                 // 发同步请求
@@ -36,14 +39,14 @@ public class UserRestService {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                userRestCallback.onSuccess(jsonObject.getInteger("code"));
+                callback.onSuccess(jsonObject.getInteger("code"));
             }
         }.execute(user);
     }
 
-    public static void modifyUser(final User user, final UserRestCallback restCallback) {
+    public static void modifyUser(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
-            UserRestCallback userRestCallback = restCallback;
+            RestCallback Callback = restCallback;
             @Override
             protected String doInBackground(User... users) {
                 String url = Constant.BASEURL+"user";
@@ -55,14 +58,14 @@ public class UserRestService {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                userRestCallback.onSuccess(jsonObject.getInteger("code"));
+                Callback.onSuccess(jsonObject.getInteger("code"));
             }
         }.execute(user);
     }
 
-    public static void getUserByID(final long userId, final UserRestCallback restCallback) {
+    public static void getUserByID(final long userId, final RestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
-            UserRestCallback userRestCallback = restCallback;
+            RestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... number) {
                 String url = Constant.BASEURL+"user/"+ number[0];
@@ -73,7 +76,7 @@ public class UserRestService {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                userRestCallback.onSuccess(jsonObject.getInteger("code"));
+                callback.onSuccess(jsonObject.getInteger("code"));
             }
         }.execute(userId);
     }
@@ -102,25 +105,50 @@ public class UserRestService {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public static void addUserMovie(final User user, final MovieRestCallback restCallback) {
+    public static void addUserMovie(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
-            MovieRestCallback movieRestCallback = restCallback;
+            RestCallback callback = restCallback;
             @Override
             protected String doInBackground(User... users) {
                 // 发同步请求
                 String url = Constant.BASEURL+"userMovies";
                 String json = JSON.toJSONString(users[0]);
-                Log.e("MovieRestService发送", json);
+                // Log.e("UserRestService发送", json);
                 return HttpUtil.sendPostRequest(url, json);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // Log.e("MovieRestService", s);
+                // Log.e("UserRestService", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                movieRestCallback.onSuccess(responseNum);
+                callback.onSuccess(responseNum);
+            }
+        }.execute(user);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public static void addUserLike(final User user, final RestCallback restCallback) {
+        new AsyncTask<User, Integer, String>() {
+            RestCallback callback = restCallback;
+            @Override
+            protected String doInBackground(User... users) {
+                // 发同步请求
+                String url = Constant.BASEURL+"userLike";
+                String json = JSON.toJSONString(users[0]);
+                Log.e("UserRestService发送", json);
+                // return HttpUtil.sendPostRequest(url, json);
+                return "";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.e("UserRestService", s);
+                // JSONObject jsonObject = JSON.parseObject(s);
+                // int responseNum = jsonObject.getInteger("code");
+                // callback.onSuccess(responseNum);
             }
         }.execute(user);
     }

@@ -1,10 +1,12 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/16
  */
 
 package com.edu.whu.xiaomaivideo.model;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import org.parceler.Parcel;
 
@@ -166,5 +168,18 @@ public class User {
             movies = new ArrayList<>();
         }
         movies.add(movie);
+    }
+
+    // 判断用户是否点赞
+    public boolean isLikeMovie(long movieId) {
+        if (this.movies == null) {
+            return false;
+        }
+        for (Movie movie : this.likeMovies) {
+            if (movie.getMovieId() == movieId) {
+                return true;
+            }
+        }
+        return false;
     }
 }

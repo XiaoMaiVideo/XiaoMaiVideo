@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪
+ * Create Time: 2020/7/15
+ * Update Time: 2020/7/15
+ */
+
 package com.edu.whu.xiaomaivideo.model;
 
 import org.parceler.Parcel;

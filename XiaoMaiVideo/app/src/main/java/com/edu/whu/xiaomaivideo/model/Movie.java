@@ -1,3 +1,9 @@
+/**
+ * Author: 叶俊豪
+ * Create Time: 2020/7/15
+ * Update Time: 2020/7/16
+ */
+
 package com.edu.whu.xiaomaivideo.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -14,7 +20,7 @@ public class Movie {
     private String url;
     private String description;
 
-    @JSONField(serialize = false)
+    @JSONField(serialize = false) // 重要！对象转json串的时候无视掉这一属性，避免循环引用导致stack overflow
     private User publisher;
     private String categories;
     private List<User> likers;
@@ -73,5 +79,12 @@ public class Movie {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public void addLiker(User user) {
+        if (this.likers == null) {
+            likers = new ArrayList<>();
+        }
+        likers.add(user);
     }
 }

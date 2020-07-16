@@ -24,6 +24,7 @@ import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.service.JWebSocketService;
 import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoSuccessDialog;
+import com.edu.whu.xiaomaivideo.ui.fragment.BlankFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
@@ -105,7 +106,7 @@ public class MainActivity extends FragmentActivity {
         mFragments = new ArrayList<>(5);
         mFragments.add(new HomeFragment()); // 第一个tab
         mFragments.add(new MessageFragment()); // 第二个tab
-        mFragments.add(new MeFragment()); // 没用，占个位置
+        mFragments.add(new BlankFragment()); // 没用，占个位置
         mFragments.add(new FindFragment()); // 第三个tab
         mFragments.add(new MeFragment()); // 第四个tab
         mAdapter = new MyAdapter(getSupportFragmentManager());
@@ -228,7 +229,6 @@ public class MainActivity extends FragmentActivity {
         UserRestService.verifyUser(user, new UserRestCallback() {
             @Override
             public void onSuccess(int resultCode, User user) {
-                super.onSuccess(resultCode);
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     Constant.CurrentUser = user;
                     startWebSocketService();
