@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/12
  */
 
 package com.edu.whu.xiaomaivideo.ui.activity;
@@ -35,10 +35,10 @@ public class LoginActivity extends AppCompatActivity {
     private String rePassword;
     ActivityLoginBinding activityLoginBinding;
     LoginViewModel loginViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         loginViewModel = new ViewModelProvider(Objects.requireNonNull(this)).get(LoginViewModel.class);
         activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
