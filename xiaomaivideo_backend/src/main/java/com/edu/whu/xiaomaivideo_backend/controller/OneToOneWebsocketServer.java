@@ -1,13 +1,14 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  */
 
 
 package com.edu.whu.xiaomaivideo_backend.controller;
 
 import com.edu.whu.xiaomaivideo_backend.model.*;
+import com.edu.whu.xiaomaivideo_backend.service.CommitRestService;
 import com.edu.whu.xiaomaivideo_backend.service.MessageRestService;
 import com.edu.whu.xiaomaivideo_backend.service.MovieRestService;
 import com.edu.whu.xiaomaivideo_backend.service.UserRestService;
@@ -19,7 +20,6 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,6 +31,12 @@ public class OneToOneWebsocketServer {
 
 
     public static MessageRestService messageRestService;
+
+
+    public static CommitRestService commitRestService;
+
+
+    public static MovieRestService movieRestService;
 
     /**
      * 用于存放所有在线客户端
@@ -98,6 +104,21 @@ public class OneToOneWebsocketServer {
             case "like":
                 //点赞使用post+websocket
                 break;
+            case "commit":
+                //commit时，需提交movieId
+                Comment comment =new Comment();
+                comment.setMsg(messageVO.getText());
+                comment.setCommiter(sender);
+                comment.setMovie(movieRestService.getMovieById(messageVO.getMovieId()));
+                comment.setTime(new Date());
+                try{
+                    commitRestService.saveCommit(comment);
+                    log.info("成功保存评论{}", comment.getMsg());
+                }catch (Exception e){
+
+                }
+                break;
+
         }
         this.sendTo(messageVO);
     }

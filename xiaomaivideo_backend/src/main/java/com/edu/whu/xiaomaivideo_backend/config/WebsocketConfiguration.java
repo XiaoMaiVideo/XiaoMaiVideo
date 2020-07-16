@@ -1,13 +1,15 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  */
 
 package com.edu.whu.xiaomaivideo_backend.config;
 
 import com.edu.whu.xiaomaivideo_backend.controller.OneToOneWebsocketServer;
+import com.edu.whu.xiaomaivideo_backend.service.CommitRestJPAServiceImpl;
 import com.edu.whu.xiaomaivideo_backend.service.MessageRestJPAServiceImpl;
+import com.edu.whu.xiaomaivideo_backend.service.MovieRestJPAServiceImpl;
 import com.edu.whu.xiaomaivideo_backend.service.UserRestJPAServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +32,15 @@ public class WebsocketConfiguration {
     @Autowired
     public void setMessageRestService(MessageRestJPAServiceImpl m){
         OneToOneWebsocketServer.messageRestService=m;
+    }
+
+    @Autowired
+    public void setCommitRestService(CommitRestJPAServiceImpl c){
+        OneToOneWebsocketServer.commitRestService=c;
+    }
+
+    @Autowired
+    public void setMovieRestService(MovieRestJPAServiceImpl m){
+        OneToOneWebsocketServer.movieRestService=m;
     }
 }

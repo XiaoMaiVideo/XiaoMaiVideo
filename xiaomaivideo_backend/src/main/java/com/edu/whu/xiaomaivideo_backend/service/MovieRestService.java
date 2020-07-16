@@ -24,4 +24,6 @@ public interface MovieRestService {
     Movie getMovieById(Long id);
 
     Page<Movie> getAll(int page, int total);
+
+    Page<Movie> getAllByCategoriesLike(int page, int total,String categories);
 }

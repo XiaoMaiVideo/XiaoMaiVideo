@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  */
 
 
@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -37,6 +36,18 @@ public class Movie {
     @JsonIgnoreProperties(value = {"likeMovies","movies"})
     @ManyToMany(cascade = CascadeType.REFRESH,mappedBy = "likeMovies")
     private List<User> likers=new ArrayList<>();
+
+    @JsonIgnoreProperties(value = {"movie"})
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "movie")
+    private List<Comment> comments =new ArrayList<>();
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     private String categories;
 

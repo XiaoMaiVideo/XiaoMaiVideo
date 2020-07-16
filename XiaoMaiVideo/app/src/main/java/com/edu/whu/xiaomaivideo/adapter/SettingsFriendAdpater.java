@@ -26,11 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
+import com.edu.whu.xiaomaivideo.ui.dialog.CommentDialog;
+import com.lxj.xpopup.XPopup;
 
 /**
- * Author: 李季东
+ * Author: 李季东,张俊杰
  * Create Time: 2020/7/14
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  * 视频详情页面
  */
 public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -54,6 +56,13 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
 
         //        if (getItemViewType(i) == 0)
         ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_launcher_background);
+        ((SettingsViewHolder)viewHolder).comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new XPopup.Builder(mContext)
+                        .asCustom(new CommentDialog(mContext,0L).show());
+            }
+        });
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
         ((SettingsViewHolder)viewHolder).videoView.setVideoURI(Uri.parse("https://v-cdn.zjol.com.cn/280443.mp4"));
         MediaController mediaController = new MediaController(mContext);

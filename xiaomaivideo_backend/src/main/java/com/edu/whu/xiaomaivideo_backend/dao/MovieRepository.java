@@ -14,4 +14,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface MovieRepository extends PagingAndSortingRepository<Movie,Long> {
     Page<Movie> findAll(Pageable pageable);
+
+    //根据categories字段查询表数据，传入Pageable分页参数
+    Page<Movie> findByCategoriesLike(String categories, Pageable pageable);
 }

@@ -1,24 +1,30 @@
 /**
  * Author: 张俊杰
- * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Create Time: 2020/7/16
+ * Update Time: 2020/7/16
  */
 
 package com.edu.whu.xiaomaivideo_backend.model;
 
 
 public class MessageVO {
-    private Long msgId;
-
     private Long senderId;
 
     private Long receiverId;
 
-    private String time;
-
     private String text;
 
     private String msgType;
+
+    private Long movieId;
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
+    }
 
     public String getMsgType() {
         return msgType;
@@ -26,14 +32,6 @@ public class MessageVO {
 
     public void setMsgType(String msgType) {
         this.msgType = msgType;
-    }
-
-    public Long getMsgId() {
-        return msgId;
-    }
-
-    public void setMsgId(Long msgId) {
-        this.msgId = msgId;
     }
 
     public Long getSenderId() {
@@ -50,14 +48,6 @@ public class MessageVO {
 
     public void setReceiverId(Long receiverId) {
         this.receiverId = receiverId;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getText() {

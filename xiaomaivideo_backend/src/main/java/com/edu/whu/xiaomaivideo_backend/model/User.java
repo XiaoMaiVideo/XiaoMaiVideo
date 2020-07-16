@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/16
  */
 
 
@@ -12,9 +12,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="user_table")
@@ -40,6 +38,18 @@ public class User {
     @JsonIgnoreProperties(value = {"sender","receiver"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
     private List<Message> sendmsgs=new ArrayList<>();
+
+    @JsonIgnoreProperties(value = {"commiter"})
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "commiter")
+    private List<Comment> comments =new ArrayList<>();
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public List<Message> getSendmsgs() {
         return sendmsgs;

@@ -53,4 +53,12 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
 //        List<Movie> movieList = moviePage.getContent();
 //        return movieList;
     }
+
+    @Override
+    public Page<Movie> getAllByCategoriesLike(int page, int total,String categories) {
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime"));
+        return movieRepository.findByCategoriesLike(categories,pageable);
+    }
+
+
 }

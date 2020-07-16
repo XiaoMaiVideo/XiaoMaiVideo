@@ -2,6 +2,7 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.CommentAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityVideoDetailBinding;
+import com.edu.whu.xiaomaivideo.ui.dialog.CommentDialog;
 import com.edu.whu.xiaomaivideo.viewModel.VideoDatailModel;
+import com.lxj.xpopup.XPopup;
 
-import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -41,6 +43,14 @@ public class VideoDetailActivity extends AppCompatActivity {
         activityVideoDetailBinding.friendText.setText(bundle.getString("username"));
         activityVideoDetailBinding.friendVideo.setVideoURI(Uri.parse(bundle.getString("videoUrl")));
         activityVideoDetailBinding.friendImage.setImageResource(bundle.getInt("userImg"));
+        activityVideoDetailBinding.friendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //movieId获得
+                new XPopup.Builder(VideoDetailActivity.this)
+                        .asCustom(new CommentDialog(VideoDetailActivity.this,0L).show());
+            }
+        });
 
         initAdapter();
     }
