@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -71,16 +72,17 @@ public class HotFragment extends Fragment {
             }
 
             @Override
-            public void onLikeButtonClick(int pos, ShineButton shineButton) {
+            public void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum) {
                 // 按下点赞按钮
                 // 如果用户没点赞，就是点赞
                 if (shineButton.isChecked()) {
                     movieList.get(pos).addLiker(Constant.CurrentUser);
-                    Constant.CurrentUser.addLikeMovies(movieList.get(pos));
-                    UserRestService.addUserLike(Constant.CurrentUser, new RestCallback() {
+                    // Constant.CurrentUser.addLikeMovies(movieList.get(pos));
+                    UserRestService.addUserLike(movieList.get(pos).getMovieId(), new RestCallback() {
                         @Override
                         public void onSuccess(int resultCode) {
-
+                            // 点赞数加1即可
+                            likeNum.setText(movieList.get(pos).getLikers().size()+"");
                         }
                     });
                 }
@@ -91,7 +93,7 @@ public class HotFragment extends Fragment {
             }
 
             @Override
-            public void onStarButtonClick(int pos, ShineButton shineButton) {
+            public void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum) {
                 // 按下收藏按钮
             }
 

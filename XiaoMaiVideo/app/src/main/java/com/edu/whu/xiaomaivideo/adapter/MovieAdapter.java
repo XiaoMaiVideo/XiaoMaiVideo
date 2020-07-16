@@ -81,7 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
         JzvdStd jzvdStd;
         ImageView userAvatar, shareButton;
-        TextView userNickname, publishTime, movieDescription;
+        TextView userNickname, publishTime, movieDescription, likeNum, starNum, commentNum;
         ShineButton likeButton, starButton;
         ConstraintLayout videoInfoLayout;
         public MyViewHolder(View itemView) {
@@ -94,11 +94,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             shareButton = itemView.findViewById(R.id.shareButton);
             likeButton = itemView.findViewById(R.id.likebutton);
             starButton = itemView.findViewById(R.id.starbutton);
+            likeNum = itemView.findViewById(R.id.textView6);
+            starNum = itemView.findViewById(R.id.textView7);
+            commentNum = itemView.findViewById(R.id.textView8);
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
+
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e(TAG, "点击了"+getAdapterPosition());
                     mListener.onItemClick(getAdapterPosition());
                 }
             });
@@ -106,14 +109,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    mListener.onLikeButtonClick(getAdapterPosition(), likeButton);
+                    mListener.onLikeButtonClick(getAdapterPosition(), likeButton, likeNum);
                 }
             });
 
             starButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    mListener.onStarButtonClick(getAdapterPosition(), starButton);
+                    mListener.onStarButtonClick(getAdapterPosition(), starButton, starNum);
                 }
             });
 
@@ -128,8 +131,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     public interface OnItemClickListener {
         void onItemClick(int pos);
-        void onLikeButtonClick(int pos, ShineButton shineButton);
-        void onStarButtonClick(int pos, ShineButton shineButton);
+        void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum);
+        void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum);
         void onShareButtonClick(int pos);
     }
 }
