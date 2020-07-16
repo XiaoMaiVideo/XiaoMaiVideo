@@ -11,7 +11,7 @@
 
         <variable
             name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.viewModel.VideoDatailModel" />
+            type="com.edu.whu.xiaomaivideo.viewModel.VideoDetailModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:avatarSrc="@{viewmodel.movie.publisher.avatar}" />
 
         <TextView
             android:id="@+id/friendText"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="36dp"
-            android:text="name"
+            android:text="@{viewmodel.movie.publisher.nickname}"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/friendImage"
             app:layout_constraintTop_toTopOf="parent" />
