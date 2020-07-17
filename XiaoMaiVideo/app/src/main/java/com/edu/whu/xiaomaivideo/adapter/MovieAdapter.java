@@ -7,9 +7,6 @@ package com.edu.whu.xiaomaivideo.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,30 +17,15 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.downloader.Error;
-import com.downloader.OnDownloadListener;
-import com.downloader.PRDownloader;
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
-import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
-import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.util.EventBusMessage;
-import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
-import org.greenrobot.eventbus.EventBus;
-import org.parceler.Parcels;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +39,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     // int[] videoIndexs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     List<Movie> mMovies;
     private Context context;
+    private MovieAdapter.OnItemClickListener mListener;
 
-    public MovieAdapter(Context context, List<Movie> movies) {
+    public MovieAdapter(Context context, List<Movie> movies, OnItemClickListener onItemClickListener) {
         this.context = context;
+        this.mListener = onItemClickListener;
         this.mMovies = movies;
     }
 
@@ -118,99 +102,37 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // mListener.onItemClick(getAdapterPosition());
-                    // 跳转进入详情页面
-                    Intent intent = new Intent(context, VideoDetailActivity.class);
-                    intent.putExtra("movie", Parcels.wrap(Movie.class, mMovies.get(getAdapterPosition())));
-                    context.startActivity(intent);
+                    mListener.onItemClick(getAdapterPosition());
                 }
             });
 
             likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    // mListener.onLikeButtonClick(getAdapterPosition(), likeButton, likeNum);
-                    // 按下点赞按钮
-                    // 如果用户没点赞，就是点赞
-                    if (likeButton.isChecked()) {
-                        // TODO: 在界面更新点赞数
-                        MessageVO message = new MessageVO();
-                        message.setMsgType("like");
-                        message.setSenderId(Constant.CurrentUser.getUserId());
-                        message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
-                        message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
-                        EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-                    }
-                    // 如果用户点了赞，就是取消点赞
-                    else {
-
-                    }
+                    mListener.onLikeButtonClick(getAdapterPosition(), likeButton, likeNum);
                 }
             });
 
             starButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    // mListener.onStarButtonClick(getAdapterPosition(), starButton, starNum);
+                    mListener.onStarButtonClick(getAdapterPosition(), starButton, starNum);
                 }
             });
 
             shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // mListener.onShareButtonClick(getAdapterPosition(), shareButton);
-                    // 按下分享按钮
-                    new XPopup.Builder(context)
-                            .atView(shareButton)
-                            .asAttachList(new String[]{"分享到动态", "分享到其他应用"},
-                                    new int[]{R.drawable.game, R.drawable.food},
-                                    new OnSelectListener() {
-                                        @Override
-                                        public void onSelect(int position, String text) {
-                                            if (position == 0) {
-                                                // TODO: 应用内分享
-                                            }
-                                            else {
-                                                // TODO: 应用外分享
-                                                String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
-                                                String fileName = System.currentTimeMillis() + ".mp4";
-                                                ProgressDialog progressDialog = new ProgressDialog(context);
-                                                new XPopup.Builder(context)
-                                                        .asCustom(progressDialog)
-                                                        .show();
-                                                int downloadId = PRDownloader.download(mMovies.get(getAdapterPosition()).getUrl(), filePath, fileName)
-                                                        .build()
-                                                        .setOnProgressListener(progress -> progressDialog.setProgress((int) (((float)progress.currentBytes/(float)progress.totalBytes)*100)))
-                                                        .start(new OnDownloadListener() {
-                                                            @Override
-                                                            public void onDownloadComplete() {
-                                                                progressDialog.dismissWith(new Runnable() {
-                                                                    @Override
-                                                                    public void run() {
-                                                                        String path = new File(filePath).getPath()+"/"+fileName;
-                                                                        Uri uri = InsertVideoUtil.insertVideo(context, path);
-                                                                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                                                        shareIntent.setType("video/*");
-                                                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                                                        // TODO: 回调怎么办？分享到微信好像没回调
-                                                                        context.startActivity(Intent.createChooser(shareIntent, "分享"));
-                                                                    }
-                                                                });
-                                                            }
-
-                                                            @Override
-                                                            public void onError(Error error) {
-
-                                                            }
-                                                        });
-
-                                            }
-                                        }
-                                    })
-                            .show();
-
+                    mListener.onShareButtonClick(getAdapterPosition(), shareButton);
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int pos);
+        void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum);
+        void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum);
+        void onShareButtonClick(int pos, ImageView imageView);
     }
 }

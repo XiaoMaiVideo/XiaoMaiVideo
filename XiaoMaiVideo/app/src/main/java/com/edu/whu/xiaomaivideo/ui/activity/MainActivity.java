@@ -29,7 +29,6 @@ import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.SearchTabFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
