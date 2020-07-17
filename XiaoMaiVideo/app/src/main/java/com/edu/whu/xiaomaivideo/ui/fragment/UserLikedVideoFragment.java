@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,13 +25,146 @@ import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
+import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
 import com.edu.whu.xiaomaivideo.databinding.UserLikedVideoFragmentBinding;
+import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.UserVideoWorksViewModel;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.downloader.Error;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnProgressListener;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
+import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
+import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
+import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
+import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
+import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
+import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
+import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
+import com.jiajie.load.LoadingDialog;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.sackcentury.shinebuttonlib.ShineButton;
+
+import org.greenrobot.eventbus.EventBus;
+import org.parceler.Parcels;
+
+import java.io.File;
+import java.util.List;
+import java.util.Objects;
+
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 import java.util.Objects;
 
 public class UserLikedVideoFragment extends Fragment {
+
+    private UserLikedVideoViewModel userLikedVideoViewModel;
+    UserLikedVideoFragmentBinding fragmentUserLikedVideoBinding;
+    List<Movie> movieList;
+
+    public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
+    public JzvdStd videoView;
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        userLikedVideoViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(UserLikedVideoViewModel.class);
+        fragmentUserLikedVideoBinding = DataBindingUtil.inflate(inflater, R.layout.user_liked_video_fragment, container, false);
+        fragmentUserLikedVideoBinding.setViewmodel(userLikedVideoViewModel);
+        fragmentUserLikedVideoBinding.setLifecycleOwner(getActivity());
+        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
+        dialog.show();
+        MovieRestService.getMovies(0, new MovieRestCallback() {
+            @Override
+            public void onSuccess(int resultCode, List<Movie> movies) {
+                super.onSuccess(resultCode, movies);
+                movieList = movies;
+                setRecyclerView();
+                dialog.dismiss();
+            }
+        });
+        return fragmentUserLikedVideoBinding.getRoot();
+    }
+
+    private void setRecyclerView() {
+        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
+        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                VisibleCount = lastVisibleItem - firstVisibleItem;
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE://停止滚动
+                        /**在这里执行，视频的自动播放与停止*/
+                        autoPlayVideo(recyclerView);
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING://拖动
+                        autoPlayVideo(recyclerView);
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING://性滑动
+                        JzvdStd.releaseAllVideos();
+                        break;
+                }
+
+            }
+        });
+    }
+
+    @Nullable
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void autoPlayVideo(RecyclerView recyclerView) {
+        for(int i=0;i<VisibleCount;i++) {
+            if (recyclerView != null && recyclerView.getChildAt(i) != null &&recyclerView.getChildAt(i).findViewById(R.id.video) != null){
+                videoView = (JzvdStd) recyclerView.getChildAt(i).findViewById(R.id.video);
+                Rect rect = new Rect();
+                videoView.getLocalVisibleRect(rect);//获取视图本身的可见坐标，把值传入到rect对象中
+                int videoHeight = videoView.getHeight();//获取视频的高度
+                if(rect.top==0&&rect.bottom==videoHeight){
+                    if(videoView.state == Jzvd.STATE_NORMAL||videoView.state==Jzvd.STATE_PAUSE){
+                        videoView.startVideo();
+                    }
+                    return;
+                }
+                videoView.releaseAllVideos();
+            } else{
+                if(videoView!=null){
+                    videoView.releaseAllVideos();
+                }
+            }
+        }
+    }
+}
+/*public class UserLikedVideoFragment extends Fragment {
 
     private UserLikedVideoViewModel mViewModel;
     private UserLikedVideoFragmentBinding userLikedVideoFragmentBinding;
@@ -67,4 +201,4 @@ public class UserLikedVideoFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-}
+}*/
