@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/17
  */
 
 package com.edu.whu.xiaomaivideo.model;
@@ -30,6 +30,8 @@ public class User {
     private List<Movie> movies;
     private List<Message> receivemsgs;
     private List<Movie> likeMovies;
+    private List<User> followers;
+    private List<User> following;
 
     public User() {
 
@@ -42,6 +44,22 @@ public class User {
         user.setUsername("尚未登录...");
         user.setAvatar("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1093847288,3038136586&fm=26&gp=0.jpg");
         return user;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
     }
 
     public String getUsername() {

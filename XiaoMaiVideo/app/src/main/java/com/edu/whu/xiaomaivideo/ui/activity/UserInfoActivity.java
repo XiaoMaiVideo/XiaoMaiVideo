@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/10
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/17
  */
 
 package com.edu.whu.xiaomaivideo.ui.activity;
@@ -138,6 +138,8 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 // 跳转关注和粉丝列表页面
+                Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
+                startActivity(intent);
             }
         });
     }
