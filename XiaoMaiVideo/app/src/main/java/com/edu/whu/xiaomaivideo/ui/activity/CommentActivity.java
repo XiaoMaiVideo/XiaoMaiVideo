@@ -12,7 +12,7 @@ public class CommentActivity  extends BaseActivity {
 
     @Override
     int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_comment;
     }
 
     @Override
@@ -27,9 +27,5 @@ public class CommentActivity  extends BaseActivity {
 
     public void Single(View view) {
         startActivity(CommentSingleActivity.class);
-    }
-
-    public void Multi(View view) {
-        startActivity(CommentMultiActivity.class);
     }
 }

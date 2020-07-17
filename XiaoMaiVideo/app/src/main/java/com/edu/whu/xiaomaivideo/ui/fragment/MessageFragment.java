@@ -6,7 +6,6 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MessageAdapter;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.MessageFragmentBinding;
-import com.edu.whu.xiaomaivideo.ui.activity.SearchActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
 import com.edu.whu.xiaomaivideo.viewModel.MessageViewModel;
 
 import java.util.Objects;

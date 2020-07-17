@@ -1,90 +1,46 @@
-/**
- * Author: 付浩、叶俊豪
- * Create Time: 2020/7/9
- * Update Time: 2020/7/16
- */
+package com.edu.whu.xiaomaivideo.ui.activity;
 
-package com.edu.whu.xiaomaivideo.ui.fragment;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
-import com.downloader.Error;
-import com.downloader.OnDownloadListener;
-import com.downloader.OnProgressListener;
-import com.downloader.PRDownloader;
-import com.downloader.Progress;
+import android.app.Activity;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.widget.TextView;
+
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
-import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
-import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
-import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
-import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
-import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
-import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
-import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.util.EventBusMessage;
-import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
-import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 import com.jiajie.load.LoadingDialog;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnSelectListener;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
-import org.greenrobot.eventbus.EventBus;
-import org.parceler.Parcels;
-
-import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class HotFragment extends Fragment {
+public class MovieTypeActivity extends Activity {
 
-    private HotViewModel hotViewModel;
-    FragmentHotBinding fragmentHotBinding;
-    List<Movie> movieList;
+    private List<Movie> movieList;
+    private RecyclerView mRecyclerView;
 
     public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
     public JzvdStd videoView;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        hotViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(HotViewModel.class);
-        fragmentHotBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_hot, container, false);
-        fragmentHotBinding.setViewmodel(hotViewModel);
-        fragmentHotBinding.setLifecycleOwner(getActivity());
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_movie_type);
+
+        String type = getIntent().getStringExtra("type");
+        TextView typeText = findViewById(R.id.type);
+        typeText.setText(type);
+        mRecyclerView = findViewById(R.id.movieTypeRecyclerView);
+        LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
         dialog.show();
-        MovieRestService.getMovies(0, new MovieRestCallback() {
+        MovieRestService.getMoviesByCategories(type, 0, new MovieRestCallback() {
             @Override
             public void onSuccess(int resultCode, List<Movie> movies) {
                 super.onSuccess(resultCode, movies);
@@ -93,13 +49,12 @@ public class HotFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-        return fragmentHotBinding.getRoot();
     }
 
     private void setRecyclerView() {
-        fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
-        fragmentHotBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(new MovieAdapter(this, movieList));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -122,7 +77,6 @@ public class HotFragment extends Fragment {
                         JzvdStd.releaseAllVideos();
                         break;
                 }
-
             }
         });
     }

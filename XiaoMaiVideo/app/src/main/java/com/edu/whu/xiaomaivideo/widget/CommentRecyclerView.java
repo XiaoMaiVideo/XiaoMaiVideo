@@ -2,7 +2,7 @@
  * author: 何慷
  * createTime：2020/7/17
  */
-package com.edu.whu.xiaomaivideo.util;
+package com.edu.whu.xiaomaivideo.widget;
 
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,11 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class RecyclerViewUtil {
+public class CommentRecyclerView {
 
     private RecyclerView recyclerView;
 
-    public RecyclerViewUtil() {
+    public CommentRecyclerView() {
     }
 
     public void initScrollListener(RecyclerView recyclerView) {
@@ -73,5 +73,4 @@ public class RecyclerViewUtil {
             mScrollListener = null;
         }
     }
-
 }

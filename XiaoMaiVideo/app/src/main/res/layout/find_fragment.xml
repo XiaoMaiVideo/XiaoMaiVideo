@@ -29,128 +29,412 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:theme="@style/MainAppBar"
-                android:background="@color/colorPrimary"
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/ll_header_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/header_height"
-                    android:background="@color/colorPrimaryDark"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:background="@android:color/white"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <SearchView
                         android:id="@+id/sv_search"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/sv_search">
 
                     </SearchView>
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout1"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/icons_1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp">
 
-                        android:background="#FFFFFF"
-                        android:clickable="true"
-                        app:tabBackground="@android:color/transparent"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/colorAccent"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabMaxWidth="0dp"
-                        app:tabRippleColor="@android:color/transparent"
-                        app:tabSelectedTextColor="@color/colorPrimary"
-                        app:tabTextColor="@color/colorPrimary">
-
-                        <com.google.android.material.tabs.TabItem
-                            android:id="@+id/tabItem2"
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_life" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_culture"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/culture" />
 
+                            <TextView
+                                android:id="@+id/tv_culture"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="文化"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_sport" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_child"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/child1" />
+
+                            <TextView
+                                android:id="@+id/tv_child"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="0dp"
+                                android:gravity="center"
+                                android:text="儿童"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_culture" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_fashion"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/fashion" />
+
+                            <TextView
+                                android:id="@+id/tv_fashion"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="时尚"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_fashion" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="24dp"
-                            android:layout="@layout/search_tab_item_tech" />
+                            <ImageView
+                                android:id="@+id/iv_food"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/food" />
 
-                    </com.google.android.material.tabs.TabLayout>
+                            <TextView
+                                android:id="@+id/tv_food"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="美食"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/icons_2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp">
 
-                        android:background="#FFFFFF"
-                        android:clickable="true"
-                        app:tabBackground="@android:color/transparent"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/colorAccent"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabMaxWidth="0dp"
-                        app:tabRippleColor="@android:color/transparent"
-                        app:tabSelectedTextColor="@color/colorPrimary"
-                        app:tabTextColor="@color/colorPrimary">
-
-                        <com.google.android.material.tabs.TabItem
-                            android:id="@+id/tabItem1"
+                        <LinearLayout
+                            android:id="@+id/linearLayout6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_music" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_game"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/game" />
 
+                            <TextView
+                                android:id="@+id/tv_game"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="0dp"
+                                android:gravity="center"
+                                android:text="游戏"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_movie" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout7"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout6"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_life"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/life" />
+
+                            <TextView
+                                android:id="@+id/tv_life"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="生活"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_society" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_movie"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/movie" />
+
+                            <TextView
+                                android:id="@+id/tv_movie"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="影视"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout="@layout/search_tab_item_game" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout7"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.tabs.TabItem
+                            <ImageView
+                                android:id="@+id/iv_music"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/music" />
+
+                            <TextView
+                                android:id="@+id/tv_music"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="音乐"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/icons_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="24dp"
-                            android:layout="@layout/search_tab_item_food" />
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout9"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                    </com.google.android.material.tabs.TabLayout>
+                            <ImageView
+                                android:id="@+id/iv_society"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/society" />
 
+                            <TextView
+                                android:id="@+id/tv_society"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="0dp"
+                                android:gravity="center"
+                                android:text="社会"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout11"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout10"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_tech"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/tech" />
+
+                            <TextView
+                                android:id="@+id/tv_tech"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="科技"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout12"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout9"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_sport"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/sport" />
+
+                            <TextView
+                                android:id="@+id/tv_sport"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="体育"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout11"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_more"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/modify_user_info" />
+
+                            <TextView
+                                android:id="@+id/tv_more"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_marginStart="0dp"
+                                android:text="更多"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
+
 
                 <com.ogaclejapan.smarttablayout.SmartTabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@android:color/white"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     app:layout_scrollFlags="scroll"
                     app:stl_customTabTextLayoutId="@layout/custom_tab"
                     app:stl_customTabTextViewId="@+id/custom_text"
@@ -168,11 +452,12 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

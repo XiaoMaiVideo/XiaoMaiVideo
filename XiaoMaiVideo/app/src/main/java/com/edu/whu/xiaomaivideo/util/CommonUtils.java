@@ -1,11 +1,12 @@
 /**
  * Author: 何慷、叶俊豪
  * Create Time: 2020/7/12
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/17
  */
 
 package com.edu.whu.xiaomaivideo.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +14,18 @@ import android.graphics.Paint;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.others.BaseApplication;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,5 +118,95 @@ public class CommonUtils {
     public static String convertTimeToDateString(long milliSeconds) {
         DateFormat format = SimpleDateFormat.getDateTimeInstance();
         return format.format(new Date(milliSeconds));
+    }
+
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f) - 15;
+    }
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static void loadToImageView(String url, ImageView imageView) {
+        if (url.endsWith("gif")) {
+            loadToImageViewStaticGif(url, imageView);
+        } else {
+            Glide.with(BaseApplication.getContext())
+                    .load(url)
+                    .placeholder(R.drawable.loading)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .centerCrop()
+                    .into(imageView);
+        }
+    }
+
+    public static void loadToImageViewFitCenter(String url, ImageView imageView) {
+        if (url.endsWith("gif")) {
+            loadToImageViewStaticGif(url, imageView);
+        } else {
+            Glide.with(BaseApplication.getContext())
+                    .load(url)
+                    .into(imageView);
+        }
+    }
+
+    public static void loadToImageViewZoomIn(String url, ImageView imageView) {
+        if (url.endsWith("gif")) {
+            loadToImageViewZoomInGif(url, imageView);
+        } else {
+            Glide.with(BaseApplication.getContext())
+                    .load(url)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView);
+        }
+    }
+
+    public static void loadToImageViewZoomInGif(String url, ImageView imageView) {
+        Glide.with(BaseApplication.getContext())
+                .load(url)
+                //      .asGif()
+                .fitCenter()
+                .into(imageView);
+    }
+
+    public static void loadToImageViewStaticGif(String url, ImageView imageView) {
+        Glide.with(BaseApplication.getContext())
+                .load(url)
+                //  .asBitmap()
+                .centerCrop()
+                .into(imageView);
+    }
+
+
+    public static void saveBitmap(String bitName, Bitmap mBitmap) {
+        File f = new File("/sdcard/Pictures/" + bitName+".png");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+
+        }
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+        try {
+            fOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fOut.close();
+            Toast.makeText(BaseApplication.getContext(),"保存完成",Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(BaseApplication.getContext(),"保存失败",Toast.LENGTH_SHORT).show();
+        }
     }
 }

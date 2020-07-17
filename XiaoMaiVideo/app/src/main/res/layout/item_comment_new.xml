@@ -108,17 +108,4 @@
 
     </RelativeLayout>
 
-    <!--二级评论-->
-    <com.test.commentdialog.widget.VerticalCommentLayout
-        android:id="@+id/verticalCommentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_group"
-        android:clickable="true"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingLeft="57dp"
-        android:visibility="gone" />
-
-
 </RelativeLayout>

@@ -15,25 +15,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.FirstLevelComment;
-import com.edu.whu.xiaomaivideo.widget.VerticalCommentLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 
 public class CommentDialogSingleAdapter extends BaseQuickAdapter<FirstLevelComment, BaseViewHolder> {
 
-    private VerticalCommentLayout.CommentItemClickListener mItemClickListener;
 
-    public CommentDialogSingleAdapter(VerticalCommentLayout.CommentItemClickListener mItemClickListener) {
+    public CommentDialogSingleAdapter() {
         super(R.layout.item_comment_new);
-        this.mItemClickListener = mItemClickListener;
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, FirstLevelComment content) {
-
-//            LinearLayout ll_like = helper.getView(R.id.ll_like);
-//            RelativeLayout rl_group = helper.getView(R.id.rl_group);
-
         RoundedImageView iv_header = helper.getView(R.id.iv_header);
         ImageView iv_like = helper.getView(R.id.iv_like);
         TextView tv_like_count = helper.getView(R.id.tv_like_count);
@@ -50,18 +43,5 @@ public class CommentDialogSingleAdapter extends BaseQuickAdapter<FirstLevelComme
         tv_user_name.setText(content.getUserName());
 
         Glide.with(mContext).load(content.getHeadImg()).into(iv_header);
-
-        if (content.getSecondLevelComments() != null) {
-            VerticalCommentLayout commentWidget = helper.getView(R.id.verticalCommentLayout);
-            commentWidget.setVisibility(View.VISIBLE);
-            int size = content.getSecondLevelComments().size();
-            commentWidget.setTotalCount(size + 10);
-            commentWidget.setPosition(helper.getAdapterPosition());
-            commentWidget.setOnCommentItemClickListener(mItemClickListener);
-            int limit = helper.getAdapterPosition() + 1;
-            commentWidget.addCommentsWithLimit(content.getSecondLevelComments(), size, false);
-//                rl_group.setTag(commentWidget);
-        }
-
     }
 }

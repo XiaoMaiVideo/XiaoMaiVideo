@@ -69,6 +69,8 @@ public class UserInfoActivity extends FragmentActivity {
         User user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         userInfoViewModel.setUser(user);
 
+        // 可能需要获取详细信息，在这里访问网络
+
         activityUserInfoBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_info);
         activityUserInfoBinding.setViewmodel(userInfoViewModel);
         activityUserInfoBinding.setLifecycleOwner(this);

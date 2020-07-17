@@ -8,14 +8,10 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-import static com.edu.whu.xiaomaivideo.model.CommentEntity.TYPE_COMMENT_PARENT;
-
 /**
  *  一级评论相关内容
  */
-public class FirstLevelComment implements MultiItemEntity {
-    
-    private List<SecondLevelComment> secondLevelComments;
+public class FirstLevelComment {
 
     //一级评论id
     private String id;
@@ -104,14 +100,6 @@ public class FirstLevelComment implements MultiItemEntity {
         this.isLike = isLike;
     }
 
-    public List<SecondLevelComment> getSecondLevelComments() {
-        return secondLevelComments;
-    }
-
-    public void setSecondLevelComments(List<SecondLevelComment> secondLevelComments) {
-        this.secondLevelComments = secondLevelComments;
-    }
-
     public long getTotalCount() {
         return totalCount;
     }
@@ -134,41 +122,5 @@ public class FirstLevelComment implements MultiItemEntity {
 
     public void setPositionCount(int positionCount) {
         this.positionCount = positionCount;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"secondLevelBeans\":")
-                .append(secondLevelComments);
-        sb.append(",\"id\":\"")
-                .append(id).append('\"');
-        sb.append(",\"headImg\":\"")
-                .append(headImg).append('\"');
-        sb.append(",\"userName\":\"")
-                .append(userName).append('\"');
-        sb.append(",\"userId\":\"")
-                .append(userId).append('\"');
-        sb.append(",\"content\":\"")
-                .append(content).append('\"');
-        sb.append(",\"createTime\":")
-                .append(createTime);
-        sb.append(",\"likeCount\":")
-                .append(likeCount);
-        sb.append(",\"isLike\":")
-                .append(isLike);
-        sb.append(",\"totalCount\":")
-                .append(totalCount);
-        sb.append(",\"position\":")
-                .append(position);
-        sb.append(",\"positionCount\":")
-                .append(positionCount);
-        sb.append('}');
-        return sb.toString();
-    }
-
-    @Override
-    public int getItemType() {
-        return TYPE_COMMENT_PARENT;
     }
 }
