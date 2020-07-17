@@ -6,10 +6,15 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +31,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
+import com.downloader.Error;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnProgressListener;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
-import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
@@ -39,8 +48,10 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
+import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
+import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
 import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
@@ -50,6 +61,7 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,22 +112,13 @@ public class HotFragment extends Fragment {
                 // 按下点赞按钮
                 // 如果用户没点赞，就是点赞
                 if (shineButton.isChecked()) {
-                    movieList.get(pos).addLiker(Constant.CurrentUser);
-                    // Constant.CurrentUser.addLikeMovies(movieList.get(pos));
-                    UserRestService.addUserLike(movieList.get(pos).getMovieId(), new RestCallback() {
-                        @Override
-                        public void onSuccess(int resultCode) {
-                            // 点赞数加1即可
-                            likeNum.setText(movieList.get(pos).getLikers().size()+"");
-                            // 发WebSocket消息
-                            MessageVO message = new MessageVO();
-                            message.setMsgType("like");
-                            message.setSenderId(Constant.CurrentUser.getUserId());
-                            message.setReceiverId(movieList.get(pos).getPublisher().getUserId());
-                            message.setMovieId(movieList.get(pos).getMovieId());
-                            EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-                        }
-                    });
+                    // TODO: 在界面更新点赞数
+                    MessageVO message = new MessageVO();
+                    message.setMsgType("like");
+                    message.setSenderId(Constant.CurrentUser.getUserId());
+                    message.setReceiverId(movieList.get(pos).getPublisher().getUserId());
+                    message.setMovieId(movieList.get(pos).getMovieId());
+                    EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                 }
                 // 如果用户点了赞，就是取消点赞
                 else {
@@ -132,27 +135,49 @@ public class HotFragment extends Fragment {
             public void onShareButtonClick(int pos, ImageView imageView) {
                 // 按下分享按钮
                 new XPopup.Builder(getContext())
-                        .atView(imageView)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
+                        .atView(imageView)
                         .asAttachList(new String[]{"分享到动态", "分享到其他应用"},
                                 new int[]{R.drawable.game, R.drawable.food},
                                 new OnSelectListener() {
                                     @Override
                                     public void onSelect(int position, String text) {
                                         if (position == 0) {
-                                            // TODO: 应用内分享，这里先用作点赞推送消息的测试
-                                            MessageVO message = new MessageVO();
-                                            message.setMsgType("like");
-                                            message.setSenderId(Constant.CurrentUser.getUserId());
-                                            message.setReceiverId(movieList.get(pos).getPublisher().getUserId());
-                                            message.setMovieId(movieList.get(pos).getMovieId());
-                                            EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+                                            // TODO: 应用内分享
                                         }
                                         else {
-                                            // TODO: 应用外分享，功能没完成，可能需要用ShareSDK
-                                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                            shareIntent.setType("video/*");
-                                            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(movieList.get(pos).getUrl()));
-                                            startActivity(Intent.createChooser(shareIntent, "分享"));
+                                            // TODO: 应用外分享
+                                            String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
+                                            String fileName = System.currentTimeMillis() + ".mp4";
+                                            ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                                            new XPopup.Builder(getActivity())
+                                                    .asCustom(progressDialog)
+                                                    .show();
+                                            int downloadId = PRDownloader.download(movieList.get(pos).getUrl(), filePath, fileName)
+                                                    .build()
+                                                    .setOnProgressListener(progress -> progressDialog.setProgress((int) (((float)progress.currentBytes/(float)progress.totalBytes)*100)))
+                                                    .start(new OnDownloadListener() {
+                                                        @Override
+                                                        public void onDownloadComplete() {
+                                                            progressDialog.dismissWith(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    String path = new File(filePath).getPath()+"/"+fileName;
+                                                                    Uri uri = InsertVideoUtil.insertVideo(getActivity(), path);
+                                                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                                                                    shareIntent.setType("video/*");
+                                                                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                                                    // TODO: 回调怎么办？分享到微信好像没回调
+                                                                    startActivity(Intent.createChooser(shareIntent, "分享"));
+                                                                }
+                                                            });
+                                                        }
+
+                                                        @Override
+                                                        public void onError(Error error) {
+
+                                                        }
+                                                    });
+
                                         }
                                     }
                                 })

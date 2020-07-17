@@ -22,6 +22,8 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import com.edu.whu.xiaomaivideo.R;
+
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
     TabLayout tabLayout;

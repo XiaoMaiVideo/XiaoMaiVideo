@@ -78,7 +78,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new XPopup.Builder(VideoDetailActivity.this)
-                        .asCustom(new CommentDialog(VideoDetailActivity.this,movie).show());
+                        .asCustom(new CommentDialog(VideoDetailActivity.this, movie).show());
             }
         });
 

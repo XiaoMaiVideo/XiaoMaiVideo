@@ -6,6 +6,8 @@
 
 package com.edu.whu.xiaomaivideo.model;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.Date;
 
 public class MessageVO {

@@ -21,6 +21,8 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.JWebSocketClient;
@@ -108,10 +110,25 @@ public class JWebSocketService extends Service {
             @Override
             public void onMessage(String message) {
                 Log.e("JWebSocketClientService", "收到的消息：" + message);
-                // 消息统一存到本地数据库里，打开消息提醒页面以后再加载。本地数据库配置稍后完成
-
-                // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
-                // EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
+                if (message.startsWith("连接成功")) {
+                    // 连接成功消息，无视掉
+                    return;
+                }
+                JSONObject jsonObject = JSON.parseObject(message);
+                MessageVO messageVO = JSON.toJavaObject(jsonObject, MessageVO.class);
+                if (messageVO.getMsgType().equals("like")) {
+                    // 点赞，发送点赞通知
+                    Log.e("JWebSocketClientService", "收到的消息：点赞");
+                }
+                else if (messageVO.getMsgType().equals("comment")) {
+                    // 评论，发送评论通知
+                }
+                else if (messageVO.getMsgType().equals("msg")) {
+                    // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
+                    // EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
+                }
+                // 消息统一存到本地数据库里，打开消息提醒页面以后再加载
+                // messageVO.save();
             }
 
             @Override

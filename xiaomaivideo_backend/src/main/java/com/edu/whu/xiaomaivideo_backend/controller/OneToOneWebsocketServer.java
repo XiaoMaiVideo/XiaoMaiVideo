@@ -95,17 +95,18 @@ public class OneToOneWebsocketServer {
                 message1.setText(messageVO.getText());
                 message1.setTime(new Date());
                 message1.setMsgType(messageVO.getMsgType());
-                try{
+                try {
                     messageRestService.saveMessage(message1);
                     log.info("成功保存信息{}",message1.getText());
-                }catch (Exception e){
+                } catch (Exception e){
 
                 }
                 break;
             case "like":
-                //点赞使用post+websocket
-                List<Movie> movies=sender.getLikeMovies();
-                movies.add(movieRestService.getMovieById(messageVO.getMovieId()));
+                // 点赞使用websocket
+                List<Movie> movies = sender.getLikeMovies();
+                Movie movie = movieRestService.getMovieById(messageVO.getMovieId());
+                movies.add(movie);
                 sender.setLikeMovies(movies);
                 try {
                     userRestService.saveUser(sender);

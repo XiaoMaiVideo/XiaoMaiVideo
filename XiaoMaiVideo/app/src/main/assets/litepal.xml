@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--**
+    * Author: 叶俊豪
+    * Create Time: 2020/7/16
+    * Update Time: 2020/7/16
+    *-->
+<litepal>
+
+    <dbname value="Message" />
+
+    <version value="1" />
+
+    <list>
+
+        <mapping class="com.edu.whu.xiaomaivideo.model.MessageVO" />
+    </list>
+</litepal>
