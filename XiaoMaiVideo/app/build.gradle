@@ -84,6 +84,10 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
     // 通信框架
     implementation 'org.greenrobot:eventbus:3.2.0'
+    // SQLite数据库框架
+    implementation 'org.litepal.guolindev:core:3.1.0'
+    // 文件下载第三方库
+    implementation 'com.mindorks.android:prdownloader:0.5.0'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

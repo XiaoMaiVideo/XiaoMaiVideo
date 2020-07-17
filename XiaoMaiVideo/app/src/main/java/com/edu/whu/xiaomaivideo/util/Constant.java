@@ -31,6 +31,7 @@ public class Constant {
 
     public static final int SET_USER_INFO = 5;
     public static final int TAKE_VIDEO = 6;
+    public static final int SHARE_OUTSIDE = 7;
 
     public static final String PAGE_LIMIT = "10";
 
