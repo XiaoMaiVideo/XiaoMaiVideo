@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.edu.whu.xiaomaivideo.util.MyViewPager
+        <com.edu.whu.xiaomaivideo.widget.MyViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

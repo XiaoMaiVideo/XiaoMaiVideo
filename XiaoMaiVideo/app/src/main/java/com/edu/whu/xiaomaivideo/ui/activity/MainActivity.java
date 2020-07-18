@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -29,9 +28,8 @@ import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.SearchTabFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.util.MyViewPager;
+import com.edu.whu.xiaomaivideo.widget.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
@@ -43,10 +41,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +56,7 @@ public class MainActivity extends FragmentActivity {
     private Long exitTime=0L;
     Intent webSocketService;
     SetWebSocketMessageReceiver setWebSocketMessageReceiver;
+    FindFragment findFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,13 +96,14 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
+        findFragment = new FindFragment();
         mViewPager = findViewById(R.id.viewPager);
         mTabLayout = findViewById(R.id.tab_layout);
         mFragments = new ArrayList<>(5);
         mFragments.add(new HomeFragment()); // 第一个tab
         mFragments.add(new MessageFragment()); // 第二个tab
         mFragments.add(new BlankFragment()); // 没用，占个位置
-        mFragments.add(new FindFragment()); // 第三个tab
+        mFragments.add(findFragment); // 第三个tab
         mFragments.add(new MeFragment()); // 第四个tab
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
@@ -168,6 +164,9 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        if (findFragment.onKeyDown()) {
+            return;
+        }
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(
                     getApplication(),

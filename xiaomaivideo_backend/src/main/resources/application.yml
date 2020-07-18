@@ -1,6 +1,7 @@
 spring:
   profiles:
-    active: dev2
+    active: dev1
+
   datasource:
     url: jdbc:mysql://localhost:3306/xiaomaivideo?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root

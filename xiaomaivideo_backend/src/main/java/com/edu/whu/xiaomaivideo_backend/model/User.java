@@ -60,7 +60,7 @@ public class User {
 
 
     @JsonIgnoreProperties(value = {"likers","comments"})
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "like_tabel",joinColumns = @JoinColumn(name = "userId"),inverseJoinColumns = @JoinColumn(name="movieId"))
     private List<Movie> likeMovies=new ArrayList<>();
 

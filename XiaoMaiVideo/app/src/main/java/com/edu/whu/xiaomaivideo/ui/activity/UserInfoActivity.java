@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/10
- * Update Time: 2020/7/12
+ * Update Time: 2020/7/17
  */
 
 package com.edu.whu.xiaomaivideo.ui.activity;
@@ -68,6 +68,8 @@ public class UserInfoActivity extends FragmentActivity {
 
         User user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         userInfoViewModel.setUser(user);
+
+        // 可能需要获取详细信息，在这里访问网络
 
         activityUserInfoBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_info);
         activityUserInfoBinding.setViewmodel(userInfoViewModel);
@@ -138,6 +140,8 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 // 跳转关注和粉丝列表页面
+                Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
+                startActivity(intent);
             }
         });
     }
