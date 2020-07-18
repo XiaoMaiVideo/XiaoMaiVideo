@@ -1,7 +1,7 @@
 /**
- * Author: 付浩，叶俊豪
+ * Author: 付浩，叶俊豪、李季东
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/18
  */
 package com.edu.whu.xiaomaivideo.adapter;
 
@@ -32,7 +32,6 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.ui.activity.CommentActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
@@ -50,7 +49,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
@@ -172,17 +170,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                     }
                 }
             });
-
+            //收藏
             starButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
                 }
             });
-
+            //评论
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new ShowCommentDialog(context).show();
+                    new ShowCommentDialog(context,mMovies.get(getAdapterPosition())).show();
                 }
             });
 

@@ -27,6 +27,7 @@ public class User {
     private String area;
     private String workplace;
 
+    private List<Comment> comments;
     private List<Message> sendmsgs;
     private List<Movie> movies;
     private List<Message> receivemsgs;
@@ -143,6 +144,10 @@ public class User {
         this.workplace = workplace;
     }
 
+    public List<Comment> getComments() { return comments; }
+
+
+    public void setComments(List<Comment> comments) { this.comments = comments; }
     public List<Message> getSendmsgs() {
         return sendmsgs;
     }

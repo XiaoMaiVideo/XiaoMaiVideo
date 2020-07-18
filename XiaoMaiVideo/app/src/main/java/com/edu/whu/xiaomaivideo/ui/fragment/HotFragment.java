@@ -68,7 +68,7 @@ import java.util.Objects;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class HotFragment extends Fragment {
+public class  HotFragment extends Fragment {
 
     private HotViewModel hotViewModel;
     FragmentHotBinding fragmentHotBinding;

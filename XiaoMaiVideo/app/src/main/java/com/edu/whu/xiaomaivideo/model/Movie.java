@@ -1,7 +1,7 @@
 /**
- * Author: 叶俊豪
+ * Author: 叶俊豪、李季东
  * Create Time: 2020/7/15
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.model;
@@ -23,6 +23,7 @@ public class Movie {
     private User publisher;
     private String categories;
     private List<User> likers;
+    private List<Comment> comments;
 
     public Movie() {
 
@@ -79,6 +80,10 @@ public class Movie {
     public void setPublisher(User publisher) {
         this.publisher = publisher;
     }
+
+    public List<Comment> getComments(){ return  comments; }
+
+    public  void  setComments(List<Comment> comments){ this.comments = comments; }
 
     public String getCategories() {
         return categories;

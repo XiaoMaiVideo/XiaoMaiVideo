@@ -1,7 +1,7 @@
 /**
- * Author: 叶俊豪
+ * Author: 叶俊豪、李季东
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.restservice;
@@ -29,6 +29,53 @@ public class MovieRestService {
     static final String TAG = "MovieRestService";
     public static void getMovieByID(final long movieId, final MovieRestCallback restCallback) {
 
+        new AsyncTask<Long, Integer, String>() {
+            MovieRestCallback movieRestCallback=restCallback;
+            @Override
+            protected String doInBackground(Long... number) {
+                // URL参数拼接用下面的方法
+                Uri.Builder builder = Uri.parse(Constant.BASEURL+"movie/"+movieId).buildUpon();
+                return HttpUtil.sendGetRequest(builder.toString());
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+//                返回数据的格式
+//                {"isok":true,"code":200,"message":"success",
+//                 "data":{"movieId":35,"publishTime":"2020年7月15日 21:41:03",
+//                 "url":"http://139.224.133.166:8088/api/file/b2290876-d3f6-485e-b4be-841254670c7e.mp4",
+//                 "description":"哈哈哈哈哈","categories":"音乐;美食;","likednum":5,"commentnum":2,"sharenum":0,
+//                 "publisher":{"userId":26,"username":"yjh8","gender":"男","nickname":"My Classic",
+//                 "avatar":"http://139.224.133.166:8088/api/file/d86c1ac6-6dc2-463b-a20b-8788936a1a56.jpg",
+//                 "description":"一个很无聊的人","birthday":"2020年7月12日","area":"山西省 太原市","workplace":"春日花花幼儿园","shares":[]},
+//                 "likers":[{"userId":28,"username":"1","gender":null,"nickname":null,
+//                 "avatar":null,"description":null,"birthday":null,"area":null,"workplace":null,"shares":[]},
+//                 {"userId":22,"username":"小麦","gender":"男","nickname":"fsq",
+//                 "avatar":"http://139.224.133.166:8088/api/file/32fdb509-57ac-423c-80c8-ff0c9ae8ae93.jpg",
+//                 "description":null,"birthday":"2000年8月16日","area":null,"workplace":null,"shares":[]},
+//                 {"userId":25,"username":"test1","gender":null,"nickname":null,
+//                 "avatar":"http://139.224.133.166:8088/api/file/db137849-f283-4d5b-9d10-4c8e18c60c95.jpg",
+//                 description":null,"birthday":null,"area":null,"workplace":null,"shares":[]},
+//                 {"userId":40,"username":"fuhao518","gender":null,"nickname":null,"avatar":null,
+//                 "description":null,"birthday":null,"area":null,"workplace":null,"shares":[]},
+//                 {"userId":28,"username":"1","gender":null,"nickname":null,"avatar":null,"description":null,
+//                 "birthday":null,"area":null,"workplace":null,"shares":[]}],
+//                 "comments":[{"commentId":43,"
+//                 commenter":{"userId":28,"username":"1","gender":null,"nickname":null,"avatar":null
+//                 ,"description":null,"birthday":null,"area":null,"workplace":null,"shares":[]},
+//                 "time":"2020-07-18 16:40:31","msg":"gegedoushirencai"},
+//                 {"commentId":46,
+//                 "commenter":{"userId":28,"username":"1","gender":null,"nickname":null,"avatar":null,
+//                 "description":null,"birthday":null,"area":null,"workplace":null,"shares":[]},"time":"2020-07-18 19:58:27","msg":"66666"}]}}
+                Log.e(TAG, s);
+                //JSON数据解码
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                JSONObject dataObject = jsonObject.getJSONObject("data");
+                Movie movie = JSON.toJavaObject(dataObject, Movie.class);
+                movieRestCallback.onSuccess(responseNum,movie);
+            }
+        }.execute();
     }
 
     public static void getMovies(final int pageNum, final MovieRestCallback restCallback) {

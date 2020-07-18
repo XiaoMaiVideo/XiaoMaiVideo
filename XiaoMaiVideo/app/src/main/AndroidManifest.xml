@@ -29,8 +29,6 @@
         <activity android:name=".ui.activity.MessageCommentActivity" />
         <activity android:name=".ui.activity.MessageLikeActivity" />
         <activity android:name=".ui.activity.MessageSubscribeActivity" />
-        <activity android:name=".ui.activity.CommentActivity" />
-        <activity android:name=".ui.activity.CommentSingleActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

@@ -1,7 +1,7 @@
 /**
  * Author: 李季东、张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
@@ -25,16 +25,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.CommentDialog;
 import com.lxj.xpopup.XPopup;
 
-/**
- * Author: 李季东,张俊杰
- * Create Time: 2020/7/14
- * Update Time: 2020/7/16
- * 视频详情页面
- */
 public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context mContext;
@@ -55,6 +52,12 @@ public class SettingsFriendAdpater extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
 
         //        if (getItemViewType(i) == 0)
+//        MovieRestService.getMovieByID(35, new MovieRestCallback() {
+//            @Override
+//            public void onSuccess(int resultCode, Movie movie) {
+//                super.onSuccess(resultCode, movie);
+//            }
+//        });
         ((SettingsViewHolder)viewHolder).imageView.setImageResource(R.drawable.ic_launcher_background);
         ((SettingsViewHolder)viewHolder).textView.setText("张三");
         ((SettingsViewHolder)viewHolder).videoView.setVideoURI(Uri.parse("https://v-cdn.zjol.com.cn/280443.mp4"));
