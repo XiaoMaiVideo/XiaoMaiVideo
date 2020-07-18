@@ -66,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="未填写"
+                    android:background="@drawable/shape"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"

@@ -22,7 +22,7 @@ import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.service.JWebSocketService;
-import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoSuccessDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.ui.fragment.BlankFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
@@ -136,6 +136,14 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void onCenterButtonPressed() {
+        if (Constant.CurrentUser.getUserId() == 0) {
+            // 没登录，不允许操作
+            BasePopupView popupView = new XPopup.Builder(this)
+                                                .asCustom(new SimpleBottomDialog(this, R.drawable.success, "没有登录，不能发视频哦"))
+                                                .show();
+            popupView.delayDismiss(1500);
+            return;
+        }
         Intent intent = new Intent(this, TakeVideoActivity.class);
         startActivityForResult(intent, Constant.TAKE_VIDEO);
     }
@@ -146,18 +154,15 @@ public class MainActivity extends FragmentActivity {
                 .requestEach(
                         android.Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (permission.granted) {
+                .subscribe(permission -> {
+                    if (permission.granted) {
 
-                        }
-                        else if (permission.shouldShowRequestPermissionRationale) {
-                            // Toast.makeText(MainActivity.this, "求求你给个权限吧", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            // Toast.makeText(MainActivity.this, "不给就算了", Toast.LENGTH_SHORT).show();
-                        }
+                    }
+                    else if (permission.shouldShowRequestPermissionRationale) {
+                        // Toast.makeText(MainActivity.this, "求求你给个权限吧", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        // Toast.makeText(MainActivity.this, "不给就算了", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -186,7 +191,7 @@ public class MainActivity extends FragmentActivity {
             if (resultCode == RESULT_OK) {
                 // 可能需要对刚刚发的视频做一定的操作
                 BasePopupView popupView = new XPopup.Builder(this)
-                                                    .asCustom(new TakeVideoSuccessDialog(this))
+                                                    .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功"))
                                                     .show();
                 popupView.delayDismiss(1500);
             }

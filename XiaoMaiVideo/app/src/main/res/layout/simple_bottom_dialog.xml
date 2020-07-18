@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Author：叶俊豪 -->
+<!-- Create Time: 2020/7/15-->
+<!-- Update Time: 2020/7/15-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/_xpopup_white_color"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/bottomDialogImage"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:src="@drawable/success"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/bottomDialogText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发布成功！"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_margin="30dp"/>
+
+</LinearLayout>

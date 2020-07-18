@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MovieRestService {
     static final String TAG = "MovieRestService";
-    public static void getMovieByID(final long movieId, final UserRestCallback restCallback) {
+    public static void getMovieByID(final long movieId, final MovieRestCallback restCallback) {
 
     }
 

@@ -37,10 +37,12 @@ import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
@@ -143,21 +145,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    // mListener.onLikeButtonClick(getAdapterPosition(), likeButton, likeNum);
-                    // 按下点赞按钮
-                    // 如果用户没点赞，就是点赞
-                    if (likeButton.isChecked()) {
-                        // TODO: 在界面更新点赞数
-                        MessageVO message = new MessageVO();
-                        message.setMsgType("like");
-                        message.setSenderId(Constant.CurrentUser.getUserId());
-                        message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
-                        message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
-                        EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+                    if (Constant.CurrentUser.getUserId() == 0) {
+                        // 没登录，不允许操作
+                        BasePopupView popupView = new XPopup.Builder(context)
+                                .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能点赞哦"))
+                                .show();
+                        popupView.delayDismiss(1500);
+                        likeButton.setChecked(false);
                     }
-                    // 如果用户点了赞，就是取消点赞
                     else {
+                        // 按下点赞按钮
+                        // 如果用户没点赞，就是点赞
+                        if (likeButton.isChecked()) {
+                            // TODO: 在界面更新点赞数
+                            MessageVO message = new MessageVO();
+                            message.setMsgType("like");
+                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
+                            message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
+                            EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+                        }
+                        // 如果用户点了赞，就是取消点赞
+                        else {
 
+                        }
                     }
                 }
             });
@@ -165,15 +176,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             starButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    // mListener.onStarButtonClick(getAdapterPosition(), starButton, starNum);
                 }
             });
 
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Intent intent = new Intent(context, CommentActivity.class);
-                    // context.startActivity(intent);
                     new ShowCommentDialog(context).show();
                 }
             });
@@ -192,6 +200,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                         public void onSelect(int position, String text) {
                                             if (position == 0) {
                                                 // TODO: 应用内分享
+                                                if (Constant.CurrentUser.getUserId() == 0) {
+                                                    // 没登录，不允许操作
+                                                    BasePopupView popupView = new XPopup.Builder(context)
+                                                            .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能分享哦"))
+                                                            .show();
+                                                    popupView.delayDismiss(1500);
+                                                }
+                                                else {
+                                                    // TODO: 应用内分享
+                                                }
                                             }
                                             else {
                                                 // TODO: 应用外分享

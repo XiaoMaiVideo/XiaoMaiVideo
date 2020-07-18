@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Author：李季东、付浩、何慷、叶俊豪 -->
-<!-- Create Time: 2020/7/18-->
-<!-- Update Time: 2020/7/16-->
+<!-- Author：李季东、付浩、何慷、叶俊豪、方胜强-->
+<!-- Create Time: 2020/7/16-->
+<!-- Update Time: 2020/7/17-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,11 +12,13 @@
     android:orientation="vertical"
     android:paddingBottom="20dp" >
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/videoInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp">
+
 
         <ImageView
             android:id="@+id/authorImage"
@@ -116,9 +118,9 @@
             android:layout_centerInParent="true"
             android:src="@android:color/darker_gray"
             app:allow_random_color="false"
-            app:big_shine_color="#FFFF00"
+            app:big_shine_color="@color/red"
             app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FFFF00"
+            app:btn_fill_color="@color/red"
             app:click_animation_duration="200"
             app:enable_flashing="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -154,9 +156,9 @@
             android:layout_centerInParent="true"
             android:src="@android:color/darker_gray"
             app:allow_random_color="false"
-            app:big_shine_color="#FFFF00"
+            app:big_shine_color="@color/yellow"
             app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FFFF00"
+            app:btn_fill_color="@color/yellow"
             app:click_animation_duration="200"
             app:enable_flashing="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +191,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/add"
+            android:src="@drawable/comment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView8"
             app:layout_constraintHorizontal_bias="0.5"

@@ -29,7 +29,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_on_primary"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="36dp"
-                    app:buttonColor="@color/colorPrimary"
+                    app:buttonColor="@color/aliceblue"
                     app:buttonText="更换头像"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="36dp"
                     android:layout_marginBottom="20dp"
-                    app:buttonColor="@color/colorPrimary"
+                    app:buttonColor="@color/aliceblue"
                     app:buttonText="修改密码"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:buttonColor="@color/colorPrimary"
+        app:buttonColor="@color/lightsalmon"
         app:buttonText="修改信息"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
