@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="movie_table")
@@ -107,11 +108,17 @@ public class Movie {
     public void setCategories(String categories) {
         this.categories = categories;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return movieId.equals(movie);
+        return movieId.equals(movie.movieId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(publishTime, url, description, categories);
     }
 }
