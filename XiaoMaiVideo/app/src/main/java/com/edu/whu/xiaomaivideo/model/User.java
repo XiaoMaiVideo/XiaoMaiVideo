@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.edu.whu.xiaomaivideo.util.Constant;
 
 import org.parceler.Parcel;
 
@@ -191,6 +192,9 @@ public class User {
     // 判断用户是否点赞
     public boolean isLikeMovie(long movieId) {
         if (this.movies == null) {
+            return false;
+        }
+        else if (this.getUserId() == 0) {
             return false;
         }
         for (Movie movie : this.likeMovies) {
