@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -60,11 +60,21 @@ public class User {
     private List<Message> receivemsgs=new ArrayList<>();
 
 
-    @JsonIgnoreProperties(value = {"likers","comments"})
+    @JsonIgnoreProperties(value = {"likers","comments","publisher"})
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "like_tabel",joinColumns = @JoinColumn(name = "userId"),inverseJoinColumns = @JoinColumn(name="movieId"))
     private List<Movie> likeMovies=new ArrayList<>();
 
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Share> shares=new ArrayList<>();
+
+    public List<Share> getShares() {
+        return shares;
+    }
+
+    public void setShares(List<Share> shares) {
+        this.shares = shares;
+    }
 
     public List<User> getFollowing() {
         return following;
