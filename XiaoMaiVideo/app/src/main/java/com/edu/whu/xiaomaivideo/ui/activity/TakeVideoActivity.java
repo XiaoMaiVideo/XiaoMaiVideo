@@ -31,6 +31,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -72,6 +73,7 @@ public class TakeVideoActivity extends AppCompatActivity {
     String outputPath;
     ProgressBar progressBar;
     EditText editText;
+    CheckBox checkBox;
 
     //获取当前经纬坐标位置
     LocationManager manager;
@@ -125,6 +127,7 @@ public class TakeVideoActivity extends AppCompatActivity {
         notCompressButton = findViewById(R.id.notCompressButton);
         progressBar = findViewById(R.id.progressBar);
         editText = findViewById(R.id.descriptionTextMultiLine);
+        checkBox = findViewById(R.id.locationSelector);
 
         compressButton.setVisibility(View.GONE);
         notCompressButton.setVisibility(View.GONE);
@@ -261,6 +264,12 @@ public class TakeVideoActivity extends AppCompatActivity {
     }
 
     private void upload(String path, String description, List<String> selectLabels) {
+        if (checkBox.isChecked()) {
+            // 调后端接口返回城市
+        }
+        else {
+            //
+        }
         StringBuilder labelString = new StringBuilder();
         for (String label: selectLabels) {
             labelString.append(label).append(";");

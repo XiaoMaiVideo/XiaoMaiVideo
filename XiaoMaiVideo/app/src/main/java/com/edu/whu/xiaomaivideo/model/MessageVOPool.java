@@ -12,15 +12,17 @@ public class MessageVOPool {
         if (!(type.equals("like")||type.equals("comment")||type.equals("follow"))) {
             return;
         }
-        List<MessageVO> messageVOList = messageVos.get(type);
-        if (messageVOList == null) {
-            messageVOList = new ArrayList<>();
+        if (!messageVos.containsKey(type)) {
+            messageVos.put(type, new ArrayList<>());
         }
-        messageVOList.add(messageVO);
+        messageVos.get(type).add(messageVO);
     }
 
     public static void clear(String type) {
-        if (messageVos.get(type) == null) {
+        if (!(type.equals("like")||type.equals("comment")||type.equals("follow"))) {
+            return;
+        }
+        if (!messageVos.containsKey(type)) {
             return;
         }
         messageVos.get(type).clear();
@@ -34,10 +36,9 @@ public class MessageVOPool {
         if (!(type.equals("like")||type.equals("comment")||type.equals("follow"))) {
             return null;
         }
-        List<MessageVO> messageVOList = messageVos.get(type);
-        if (messageVOList == null) {
-            messageVOList = new ArrayList<>();
+        if (!messageVos.containsKey(type)) {
+            return new ArrayList<>();
         }
-        return messageVOList;
+        return messageVos.get(type);
     }
 }

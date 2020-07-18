@@ -46,6 +46,7 @@ public class UserController {
             return new AjaxResponse(4, "The user already exists", false);
         }
         try {
+            // TODO: 注册的时候给一个默认的昵称和头像
             userRestService.saveUser(user);
             //@JsonIgnoreProperties(value="password", allowSetters=true)
             //不会返回密码
@@ -135,6 +136,7 @@ public class UserController {
             User user1 = userRestService.getUserById(user.getUserId());
             user.setPassword(user1.getPassword());
         }
+        // TODO: 好像会把自己发的movie的userid变成null？慎用
         userRestService.updateUser(user);
         return AjaxResponse.success();
     }

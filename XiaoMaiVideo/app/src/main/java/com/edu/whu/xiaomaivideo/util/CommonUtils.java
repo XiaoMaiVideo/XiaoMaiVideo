@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.others.BaseApplication;
 
 import java.io.File;
@@ -208,5 +209,23 @@ public class CommonUtils {
             e.printStackTrace();
             Toast.makeText(BaseApplication.getContext(),"保存失败",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // 判断用户user是否被当前登录用户（CurrentUser）关注
+    public static boolean isUserFollowedByCurrentUser(User user) {
+        if (user.getUserId() == Constant.CurrentUser.getUserId()) {
+            return false;
+        }
+        // 用户粉丝为0，不被当前用户关注
+        if (user.getFollowers() == null) {
+            return false;
+        }
+        // 看关注列表里面有没有这个user
+        for (User following: Constant.CurrentUser.getFollowing()) {
+            if (following.getUserId() == user.getUserId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

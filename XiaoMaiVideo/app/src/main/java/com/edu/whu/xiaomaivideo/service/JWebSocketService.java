@@ -132,7 +132,7 @@ public class JWebSocketService extends Service {
                     Log.e("JWebSocketClientService", "收到的消息：评论");
                     messageVO.save();
                     MessageVOPool.addMessageVO("comment", messageVO);
-                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你点了赞，快去看看吧...");
+                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你评论，快去看看吧...");
                 }
                 else if (messageVO.getMsgType().equals("msg")) {
                     // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息

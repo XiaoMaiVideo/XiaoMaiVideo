@@ -37,9 +37,10 @@ import com.alibaba.fastjson.JSON;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListener {
+public class ShowCommentDialog {
 
     private List<Comment> data = new ArrayList<>();
     private CommentRecyclerView mCommentRecyclerView;
@@ -54,11 +55,13 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
     private long totalCount = 30;//总条数不得超过它
     private int offsetY;
     private Movie movie;
+    OnAddCommentListener mListener;
 
-    public ShowCommentDialog(Context context, Movie movie) {
+    public ShowCommentDialog(Context context, Movie movie, OnAddCommentListener listener) {
         mContext = context;
         mCommentRecyclerView = new CommentRecyclerView();
-        this.movie=movie;
+        this.movie = movie;
+        this.mListener = listener;
         initData();
         showSheetDialog();
     }
@@ -99,7 +102,7 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         rv_dialog_lists.setLayoutManager(new LinearLayoutManager(mContext));
         rv_dialog_lists.setItemAnimator(new DefaultItemAnimator());
         bottomSheetAdapter.setLoadMoreView(new SimpleLoadMoreView());
-        bottomSheetAdapter.setOnLoadMoreListener(this, rv_dialog_lists);
+        // bottomSheetAdapter.setOnLoadMoreListener(this, rv_dialog_lists);
         rv_dialog_lists.setAdapter(bottomSheetAdapter);
 
         initListener();
@@ -128,6 +131,8 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
             }
         });
     }
+
+
     // 点击事件
     private void initListener() {
 //        bottomSheetAdapter.setOnItemChildClickListener((adapter, view1, position) -> {
@@ -174,6 +179,7 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
 
     private void addComment(boolean isReply, String headImg, final int position, String msg) {
         //添加一级评论
+        Log.e("ShowCommentDialog", "发评论");
         MessageVO message = new MessageVO();
         message.setMsgType("comment");
         message.setSenderId(Constant.CurrentUser.getUserId());
@@ -181,7 +187,13 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         message.setMovieId(movie.getMovieId());
         message.setText(msg);
         EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-
+        Comment comment = new Comment();
+        comment.setCommenter(Constant.CurrentUser);
+        comment.setMovie(movie);
+        comment.setMsg(msg);
+        comment.setTime(new Date());
+        data.add(0, comment);
+        bottomSheetAdapter.notifyDataSetChanged();
 //        FirstLevelComment firstLevelComment = new FirstLevelComment();
 //        firstLevelComment.setUserName("赵丽颖");
 //        firstLevelComment.setId(bottomSheetAdapter.getItemCount() + 1 + "");
@@ -190,7 +202,8 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
 //        firstLevelComment.setContent(msg);
 //        firstLevelComment.setLikeCount(0);
 //        data.add(0, firstLevelComment);
-          rv_dialog_lists.scrollToPosition(0);
+        rv_dialog_lists.scrollToPosition(0);
+        mListener.onAddComment();
     }
 
     private void dismissInputDialog() {
@@ -212,8 +225,8 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
     }
 
     //在项目中是从服务器获取数据，其实就是一级评论分页获取
-    @Override
     public void onLoadMoreRequested() {
+        bottomSheetAdapter.loadMoreComplete();
 //        Log.e("ShowCommentDialog", "加载更多");
 //        if (data.size() >= totalCount) {
 //            bottomSheetAdapter.loadMoreEnd(false);
@@ -243,5 +256,9 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface OnAddCommentListener {
+        void onAddComment();
     }
 }

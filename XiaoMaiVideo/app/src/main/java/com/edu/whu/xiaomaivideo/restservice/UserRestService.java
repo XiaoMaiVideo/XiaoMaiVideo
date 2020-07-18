@@ -69,9 +69,9 @@ public class UserRestService {
         }.execute(user);
     }
 
-    public static void getUserByID(final long userId, final RestCallback restCallback) {
+    public static void getUserByID(final long userId, final UserRestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
-            RestCallback callback = restCallback;
+            UserRestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... number) {
                 String url = Constant.BASEURL+"user/"+ number[0];
@@ -82,7 +82,9 @@ public class UserRestService {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                callback.onSuccess(jsonObject.getInteger("code"));
+                int responseNum = jsonObject.getInteger("code");
+                User user = jsonObject.getObject("data", User.class);
+                callback.onSuccess(responseNum, user);
             }
         }.execute(userId);
     }

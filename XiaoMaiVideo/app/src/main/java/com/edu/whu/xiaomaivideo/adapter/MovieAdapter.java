@@ -91,7 +91,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         // TODO: 其他消息暂未显示到item上
         holder.likeButton.setChecked(Constant.CurrentUser.isLikeMovie(mMovies.get(position).getMovieId()));
-        // holder.itemView.setOnClickListener(view -> mListener.onClick(position));
+        holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
+        holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
+        holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
+
     }
     @Override
     public int getItemCount() {
@@ -101,8 +104,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
         JzvdStd jzvdStd;
         ImageView userAvatar, shareButton, commentButton;
-        TextView userNickname, publishTime, movieDescription, likeNum, starNum, commentNum;
-        ShineButton likeButton, starButton;
+        TextView userNickname, publishTime, movieDescription, likeNum, commentNum, shareNum;
+        ShineButton likeButton;
         ConstraintLayout videoInfoLayout;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -113,11 +116,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             jzvdStd = itemView.findViewById(R.id.video);
             shareButton = itemView.findViewById(R.id.shareButton);
             commentButton = itemView.findViewById(R.id.commentButton);
-            likeButton = itemView.findViewById(R.id.likebutton);
-            starButton = itemView.findViewById(R.id.starbutton);
-            likeNum = itemView.findViewById(R.id.textView6);
-            starNum = itemView.findViewById(R.id.textView7);
-            commentNum = itemView.findViewById(R.id.textView8);
+            likeButton = itemView.findViewById(R.id.likeButton);
+            likeNum = itemView.findViewById(R.id.likeNum);
+            commentNum = itemView.findViewById(R.id.commentNum);
+            shareNum = itemView.findViewById(R.id.shareNum);
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
 
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +157,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                         // 按下点赞按钮
                         // 如果用户没点赞，就是点赞
                         if (likeButton.isChecked()) {
-                            // TODO: 在界面更新点赞数
+                            mMovies.get(getAdapterPosition()).setLikednum(mMovies.get(getAdapterPosition()).getLikednum()+1);
+                            likeNum.setText(mMovies.get(getAdapterPosition()).getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("like");
                             message.setSenderId(Constant.CurrentUser.getUserId());
@@ -165,7 +168,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                         }
                         // 如果用户点了赞，就是取消点赞
                         else {
-                            // TODO: 在界面更新点赞数
+                            mMovies.get(getAdapterPosition()).setLikednum(mMovies.get(getAdapterPosition()).getLikednum()-1);
+                            likeNum.setText(mMovies.get(getAdapterPosition()).getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("unlike");
                             message.setSenderId(Constant.CurrentUser.getUserId());
@@ -176,17 +180,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                     }
                 }
             });
-            //收藏
-            starButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(View view, boolean checked) {
-                }
-            });
+
             //评论
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new ShowCommentDialog(context,mMovies.get(getAdapterPosition())).show();
+                    new ShowCommentDialog(context, mMovies.get(getAdapterPosition()), new ShowCommentDialog.OnAddCommentListener() {
+                        @Override
+                        public void onAddComment() {
+                            mMovies.get(getAdapterPosition()).setCommentnum(mMovies.get(getAdapterPosition()).getCommentnum()+1);
+                            commentNum.setText(mMovies.get(getAdapterPosition()).getCommentnum()+"");
+                        }
+                    }).show();
                 }
             });
 
@@ -212,7 +217,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                     popupView.delayDismiss(1500);
                                                 }
                                                 else {
-                                                    // TODO: 应用内分享
+                                                    mMovies.get(getAdapterPosition()).setSharenum(mMovies.get(getAdapterPosition()).getSharenum()+1);
+                                                    shareNum.setText(mMovies.get(getAdapterPosition()).getSharenum()+"");
+                                                    // TODO: 应用内分享，发送后端请求
                                                 }
                                             }
                                             else {

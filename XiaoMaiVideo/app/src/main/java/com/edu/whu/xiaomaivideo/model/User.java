@@ -194,7 +194,7 @@ public class User {
         movies.add(movie);
     }
 
-    // 判断用户是否点赞
+    // 判断某个用户是否点赞
     public boolean isLikeMovie(long movieId) {
         if (this.movies == null) {
             return false;

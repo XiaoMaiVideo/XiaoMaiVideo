@@ -33,7 +33,7 @@ import java.util.Objects;
  */
 public class LSFMessageActivity extends AppCompatActivity {
     MentionedModel mentionedModel;
-    ActivityLcfMessageBinding activityMentionedBinding;
+    ActivityLcfMessageBinding activityLcfMessageBinding;
     LSCMessageAdapter mAdapter;
     List<User> oldUsers, newUsers;
     List<MessageVO> oldMessageVOs, newMessageVOs;
@@ -43,9 +43,9 @@ public class LSFMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mentionedModel =new ViewModelProvider(Objects.requireNonNull(this)).get(MentionedModel.class);
-        activityMentionedBinding = DataBindingUtil.setContentView(this,R.layout.activity_lcf_message);
-        activityMentionedBinding.setViewmodel(mentionedModel);
-        activityMentionedBinding.setLifecycleOwner(this);
+        activityLcfMessageBinding = DataBindingUtil.setContentView(this,R.layout.activity_lcf_message);
+        activityLcfMessageBinding.setViewmodel(mentionedModel);
+        activityLcfMessageBinding.setLifecycleOwner(this);
         LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
         dialog.show();
         mType = getIntent().getStringExtra("type");
@@ -82,8 +82,8 @@ public class LSFMessageActivity extends AppCompatActivity {
     private void initAdapter() {
         mAdapter = new LSCMessageAdapter(this, mType, oldUsers, newUsers, oldMessageVOs, newMessageVOs);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        activityMentionedBinding.recyclerViewMentioned.setLayoutManager(linearLayoutManager);
-        activityMentionedBinding.recyclerViewMentioned.setAdapter(mAdapter);
-        activityMentionedBinding.recyclerViewMentioned.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        activityLcfMessageBinding.recyclerViewMentioned.setLayoutManager(linearLayoutManager);
+        activityLcfMessageBinding.recyclerViewMentioned.setAdapter(mAdapter);
+        activityLcfMessageBinding.recyclerViewMentioned.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 }
