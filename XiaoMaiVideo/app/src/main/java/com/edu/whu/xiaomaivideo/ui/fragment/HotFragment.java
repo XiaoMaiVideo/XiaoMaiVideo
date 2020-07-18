@@ -98,92 +98,7 @@ public class HotFragment extends Fragment {
 
     private void setRecyclerView() {
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList, new MovieAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos) {
-                // 跳转进入详情页面
-                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                intent.putExtra("movie", Parcels.wrap(Movie.class, movieList.get(pos)));
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLikeButtonClick(int pos, ShineButton shineButton, TextView likeNum) {
-                // 按下点赞按钮
-                // 如果用户没点赞，就是点赞
-                if (shineButton.isChecked()) {
-                    // TODO: 在界面更新点赞数
-                    MessageVO message = new MessageVO();
-                    message.setMsgType("like");
-                    message.setSenderId(Constant.CurrentUser.getUserId());
-                    message.setReceiverId(movieList.get(pos).getPublisher().getUserId());
-                    message.setMovieId(movieList.get(pos).getMovieId());
-                    EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-                }
-                // 如果用户点了赞，就是取消点赞
-                else {
-
-                }
-            }
-
-            @Override
-            public void onStarButtonClick(int pos, ShineButton shineButton, TextView starNum) {
-                // 按下收藏按钮
-            }
-
-            @Override
-            public void onShareButtonClick(int pos, ImageView imageView) {
-                // 按下分享按钮
-                new XPopup.Builder(getContext())
-                        .atView(imageView)
-                        .asAttachList(new String[]{"分享到动态", "分享到其他应用"},
-                                new int[]{R.drawable.game, R.drawable.food},
-                                new OnSelectListener() {
-                                    @Override
-                                    public void onSelect(int position, String text) {
-                                        if (position == 0) {
-                                            // TODO: 应用内分享
-                                        }
-                                        else {
-                                            // TODO: 应用外分享
-                                            String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
-                                            String fileName = System.currentTimeMillis() + ".mp4";
-                                            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                                            new XPopup.Builder(getActivity())
-                                                    .asCustom(progressDialog)
-                                                    .show();
-                                            int downloadId = PRDownloader.download(movieList.get(pos).getUrl(), filePath, fileName)
-                                                    .build()
-                                                    .setOnProgressListener(progress -> progressDialog.setProgress((int) (((float)progress.currentBytes/(float)progress.totalBytes)*100)))
-                                                    .start(new OnDownloadListener() {
-                                                        @Override
-                                                        public void onDownloadComplete() {
-                                                            progressDialog.dismissWith(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    String path = new File(filePath).getPath()+"/"+fileName;
-                                                                    Uri uri = InsertVideoUtil.insertVideo(getActivity(), path);
-                                                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                                                    shareIntent.setType("video/*");
-                                                                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                                                    // TODO: 回调怎么办？分享到微信好像没回调
-                                                                    startActivity(Intent.createChooser(shareIntent, "分享"));
-                                                                }
-                                                            });
-                                                        }
-
-                                                        @Override
-                                                        public void onError(Error error) {
-
-                                                        }
-                                                    });
-
-                                        }
-                                    }
-                                })
-                        .show();
-            }
-        }));
+        fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
         fragmentHotBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -210,12 +125,6 @@ public class HotFragment extends Fragment {
 
             }
         });
-    }
-
-    @Nullable
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void autoPlayVideo(RecyclerView recyclerView) {

@@ -89,11 +89,25 @@ dependencies {
     // 文件下载第三方库
     implementation 'com.mindorks.android:prdownloader:0.5.0'
 
+    //万能适配器
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+
+    implementation 'com.android.support:appcompat-v7:29.0.0'
+    implementation 'com.android.support:recyclerview-v7:29.0.0'
+    implementation 'com.android.support:design:29.0.0'
+
+    // 圆角圆形图片控件 主要是可以带边框
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    // 屏幕适配
+    // implementation 'me.jessyan:autosize:1.1.2'
+
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 
 
 }

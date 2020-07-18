@@ -4,7 +4,7 @@
  * Update Time: 2020/7/7
  */
 
-package com.edu.whu.xiaomaivideo.util;
+package com.edu.whu.xiaomaivideo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
