@@ -2,6 +2,7 @@
  * Author: 张俊杰
  * Create Time: 2020/7/16
  * Update Time: 2020/7/16
+ * 点赞/评论/@的消息
  */
 
 package com.edu.whu.xiaomaivideo.model;
@@ -10,7 +11,7 @@ import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
 
-public class MessageVO {
+public class MessageVO extends LitePalSupport {
     private Long senderId;
     private Long receiverId;
     private String text;

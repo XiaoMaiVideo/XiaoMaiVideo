@@ -165,7 +165,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                         }
                         // 如果用户点了赞，就是取消点赞
                         else {
-
+                            // TODO: 在界面更新点赞数
+                            MessageVO message = new MessageVO();
+                            message.setMsgType("unlike");
+                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
+                            message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
+                            EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                         }
                     }
                 }

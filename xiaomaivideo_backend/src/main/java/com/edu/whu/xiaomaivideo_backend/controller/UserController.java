@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -172,5 +173,19 @@ public class UserController {
             // 登录成功
             return AjaxResponse.success(user1);
         }
+    }
+
+    @PostMapping(value = "/user/getSimpleUserInfo")
+    public @ResponseBody AjaxResponse getSimpleUserInfo(@RequestBody Long[] userIds) {
+        List<User> users = new ArrayList<>();
+        for (Long userId: userIds) {
+            User user1 = userRestService.getUserById(userId);
+            User user2 = new User();
+            user2.setNickname(user1.getNickname());
+            user2.setAvatar(user1.getAvatar());
+            user2.setDescription(user1.getDescription());
+            users.add(user2);
+        }
+        return AjaxResponse.success(users);
     }
 }
