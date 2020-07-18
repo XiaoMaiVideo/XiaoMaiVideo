@@ -34,6 +34,7 @@ public class UserController {
     @Resource(name="movieRestJPAServiceImpl")
     MovieRestService movieRestService;
 
+    //添加用户
     @PostMapping("/user")
     public @ResponseBody AjaxResponse saveUser(@RequestBody User user) {
         user.setUserId(null);
@@ -96,7 +97,7 @@ public class UserController {
 //        }
 //    }
 
-
+    //删除用户
     @DeleteMapping("/user/{id}")
     public @ResponseBody AjaxResponse deleteUser(@PathVariable Long id) {
         userRestService.deleteUser(id);

@@ -21,17 +21,16 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue
-    private Long userId;
-    private String username;
-
-    private String password;
-    private String gender;
-    private String nickname;
-    private String avatar;
-    private String description;
-    private String birthday;
-    private String area;
-    private String workplace;
+    private Long userId;        //ID
+    private String username;    //用户名
+    private String password;    //密码
+    private String gender;      //性别
+    private String nickname;    //昵称
+    private String avatar;      //
+    private String description; //个性签名
+    private String birthday;    //生日
+    private String area;        //地区
+    private String workplace;   //公司
 
     @JsonIgnoreProperties(value = {"publisher","likers","comments"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher")
@@ -191,17 +190,11 @@ public class User {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
+    public void setArea(String area) { this.area = area; }
 
-    public String getWorkplace() {
-        return workplace;
-    }
+    public String getWorkplace() {return workplace; }
 
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
-    }
+    public void setWorkplace(String workplace) { this.workplace = workplace; }
 
     @Override
     public boolean equals(Object o) {
