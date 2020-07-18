@@ -10,11 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.VideoView;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLoginBinding;
@@ -22,6 +26,7 @@ import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.testvideo.MyVideo;
 import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
 
 import java.util.Objects;
@@ -35,11 +40,11 @@ public class LoginActivity extends AppCompatActivity {
     private String rePassword;
     ActivityLoginBinding activityLoginBinding;
     LoginViewModel loginViewModel;
-    @Override
+    private MyVideo myVideo;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         loginViewModel = new ViewModelProvider(Objects.requireNonNull(this)).get(LoginViewModel.class);
         activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         activityLoginBinding.setViewmodel(loginViewModel);
@@ -173,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         activityLoginBinding.textView2.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
             @Override
             public void onClick(View view) {
                 if (activityLoginBinding.textView2.getText().equals("没有账号？")){
@@ -190,4 +196,33 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    public void initView(){
+        myVideo = (MyVideo) findViewById(R.id.myvideo);
+        //播放路径
+        myVideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video_bg));
+        //播放
+        myVideo.start();
+        //循环播放
+        myVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                myVideo.start();
+            }
+        });
+    }
+    @Override
+    protected void onRestart() {
+        //返回重新加载
+        initView();
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onStop() {
+        //防止锁屏或者弹出的时候，音乐在播放
+        myVideo.stopPlayback();
+        super.onStop();
+    }
+
 }

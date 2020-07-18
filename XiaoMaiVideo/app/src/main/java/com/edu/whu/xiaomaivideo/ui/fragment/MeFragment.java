@@ -76,7 +76,7 @@ public class MeFragment extends Fragment {
 
     @BindingAdapter("app:avatarSrc")
     public static void setAvatar(ImageView imageView, String url) {
-        // 用户圆形头像
+        //用户圆形头像
         Glide.with(imageView.getContext())
                 .load(url)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))

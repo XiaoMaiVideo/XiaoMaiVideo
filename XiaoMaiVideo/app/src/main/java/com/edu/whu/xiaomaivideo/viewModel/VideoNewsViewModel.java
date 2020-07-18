@@ -6,8 +6,19 @@
 
 package com.edu.whu.xiaomaivideo.viewModel;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class VideoNewsViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+    public MutableLiveData<String> mText;
+
+    public VideoNewsViewModel() {
+        mText = new MutableLiveData<>();
+        mText.setValue("This is VideoNewsView fragment");
+    }
+
+    public LiveData<String> getText() {
+        return mText;
+    }
 }
