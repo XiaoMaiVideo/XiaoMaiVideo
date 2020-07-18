@@ -187,10 +187,10 @@ public class MeFragment extends Fragment {
 
         meViewModel.setUser(Constant.CurrentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
-        menuItems.add(new Pair<>("我的收藏", R.drawable.star));
-        menuItems.add(new Pair<>("隐私设置", R.drawable.discover));
-        menuItems.add(new Pair<>("通知设置", R.drawable.discover));
-        menuItems.add(new Pair<>("清除缓存", R.drawable.discover));
+        menuItems.add(new Pair<>("我的收藏", R.drawable.collect));
+        menuItems.add(new Pair<>("隐私设置", R.drawable.privacy));
+        menuItems.add(new Pair<>("通知设置", R.drawable.notification));
+        menuItems.add(new Pair<>("清除缓存", R.drawable.clean));
         menuItems.add(new Pair<>("退出登录", R.drawable.logout));
         mAdapter.notifyDataSetChanged();
     }

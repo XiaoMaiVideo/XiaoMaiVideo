@@ -7,7 +7,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/_xpopup_white_color"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -25,6 +24,7 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/shape"
             android:hint="发表你的评论" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        app:buttonColor="@color/crimson"
         app:buttonText="发表"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

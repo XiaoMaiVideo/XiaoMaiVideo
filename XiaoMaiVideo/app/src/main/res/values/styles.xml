@@ -25,7 +25,7 @@
         <!--阴影  -->
         <item name="android:windowIsTranslucent">false</item><!--半透明-->
         <!--背景透明-->
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <!-- 还可以加入一些弹出和退出的动画 (lan)-->
     </style>
 
