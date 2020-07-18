@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -11,6 +11,7 @@ package com.edu.whu.xiaomaivideo_backend.controller;
 
 import com.edu.whu.xiaomaivideo_backend.model.AjaxResponse;
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
+import com.edu.whu.xiaomaivideo_backend.model.Share;
 import com.edu.whu.xiaomaivideo_backend.model.User;
 import com.edu.whu.xiaomaivideo_backend.service.MovieRestService;
 import com.edu.whu.xiaomaivideo_backend.service.UserRestService;
@@ -74,6 +75,28 @@ public class UserController {
             return AjaxResponse.failure();
         }
     }
+
+    @PostMapping("/shareMovies")
+    public @ResponseBody AjaxResponse saveShareMovies(@RequestBody User user) {
+        User user1 = userRestService.getUser(user.getUsername());
+        List<Share> shares=user1.getShares();
+        for (Share share:user.getShares()){
+            share.setMovie(movieRestService.getMovieById(share.getMovie().getMovieId()));
+            share.setShareDate(new Date());
+        }
+        shares.addAll(user.getShares());
+        user1.setShares(shares);
+        try {
+            userRestService.saveUser(user1);
+            return AjaxResponse.success(user1);
+        }
+        catch (Exception e) {
+            return AjaxResponse.failure();
+        }
+    }
+
+
+
 
 
 //    //用户点赞视频，可以同时多个，外层用户需要用户名
