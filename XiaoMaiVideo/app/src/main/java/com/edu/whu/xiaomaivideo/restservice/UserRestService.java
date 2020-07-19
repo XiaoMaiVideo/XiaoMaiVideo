@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo.restservice;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -23,7 +24,11 @@ import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRestService {
+    static final String TAG = "UserRestService";
     @SuppressLint("StaticFieldLeak")
     public static void addUser(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
@@ -64,9 +69,9 @@ public class UserRestService {
         }.execute(user);
     }
 
-    public static void getUserByID(final long userId, final RestCallback restCallback) {
+    public static void getUserByID(final long userId, final UserRestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
-            RestCallback callback = restCallback;
+            UserRestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... number) {
                 String url = Constant.BASEURL+"user/"+ number[0];
@@ -77,7 +82,9 @@ public class UserRestService {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                callback.onSuccess(jsonObject.getInteger("code"));
+                int responseNum = jsonObject.getInteger("code");
+                User user = jsonObject.getObject("data", User.class);
+                callback.onSuccess(responseNum, user);
             }
         }.execute(userId);
     }
@@ -157,5 +164,40 @@ public class UserRestService {
                 callback.onSuccess(responseNum);
             }
         }.execute(movieId);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public static void getUserSimpleInfoList(final List<Long> userIds, final UserRestCallback restCallback) {
+
+        new AsyncTask<Long, Integer, String>() {
+            UserRestCallback userRestCallback = restCallback;
+            @Override
+            protected String doInBackground(Long... numbers) {
+                // 发同步请求
+                String url = Constant.BASEURL+"/user/getSimpleUserInfo";
+                String json = JSON.toJSONString(numbers);
+                Log.e(TAG, "发送，"+json);
+                return HttpUtil.sendPostRequest(url, json);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.e("UserRestService", s);
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                List<User> users = new ArrayList<>();
+                for (int i=0;i<jsonArray.size();i++) {
+                    JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    User user = JSON.toJavaObject(jsonObj, User.class);
+                    users.add(user);
+                }
+                userRestCallback.onSuccess(responseNum, users);
+                // int responseNum = jsonObject.getInteger("code");
+                // List<User> users = new ArrayList<>();
+                // userRestCallback.onSuccess();
+            }
+        }.execute(userIds.toArray(new Long[userIds.size()]));
     }
 }

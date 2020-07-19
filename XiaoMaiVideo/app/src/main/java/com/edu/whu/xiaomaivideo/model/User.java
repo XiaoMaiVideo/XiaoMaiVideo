@@ -1,12 +1,13 @@
 /**
- * Author: 张俊杰、叶俊豪
+ * Author: 张俊杰、叶俊豪、李季东
  * Create Time: 2020/7/8
- * Update Time: 2020/7/17
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.edu.whu.xiaomaivideo.util.Constant;
 
 import org.parceler.Parcel;
 
@@ -26,6 +27,7 @@ public class User {
     private String area;
     private String workplace;
 
+    private List<Comment> comments;
     private List<Message> sendmsgs;
     private List<Movie> movies;
     private List<Message> receivemsgs;
@@ -142,6 +144,10 @@ public class User {
         this.workplace = workplace;
     }
 
+    public List<Comment> getComments() { return comments; }
+
+
+    public void setComments(List<Comment> comments) { this.comments = comments; }
     public List<Message> getSendmsgs() {
         return sendmsgs;
     }
@@ -188,9 +194,12 @@ public class User {
         movies.add(movie);
     }
 
-    // 判断用户是否点赞
+    // 判断某个用户是否点赞
     public boolean isLikeMovie(long movieId) {
         if (this.movies == null) {
+            return false;
+        }
+        else if (this.getUserId() == 0) {
             return false;
         }
         for (Movie movie : this.likeMovies) {

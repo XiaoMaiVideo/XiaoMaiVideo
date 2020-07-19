@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -108,6 +108,18 @@ public class OneToOneWebsocketServer {
                 Movie movie = movieRestService.getMovieById(messageVO.getMovieId());
                 movies.add(movie);
                 sender.setLikeMovies(movies);
+                try {
+                    userRestService.saveUser(sender);
+                }
+                catch (Exception e) {
+                }
+                break;
+            case "unlike":
+                // 取消点赞使用websocket
+                List<Movie> movies1 = sender.getLikeMovies();
+                Movie movie1 = movieRestService.getMovieById(messageVO.getMovieId());
+                movies1.remove(movie1);
+                sender.setLikeMovies(movies1);
                 try {
                     userRestService.saveUser(sender);
                 }

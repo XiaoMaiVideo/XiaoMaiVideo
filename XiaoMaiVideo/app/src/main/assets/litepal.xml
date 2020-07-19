@@ -14,5 +14,6 @@
     <list>
 
         <mapping class="com.edu.whu.xiaomaivideo.model.MessageVO" />
+        <mapping class="com.edu.whu.xiaomaivideo.model.Message" />
     </list>
 </litepal>

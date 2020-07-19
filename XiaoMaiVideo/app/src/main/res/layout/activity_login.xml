@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="小麦"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="65sp"
 
             app:layout_constraintBottom_toTopOf="@id/accountTextInputLayout"
@@ -132,9 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:buttonColor="?attr/colorPrimary"
-            app:textColor="#FFB444"
+            app:textColor="@color/deepskyblue"
             app:buttonText="登录"
-            android:textSize="18sp"
+
+            android:textSize="30sp"
             app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textView2"

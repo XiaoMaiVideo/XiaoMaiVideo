@@ -68,7 +68,7 @@ import java.util.Objects;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class HotFragment extends Fragment {
+public class  HotFragment extends Fragment {
 
     private HotViewModel hotViewModel;
     FragmentHotBinding fragmentHotBinding;
@@ -125,12 +125,6 @@ public class HotFragment extends Fragment {
 
             }
         });
-    }
-
-    @Nullable
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void autoPlayVideo(RecyclerView recyclerView) {

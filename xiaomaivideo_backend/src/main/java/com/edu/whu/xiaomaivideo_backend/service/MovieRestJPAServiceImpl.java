@@ -47,6 +47,7 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
 
     @Override
     public Page<Movie> getAll(int page, int total) {
+        // TODO: 按照发布时间倒序
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime"));
         return movieRepository.findAll(pageable);
 //        //将查询结果转换为List

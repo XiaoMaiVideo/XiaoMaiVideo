@@ -8,6 +8,16 @@ package com.edu.whu.xiaomaivideo.restcallback;
 
 import com.edu.whu.xiaomaivideo.model.User;
 
-public interface UserRestCallback {
-    public void onSuccess(int resultCode, User user);
+import java.util.List;
+
+public class UserRestCallback {
+    public void onSuccess(int resultCode, User user)
+    {
+
+    }
+
+    public void onSuccess(int resultCode, List<User> users)
+    {
+
+    }
 }

@@ -13,8 +13,8 @@
         android:layout_gravity="center"
         android:id="@+id/icon1"
         android:src="@drawable/me"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
 
     <TextView
         android:id="@+id/text1"

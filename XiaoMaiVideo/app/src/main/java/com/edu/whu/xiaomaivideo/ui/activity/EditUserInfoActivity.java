@@ -113,6 +113,13 @@ public class EditUserInfoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
     public void setPasswordButtonListener() {
         button3.setButtonOnClickListener(new View.OnClickListener() {
             @Override

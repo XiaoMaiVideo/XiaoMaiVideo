@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.edu.whu.xiaomaivideo">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,17 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.FollowActivity"></activity>
+        <activity android:name=".ui.activity.MovieTypeActivity" />
+        <activity android:name=".ui.activity.FollowActivity" />
         <activity android:name=".ui.activity.TakeVideoActivity" />
         <activity android:name=".ui.activity.UserInfoActivity" />
         <activity android:name=".ui.activity.EditUserInfoActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.VideoDetailActivity" />
         <activity android:name=".ui.activity.MessageChatActivity" />
-        <activity android:name=".ui.activity.MessageMentionedActivity" />
-        <activity android:name=".ui.activity.MessageCommentActivity" />
-        <activity android:name=".ui.activity.MessageLikeActivity" />
-        <activity android:name=".ui.activity.MessageSubscribeActivity" />
+        <activity android:name=".ui.activity.LSFMessageActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

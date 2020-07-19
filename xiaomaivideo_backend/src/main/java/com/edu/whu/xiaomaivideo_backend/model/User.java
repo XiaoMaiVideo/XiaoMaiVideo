@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -9,6 +9,8 @@ package com.edu.whu.xiaomaivideo_backend.model;
 
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,17 +23,16 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue
-    private Long userId;
-    private String username;
-
-    private String password;
-    private String gender;
-    private String nickname;
-    private String avatar;
-    private String description;
-    private String birthday;
-    private String area;
-    private String workplace;
+    private Long userId;        //ID
+    private String username;    //用户名
+    private String password;    //密码
+    private String gender;      //性别
+    private String nickname;    //昵称
+    private String avatar;      //
+    private String description; //个性签名
+    private String birthday;    //生日
+    private String area;        //地区
+    private String workplace;   //公司
 
     @JsonIgnoreProperties(value = {"publisher","likers","comments"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher")
@@ -47,6 +48,7 @@ public class User {
 
     @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "follow_tabel",joinColumns = @JoinColumn(name = "followers_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id"))
     private List<User> following;
@@ -60,11 +62,21 @@ public class User {
     private List<Message> receivemsgs=new ArrayList<>();
 
 
-    @JsonIgnoreProperties(value = {"likers","comments"})
+    @JsonIgnoreProperties(value = {"likers","comments","publisher"})
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "like_tabel",joinColumns = @JoinColumn(name = "userId"),inverseJoinColumns = @JoinColumn(name="movieId"))
     private List<Movie> likeMovies=new ArrayList<>();
 
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Share> shares=new ArrayList<>();
+
+    public List<Share> getShares() {
+        return shares;
+    }
+
+    public void setShares(List<Share> shares) {
+        this.shares = shares;
+    }
 
     public List<User> getFollowing() {
         return following;
@@ -191,17 +203,11 @@ public class User {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
+    public void setArea(String area) { this.area = area; }
 
-    public String getWorkplace() {
-        return workplace;
-    }
+    public String getWorkplace() {return workplace; }
 
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
-    }
+    public void setWorkplace(String workplace) { this.workplace = workplace; }
 
     @Override
     public boolean equals(Object o) {

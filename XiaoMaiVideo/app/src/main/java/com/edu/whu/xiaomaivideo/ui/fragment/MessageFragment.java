@@ -6,7 +6,6 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MessageAdapter;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.MessageFragmentBinding;
-import com.edu.whu.xiaomaivideo.ui.activity.SearchActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
 import com.edu.whu.xiaomaivideo.viewModel.MessageViewModel;
 
 import java.util.Objects;
@@ -47,15 +43,6 @@ public class MessageFragment extends Fragment {
         messageFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.message_fragment,container,false);
         messageFragmentBinding.setViewmodel(messageViewModel);
         messageFragmentBinding.setLifecycleOwner(getActivity());
-        /*
-        messageFragmentBinding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
         initAdapter();
 
         return messageFragmentBinding.getRoot();
@@ -64,12 +51,9 @@ public class MessageFragment extends Fragment {
         mAdapter=new MessageAdapter(getActivity(), new MessageAdapter.OnItemClickListener()
         {
             @Override
-            public void onClick(int pos)
-            {
-                //点击item发生的事情
+            public void onClick(int pos) {
+                // 点击item发生的事情
                 Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
-//                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
-//                startActivity(intent);
             }
         });
         messageFragmentBinding.recyclerView3.setAdapter(mAdapter);

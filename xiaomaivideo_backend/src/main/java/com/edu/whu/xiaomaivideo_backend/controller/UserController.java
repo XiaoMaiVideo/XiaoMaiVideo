@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -11,6 +11,7 @@ package com.edu.whu.xiaomaivideo_backend.controller;
 
 import com.edu.whu.xiaomaivideo_backend.model.AjaxResponse;
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
+import com.edu.whu.xiaomaivideo_backend.model.Share;
 import com.edu.whu.xiaomaivideo_backend.model.User;
 import com.edu.whu.xiaomaivideo_backend.service.MovieRestService;
 import com.edu.whu.xiaomaivideo_backend.service.UserRestService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +36,7 @@ public class UserController {
     @Resource(name="movieRestJPAServiceImpl")
     MovieRestService movieRestService;
 
+    //添加用户
     @PostMapping("/user")
     public @ResponseBody AjaxResponse saveUser(@RequestBody User user) {
         user.setUserId(null);
@@ -43,6 +46,9 @@ public class UserController {
             return new AjaxResponse(4, "The user already exists", false);
         }
         try {
+            // 给一个默认的昵称和头像
+            user.setNickname(user.getUsername());
+            user.setAvatar("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1093847288,3038136586&fm=26&gp=0.jpg");
             userRestService.saveUser(user);
             //@JsonIgnoreProperties(value="password", allowSetters=true)
             //不会返回密码
@@ -74,6 +80,28 @@ public class UserController {
         }
     }
 
+    @PostMapping("/shareMovies")
+    public @ResponseBody AjaxResponse saveShareMovies(@RequestBody User user) {
+        User user1 = userRestService.getUser(user.getUsername());
+        List<Share> shares=user1.getShares();
+        for (Share share:user.getShares()){
+            share.setMovie(movieRestService.getMovieById(share.getMovie().getMovieId()));
+            share.setShareDate(new Date());
+        }
+        shares.addAll(user.getShares());
+        user1.setShares(shares);
+        try {
+            userRestService.saveUser(user1);
+            return AjaxResponse.success(user1);
+        }
+        catch (Exception e) {
+            return AjaxResponse.failure();
+        }
+    }
+
+
+
+
 
 //    //用户点赞视频，可以同时多个，外层用户需要用户名
 //    //内曾视频需要用户点赞视频的movieId
@@ -96,7 +124,7 @@ public class UserController {
 //        }
 //    }
 
-
+    //删除用户
     @DeleteMapping("/user/{id}")
     public @ResponseBody AjaxResponse deleteUser(@PathVariable Long id) {
         userRestService.deleteUser(id);
@@ -106,10 +134,12 @@ public class UserController {
     @PutMapping("/user")
     public @ResponseBody AjaxResponse updateUser(@RequestBody User user) {
         // 传上来密码是空的，先填个密码
+        User user1 = userRestService.getUser(user.getUsername());
         if (user.getPassword() == null || "".equals(user.getPassword())) {
-            User user1 = userRestService.getUserById(user.getUserId());
             user.setPassword(user1.getPassword());
         }
+        user.setMovies(user1.getMovies());
+        // TODO: 好像会把自己发的movie的userid变成null？慎用
         userRestService.updateUser(user);
         return AjaxResponse.success();
     }
@@ -148,5 +178,19 @@ public class UserController {
             // 登录成功
             return AjaxResponse.success(user1);
         }
+    }
+
+    @PostMapping(value = "/user/getSimpleUserInfo")
+    public @ResponseBody AjaxResponse getSimpleUserInfo(@RequestBody Long[] userIds) {
+        List<User> users = new ArrayList<>();
+        for (Long userId: userIds) {
+            User user1 = userRestService.getUserById(userId);
+            User user2 = new User();
+            user2.setNickname(user1.getNickname());
+            user2.setAvatar(user1.getAvatar());
+            user2.setDescription(user1.getDescription());
+            users.add(user2);
+        }
+        return AjaxResponse.success(users);
     }
 }

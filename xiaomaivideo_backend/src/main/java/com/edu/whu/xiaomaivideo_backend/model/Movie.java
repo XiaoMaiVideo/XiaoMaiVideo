@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 
@@ -10,8 +10,10 @@ package com.edu.whu.xiaomaivideo_backend.model;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="movie_table")
@@ -26,7 +28,9 @@ public class Movie {
     private String url;
     private String description;
     private String categories;
-
+    private int likednum;
+    private int commentnum;
+    private int sharenum;
 
     @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @ManyToOne
@@ -42,7 +46,29 @@ public class Movie {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "movie")
     private List<Comment> comments =new ArrayList<>();
 
+    public int getLikednum() {
+        return likers.size();
+    }
 
+    public void setLikednum(int likenum) {
+        this.likednum = likednum;
+    }
+
+    public int getCommentnum() {
+        return comments.size();
+    }
+
+    public void setCommentnum(int commentnum) {
+        this.commentnum = commentnum;
+    }
+
+    public int getSharenum() {
+        return sharenum;
+    }
+
+    public void setSharenum(int sharenum) {
+        this.sharenum = sharenum;
+    }
 
     public List<Comment> getComments() {
         return comments;
@@ -106,5 +132,18 @@ public class Movie {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return movieId.equals(movie.movieId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(publishTime, url, description, categories);
     }
 }
