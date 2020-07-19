@@ -17,17 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.util.EventBusMessage;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -57,7 +52,7 @@ public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ImageView imageView= ((FollowersAndFollowingViewHolder)holder).avatar;
-        Glide.with(mContext).load(Constant.CurrentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
+        Glide.with(mContext).load(Constant.currentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
         //((FollowersAndFollowingViewHolder)holder).username.setText(users.get(position).getUsername());
         ((FollowersAndFollowingViewHolder)holder).username.setText("测试");
         ((FollowersAndFollowingViewHolder)holder).description.setText("ceshi");

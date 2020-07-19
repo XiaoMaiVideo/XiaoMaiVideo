@@ -7,23 +7,17 @@
 package com.edu.whu.xiaomaivideo.service;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.MessageVOPool;
-import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.JWebSocketClient;
@@ -32,10 +26,8 @@ import com.edu.whu.xiaomaivideo.util.NotificationUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.java_websocket.handshake.ServerHandshake;
-import org.parceler.Parcels;
 
 import java.net.URI;
-import java.util.List;
 
 public class JWebSocketService extends Service {
 
@@ -107,7 +99,7 @@ public class JWebSocketService extends Service {
     }
 
     private void initSocketClient() {
-        URI uri = URI.create(Constant.WS_URL+Constant.CurrentUser.getUserId());
+        URI uri = URI.create(Constant.WS_URL+Constant.currentUser.getUserId());
         client = new JWebSocketClient(uri) {
             @Override
             public void onMessage(String message) {

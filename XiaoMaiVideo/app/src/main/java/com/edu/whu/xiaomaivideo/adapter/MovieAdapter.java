@@ -91,7 +91,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.movieDescription.setText(mMovies.get(position).getDescription());
 
         // TODO: 类别的标签还没显示
-        holder.likeButton.setChecked(Constant.CurrentUser.isLikeMovie(mMovies.get(position).getMovieId()));
+        holder.likeButton.setChecked(Constant.currentUser.isLikeMovie(mMovies.get(position).getMovieId()));
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
@@ -156,7 +156,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    if (Constant.CurrentUser.getUserId() == 0) {
+                    if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许操作
                         BasePopupView popupView = new XPopup.Builder(context)
                                 .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能点赞哦"))
@@ -173,7 +173,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                             likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("like");
-                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setSenderId(Constant.currentUser.getUserId());
                             message.setReceiverId(currentMovie.getPublisher().getUserId());
                             message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
@@ -184,7 +184,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                             likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("unlike");
-                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setSenderId(Constant.currentUser.getUserId());
                             message.setReceiverId(currentMovie.getPublisher().getUserId());
                             message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
@@ -223,7 +223,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                         public void onSelect(int position, String text) {
                                             if (position == 0) {
                                                 // TODO: 应用内分享
-                                                if (Constant.CurrentUser.getUserId() == 0) {
+                                                if (Constant.currentUser.getUserId() == 0) {
                                                     // 没登录，不允许操作
                                                     BasePopupView popupView = new XPopup.Builder(context)
                                                             .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能分享哦"))

@@ -6,9 +6,6 @@
 
 package com.edu.whu.xiaomaivideo.model;
 
-import com.stfalcon.chatkit.commons.models.IMessage;
-import com.stfalcon.chatkit.commons.models.IUser;
-
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 import org.parceler.Parcel;

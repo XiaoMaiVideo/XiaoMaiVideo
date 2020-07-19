@@ -102,10 +102,8 @@ dependencies {
     // 屏幕适配
     // implementation 'me.jessyan:autosize:1.1.2'
 
-    // 聊天视图
-    implementation 'com.github.stfalcon:chatkit:0.3.3'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
+    // 可分组的Adapter
+    implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.3.0'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

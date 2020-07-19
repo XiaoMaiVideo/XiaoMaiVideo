@@ -85,7 +85,7 @@ public class VideoNewsAdapter extends RecyclerView.Adapter<VideoNewsAdapter.MyVi
         holder.originator_movieDescription.setText(mMovies.get(position).getDescription());
 
         // TODO: 其他消息暂未显示到item上
-        holder.likeButton.setChecked(Constant.CurrentUser.isLikeMovie(mMovies.get(position).getMovieId()));
+        holder.likeButton.setChecked(Constant.currentUser.isLikeMovie(mMovies.get(position).getMovieId()));
         // holder.itemView.setOnClickListener(view -> mListener.onClick(position));
     }
     @Override
@@ -139,7 +139,7 @@ public class VideoNewsAdapter extends RecyclerView.Adapter<VideoNewsAdapter.MyVi
                         // TODO: 在界面更新点赞数
                         MessageVO message = new MessageVO();
                         message.setMsgType("like");
-                        message.setSenderId(Constant.CurrentUser.getUserId());
+                        message.setSenderId(Constant.currentUser.getUserId());
                         message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
                         message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
                         EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));

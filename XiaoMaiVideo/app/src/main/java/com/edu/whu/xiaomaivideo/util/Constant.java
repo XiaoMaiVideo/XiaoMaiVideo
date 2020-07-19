@@ -22,7 +22,7 @@ public class Constant {
     public static final String WS_URL = "ws://139.224.133.166:8088/ws/";
     public static final String RESPONSE_ERROR = "Response Error!";
 
-    public static User CurrentUser = User.Visitor(); // 尚未登录
+    public static User currentUser = User.Visitor(); // 尚未登录
 
     public static final int RESULT_SUCCESS = 200;
     public static final int RESULT_FAILURE = 400;
@@ -44,6 +44,11 @@ public class Constant {
     public static final String RECEIVE_MESSAGE = "Receive WebSocket Message";
     public static final String RECOMMEND = "Recommend";
     public static final String LOCAL_HOT = "Local Hot";
+
+    public static boolean isLocationPermissionGiven = true;
+    public static boolean isCameraPermissionGiven = true;
+    public static boolean isStoragePermissionGiven = true;
+    public static MutableLiveData<String> currentLocation = new MutableLiveData<>("");
 
     public static final int MSEC = 1;
     public static final int SEC  = 1000;

@@ -7,8 +7,6 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +28,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.EditUserInfoAdapter;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
-import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.dialog.ResetPasswordDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -45,8 +39,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.jkt.tcompress.OnCompressListener;
 import com.jkt.tcompress.TCompress;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnConfirmListener;
-import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.lxj.xpopupext.listener.CityPickerListener;
 import com.lxj.xpopupext.listener.TimePickerListener;
 import com.lxj.xpopupext.popup.CityPickerPopup;
@@ -59,7 +51,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import de.mustafagercek.library.LoadingButton;
@@ -85,7 +76,7 @@ public class EditUserInfoActivity extends AppCompatActivity {
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
         imageView = findViewById(R.id.imageView);
-        Glide.with(this).load(Constant.CurrentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
+        Glide.with(this).load(Constant.currentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
         setRecyclerView();
         setInfoButtonListener();
         setProfileButtonListener();
@@ -138,23 +129,23 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                     TextInputLayout reNewPasswordLayout = dialog.findViewById(R.id.reNewPasswordLayout);
                                     reNewPasswordLayout.setError("两次输入新密码不一致！");
                                 }
-                                else if (!originPassword.equals(Constant.CurrentUser.getPassword())) {
+                                else if (!originPassword.equals(Constant.currentUser.getPassword())) {
                                     TextInputLayout originPasswordLayout = dialog.findViewById(R.id.originPasswordLayout);
                                     originPasswordLayout.setError("原密码输入错误！");
                                 }
                                 else {
-                                    Constant.CurrentUser.setPassword(newPassword);
+                                    Constant.currentUser.setPassword(newPassword);
                                     LoadingButton loadingButton = dialog.findViewById(R.id.tv_confirm);
                                     loadingButton.onStartLoading();
-                                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
+                                    UserRestService.modifyUser(Constant.currentUser, new RestCallback() {
                                         @Override
                                         public void onSuccess(int resultCode) {
                                             loadingButton.onStopLoading();
                                             // 改缓存的数据
                                             SharedPreferences sp = getApplication().getSharedPreferences("data", Context.MODE_PRIVATE);;
                                             SharedPreferences.Editor editor = sp.edit();
-                                            editor.putString("username", Constant.CurrentUser.getUsername());
-                                            editor.putString("password", Constant.CurrentUser.getPassword());
+                                            editor.putString("username", Constant.currentUser.getUsername());
+                                            editor.putString("password", Constant.currentUser.getPassword());
                                             editor.apply();
                                             // 退出弹窗
                                             dialog.dismiss();
@@ -179,7 +170,7 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 } else {
                     editUserInfoAdapter1.commit();
                     button.onStartLoading();
-                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
+                    UserRestService.modifyUser(Constant.currentUser, new RestCallback() {
                         @Override
                         public void onSuccess(int resultCode) {
                             button.onStopLoading();
@@ -296,8 +287,8 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call call, Response response) throws IOException {
                                     String responseData = response.body().string();
-                                    Constant.CurrentUser.setAvatar(responseData);
-                                    UserRestService.modifyUser(Constant.CurrentUser, new RestCallback() {
+                                    Constant.currentUser.setAvatar(responseData);
+                                    UserRestService.modifyUser(Constant.currentUser, new RestCallback() {
                                         @Override
                                         public void onSuccess(int resultCode) {
                                             button2.onStopLoading();

@@ -8,7 +8,6 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -21,61 +20,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
-import com.edu.whu.xiaomaivideo.databinding.FragmentFriendBinding;
 import com.edu.whu.xiaomaivideo.databinding.UserLikedVideoFragmentBinding;
-import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
-import com.edu.whu.xiaomaivideo.viewModel.UserVideoWorksViewModel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
-import com.downloader.Error;
-import com.downloader.OnDownloadListener;
-import com.downloader.OnProgressListener;
-import com.downloader.PRDownloader;
-import com.downloader.Progress;
-import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
-import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
-import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
-import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
-import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
-import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
-import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
-import com.edu.whu.xiaomaivideo.util.Constant;
-import com.edu.whu.xiaomaivideo.util.EventBusMessage;
-import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
-import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 import com.jiajie.load.LoadingDialog;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnSelectListener;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
-import org.greenrobot.eventbus.EventBus;
-import org.parceler.Parcels;
-
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import java.util.Objects;
 
 public class UserLikedVideoFragment extends Fragment {
 

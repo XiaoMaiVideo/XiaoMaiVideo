@@ -6,7 +6,6 @@
 
 package com.edu.whu.xiaomaivideo.ui.dialog;
 
-import android.app.Notification;
 import android.content.Context;
 import android.view.View;
 
@@ -49,7 +48,7 @@ public class CommentDialog extends BottomPopupView {
             public void onClick(View v) {
                 MessageVO message = new MessageVO();
                 message.setMsgType("comment");
-                message.setSenderId(Constant.CurrentUser.getUserId());
+                message.setSenderId(Constant.currentUser.getUserId());
                 message.setReceiverId(movie.getPublisher().getUserId());
                 message.setMovieId(movie.getMovieId());
                 message.setText(textInputEditText.getText().toString());

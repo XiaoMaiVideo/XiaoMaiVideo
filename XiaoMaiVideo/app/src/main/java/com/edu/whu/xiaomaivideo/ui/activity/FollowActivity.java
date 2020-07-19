@@ -16,13 +16,9 @@ import android.os.Bundle;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowersFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowingFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.FriendFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.HotFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import com.edu.whu.xiaomaivideo.R;
 
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
@@ -65,10 +61,10 @@ public class FollowActivity extends AppCompatActivity {
                 switch (position) {
                     default:
                     case 0:
-                        tab.setText("关注 "+ Constant.CurrentUser.getFollowing().size());
+                        tab.setText("关注 "+ Constant.currentUser.getFollowing().size());
                         break;
                     case 1:
-                        tab.setText("粉丝 "+ Constant.CurrentUser.getFollowers().size());
+                        tab.setText("粉丝 "+ Constant.currentUser.getFollowers().size());
                         break;
                 }
             }

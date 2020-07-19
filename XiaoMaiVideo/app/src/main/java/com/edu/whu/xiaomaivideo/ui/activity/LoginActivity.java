@@ -11,14 +11,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.VideoView;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLoginBinding;
@@ -26,7 +23,6 @@ import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.testvideo.MyVideo;
 import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
 
 import java.util.Objects;
@@ -155,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (resultCode == Constant.RESULT_SUCCESS) {
                                 // 成功
                                 loginViewModel.commit(username, password);
-                                Constant.CurrentUser = user;
+                                Constant.currentUser = user;
                                 setResult(RESULT_OK);
                                 LoginActivity.this.finish();
                             } else if (resultCode == Constant.USER_NOT_EXISTS) {

@@ -77,47 +77,6 @@ public class TakeVideoActivity extends AppCompatActivity {
     EditText editText;
     CheckBox checkBox;
 
-    double latitude, longitude;
-
-    //获取当前经纬坐标位置
-    LocationManager manager;
-    //权限数组
-    String[] premissinos;
-    //没有权限
-    boolean hasNoPermisson;
-    //权限存在
-    boolean yes;
-
-    public void initPremission(){
-        //判断当前版本是否大于6
-        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M){
-            for(String per:premissinos){
-                if(checkSelfPermission(per)!=PackageManager.PERMISSION_GRANTED){
-                    hasNoPermisson=true;
-                    break;
-                }
-            }
-            if(hasNoPermisson){
-                requestPermissions(premissinos,100);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==100){
-            for(int i=0;i<grantResults.length;i++){
-                if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
-                    yes=true;
-                    break;
-                }
-            }
-            if(yes){
-                Log.e("##","没有权限!");
-            }
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,46 +95,7 @@ public class TakeVideoActivity extends AppCompatActivity {
         compressButton.setVisibility(View.GONE);
         notCompressButton.setVisibility(View.GONE);
 
-
-        LocationListener locationListener=new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Geocoder geocoder=new Geocoder(getApplicationContext());
-
-                Log.e("精度是:", location.getLatitude() + "");
-                Log.e("维度是:", location.getLongitude() + "");
-                Log.e("海拔是:", location.getAltitude() + "");
-                Log.e("速度", location.getSpeed() + "");
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                manager.removeUpdates(this);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-            //要申请的权限列表
-        premissinos=new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
-        manager = (LocationManager) getSystemService(LOCATION_SERVICE);//获得定位的管理类
-        initPremission();
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         //第一个参数 位置提供器 第二个参数 位置变化的事件间隔 第三个参数 位置变化的距离间隔 事件监听LocationListener
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
         takeVideoButton.setOnClickListener(v -> {
@@ -309,26 +229,8 @@ public class TakeVideoActivity extends AppCompatActivity {
 
     private void upload(String path, String description, List<String> selectLabels) {
         if (checkBox.isChecked()) {
-            // 调后端接口返回城市
-            Uri.Builder builder = Uri.parse(Constant.BASEURL+"location").buildUpon();
-            String locationString = longitude+","+latitude;
-            builder.appendQueryParameter("location", locationString);
-            HttpUtil.sendGetRequest(builder.toString(), new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String responseData = response.body().string();
-                    JSONObject jsonObject = JSON.parseObject(responseData);
-                    String address = jsonObject.getString("data");
-                    List<Map<String, String>> table = CommonUtils.addressResolution(address);
-                    String city = table.get(0).get("province")+table.get(0).get("city");
-                    sendVideo(path, description, selectLabels, city);
-                }
-            });
+            // 发送位置信息
+            sendVideo(path, description, selectLabels, Constant.currentLocation.getValue());
         }
         else {
             // 不发送位置信息

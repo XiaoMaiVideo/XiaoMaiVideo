@@ -14,7 +14,6 @@ import android.graphics.Paint;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -218,7 +217,7 @@ public class CommonUtils {
 
     // 判断用户user是否被当前登录用户（CurrentUser）关注
     public static boolean isUserFollowedByCurrentUser(User user) {
-        if (user.getUserId() == Constant.CurrentUser.getUserId()) {
+        if (user.getUserId() == Constant.currentUser.getUserId()) {
             return false;
         }
         // 用户粉丝为0，不被当前用户关注
@@ -226,7 +225,7 @@ public class CommonUtils {
             return false;
         }
         // 看关注列表里面有没有这个user
-        for (User following: Constant.CurrentUser.getFollowing()) {
+        for (User following: Constant.currentUser.getFollowing()) {
             if (following.getUserId() == user.getUserId()) {
                 return true;
             }

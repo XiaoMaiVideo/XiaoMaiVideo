@@ -7,18 +7,14 @@
 package com.edu.whu.xiaomaivideo.restservice;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.PropertyFilter;
-import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -121,7 +117,7 @@ public class UserRestService {
                 // 发同步请求
                 String url = Constant.BASEURL+"userMovies";
                 User user = new User();
-                user.setUsername(Constant.CurrentUser.getUsername());
+                user.setUsername(Constant.currentUser.getUsername());
                 user.addMovies(movies[0]);
                 String json = JSON.toJSONString(user);
                 // Log.e("UserRestService发送", json);
@@ -148,7 +144,7 @@ public class UserRestService {
                 // 发同步请求
                 String url = Constant.BASEURL+"userLike";
                 User user = new User();
-                user.setUsername(Constant.CurrentUser.getUsername());
+                user.setUsername(Constant.currentUser.getUsername());
                 user.addLikeMovies(new Movie(numbers[0]));
                 String json = JSON.toJSONString(user);
                 // Log.e("UserRestService发送", json);

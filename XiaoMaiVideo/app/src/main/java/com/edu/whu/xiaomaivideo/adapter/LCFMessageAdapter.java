@@ -1,83 +1,143 @@
+/**
+ * Author:李季东，张俊杰，叶俊豪
+ * Create Time: 2020/7/15
+ * Update Time: 2020/7/19
+ */
+
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
+import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.util.TimeUtils;
 
 import java.util.List;
 
-/**
- * Author:李季东,张俊杰
- * Create Time: 2020/7/15
- * Update Time: 2020/7/15
- * @我的adpter 内部的Item包含一个text和一个recyclerView。
- * 一共两个item，分别用来展示“最新@我的”和“以往@我的”
- */
-public class LCFMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LCFMessageAdapter extends GroupedRecyclerViewAdapter {
+
     private Context mContext;
-    private LCFMessageItemAdapter mLCFMessageItemAdapter_old, mLCFMessageItemAdapter_new;
-    private List<MessageVO> oldMessage;
-    private List<MessageVO> newMessage;
-    private String mType;
-
-    public LCFMessageAdapter(Context context, String type, List<User> oldUsers, List<User> newUsers, List<MessageVO> oldMessage, List<MessageVO> newMessage)
-    {
-        this.mContext = context;
-        this.oldMessage = oldMessage;
-        this.newMessage = newMessage;
-        this.mType = type;
-        mLCFMessageItemAdapter_new = new LCFMessageItemAdapter(mContext, newMessage, newUsers, mType);
-        mLCFMessageItemAdapter_old = new LCFMessageItemAdapter(mContext, oldMessage, oldUsers, mType);
-        Log.e("LCFMessageAdapter", mLCFMessageItemAdapter_new.getItemCount()+"_");
-    }
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        return new LCFMessageBlockViewHolder(LayoutInflater.from(mContext).inflate(R.layout.activity_lcf_message_block, viewGroup,false));
+    private List<MessageVO> oldMessages, newMessages;
+    List<User> oldUsers, newUsers;
+    String mType;
+    public LCFMessageAdapter(Context context, List<MessageVO> oldMessage, List<MessageVO> newMessage, List<User> oldUsers, List<User> newUsers, String type) {
+        super(context);
+        mContext = context;
+        this.oldMessages = oldMessage;
+        this.newMessages = newMessage;
+        this.oldUsers = oldUsers;
+        this.newUsers = newUsers;
+        mType = type;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        //这里应该要设计两个adapter，或者使用数组来区分数据
+    public int getGroupCount() {
+        return 2;
+    }
 
-        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        if (position==0) {
-            //最新@我的消息
-            ((LCFMessageBlockViewHolder)viewHolder).newPast.setText("最新");
-            ((LCFMessageBlockViewHolder)viewHolder).recyclerViewMentioned.setLayoutManager(new LinearLayoutManager(mContext));
-            ((LCFMessageBlockViewHolder)viewHolder).recyclerViewMentioned.setAdapter(mLCFMessageItemAdapter_new);
-        } else {
-            //以往@我的消息
-            ((LCFMessageBlockViewHolder)viewHolder).newPast.setText("以往");
-            ((LCFMessageBlockViewHolder)viewHolder).recyclerViewMentioned.setLayoutManager(new LinearLayoutManager(mContext));
-            ((LCFMessageBlockViewHolder)viewHolder).recyclerViewMentioned.setAdapter(mLCFMessageItemAdapter_old);
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        if (groupPosition == 0) {
+            return newMessages.size();
+        }
+        return oldMessages.size();
+    }
+
+    @Override
+    public boolean hasHeader(int groupPosition) {
+        return true;
+    }
+
+    @Override
+    public boolean hasFooter(int groupPosition) {
+        return false;
+    }
+
+    @Override
+    public int getHeaderLayout(int viewType) {
+        return R.layout.activity_lcf_message_header;
+    }
+
+    @Override
+    public int getFooterLayout(int viewType) {
+        return 0;
+    }
+
+    @Override
+    public int getChildLayout(int viewType) {
+        return R.layout.activity_lcf_message_item;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+        TextView textView = holder.get(R.id.mentioned_new_past);
+        if (groupPosition == 0) {
+            textView.setText("最新");
+        }
+        else {
+            textView.setText("以往");
         }
     }
 
     @Override
-    public int getItemCount() {
-        return 2;
-    }
-    class LCFMessageBlockViewHolder extends RecyclerView.ViewHolder {
-        private TextView newPast;
-        private RecyclerView recyclerViewMentioned;
+    public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
 
-        public LCFMessageBlockViewHolder(@NonNull View itemView) {
-            super(itemView);
-            newPast = itemView.findViewById(R.id.mentioned_new_past);
-            recyclerViewMentioned= itemView.findViewById(R.id.recyclerViewMentioned);
+    }
+
+    @Override
+    public void onBindChildViewHolder(BaseViewHolder holder, int groupPosition, int childPosition) {
+        ImageView avatar = holder.get(R.id.mentioned_image);
+        TextView name = holder.get(R.id.mentioned_name);
+        TextView content = holder.get(R.id.mentioned_content);
+        TextView date = holder.get(R.id.mentioned_date);
+
+        if (groupPosition == 0) {
+            Glide.with(mContext)
+                    .load(newUsers.get(childPosition).getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(avatar);
+            name.setText(newUsers.get(childPosition).getNickname());
+            if (mType.equals("like")) {
+                content.setText("赞了你的视频，快去看看");
+            } else if (mType.equals("comment")) {
+                content.setText("评论了你的视频，快去看看");
+            } else if (mType.equals("follow")) {
+                content.setText("新关注了你，快去看看");
+            }
+
+            if (!mType.equals("follow")) {
+                date.setText(TimeUtils.getRecentTimeSpanByNow(System.currentTimeMillis()));
+            } else {
+                date.setText("");
+            }
+        }
+        else {
+            Glide.with(mContext)
+                    .load(oldUsers.get(childPosition).getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(avatar);
+            name.setText(oldUsers.get(childPosition).getNickname());
+            if (mType.equals("like")) {
+                content.setText("赞了你的视频，快去看看");
+            } else if (mType.equals("comment")) {
+                content.setText("评论了你的视频，快去看看");
+            } else if (mType.equals("follow")) {
+                content.setText("新关注了你，快去看看");
+            }
+
+            if (!mType.equals("follow")) {
+                date.setText(TimeUtils.getRecentTimeSpanByNow(System.currentTimeMillis()));
+            } else {
+                date.setText("");
+            }
         }
     }
 }
-

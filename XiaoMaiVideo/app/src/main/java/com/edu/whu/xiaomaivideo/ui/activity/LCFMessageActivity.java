@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
@@ -51,9 +50,19 @@ public class LCFMessageActivity extends AppCompatActivity {
         dialog.show();
         mType = getIntent().getStringExtra("type");
         // 从本地数据库获取旧的
-        oldMessageVOs = LitePal.where("msgType = ?", mType).find(MessageVO.class);
+        List<MessageVO> tempNewMsgList = MessageVOPool.getMessageVOs(mType);
+        newMessageVOs = new ArrayList<>();
+        oldMessageVOs = new ArrayList<>();
+        List<MessageVO> tempMsgList = LitePal.where("msgType = ?", mType).find(MessageVO.class);
+        for (int i=tempMsgList.size()-1; i>=0; i--) {
+            if (tempMsgList.size()-i-1<tempNewMsgList.size()) {
+                newMessageVOs.add(tempMsgList.get(i));
+            }
+            else {
+                oldMessageVOs.add(tempMsgList.get(i));
+            }
+        }
         // 从Pool获取新的
-        newMessageVOs = MessageVOPool.getMessageVOs(mType);
         Log.e("LCFMessageActivity", newMessageVOs.size()+"_");
 
         // 访问网络
@@ -86,10 +95,10 @@ public class LCFMessageActivity extends AppCompatActivity {
 
     }
     private void initAdapter() {
-        mAdapter = new LCFMessageAdapter(this, mType, oldUsers, newUsers, oldMessageVOs, newMessageVOs);
+        mAdapter = new LCFMessageAdapter(this, oldMessageVOs, newMessageVOs, oldUsers, newUsers, mType);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         activityLcfMessageBinding.recyclerViewMentioned.setLayoutManager(linearLayoutManager);
         activityLcfMessageBinding.recyclerViewMentioned.setAdapter(mAdapter);
-        activityLcfMessageBinding.recyclerViewMentioned.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        activityLcfMessageBinding.stickyLayout.setSticky(true);
     }
 }

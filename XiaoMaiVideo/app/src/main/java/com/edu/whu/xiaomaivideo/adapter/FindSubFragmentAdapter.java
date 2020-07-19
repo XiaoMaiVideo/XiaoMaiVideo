@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindSubFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.SearchTabFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 
 import java.util.ArrayList;

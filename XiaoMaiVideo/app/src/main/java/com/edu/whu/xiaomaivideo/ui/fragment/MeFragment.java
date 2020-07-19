@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +67,7 @@ public class MeFragment extends Fragment {
         initAdapter();
         initView();
         // 自动登录成功
-        if (Constant.CurrentUser.getUserId() != 0) {
+        if (Constant.currentUser.getUserId() != 0) {
             onLogIn();
         }
         return fragmentMeBinding.getRoot();
@@ -87,7 +86,7 @@ public class MeFragment extends Fragment {
         menuItems = new ArrayList<>();
         mAdapter = new SettingsAdapter(getActivity(), pos -> {
             // 已登录
-            if (Constant.CurrentUser.getUserId() != 0) {
+            if (Constant.currentUser.getUserId() != 0) {
                 if (pos == 0) {
                     // 设置个人信息
                     Intent intent = new Intent(getActivity(), EditUserInfoActivity.class);
@@ -126,14 +125,14 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // 未登录，跳转到登录页面
-                if (Constant.CurrentUser.getUserId() == 0) {
+                if (Constant.currentUser.getUserId() == 0) {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(intent, Constant.LOGIN_SUCCESS_RESULT);
                 }
                 // 已登录，跳转到用户个人信息
                 else {
                     Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                    intent.putExtra("user", Parcels.wrap(User.class, Constant.CurrentUser));
+                    intent.putExtra("user", Parcels.wrap(User.class, Constant.currentUser));
                     startActivity(intent);
                 }
             }
@@ -153,15 +152,15 @@ public class MeFragment extends Fragment {
         }
         else if (requestCode == Constant.SET_USER_INFO) {
             if (resultCode == RESULT_OK) {
-                meViewModel.setUser(Constant.CurrentUser);
+                meViewModel.setUser(Constant.currentUser);
             }
         }
     }
 
     // 退出登录
     private void onLogOut() {
-        Constant.CurrentUser = User.Visitor();
-        meViewModel.setUser(Constant.CurrentUser);
+        Constant.currentUser = User.Visitor();
+        meViewModel.setUser(Constant.currentUser);
         // 去掉设置列表
         menuItems.clear();
         mAdapter.notifyDataSetChanged();
@@ -175,9 +174,9 @@ public class MeFragment extends Fragment {
 
     // 刚刚登录的操作
     private void onLogIn() {
-        if (Constant.CurrentUser.getAvatar() == null || Constant.CurrentUser.getAvatar().equals("")) {
+        if (Constant.currentUser.getAvatar() == null || Constant.currentUser.getAvatar().equals("")) {
             // 没有头像的，就设置一个游客的头像
-            Constant.CurrentUser.setAvatar(User.Visitor().getAvatar());
+            Constant.currentUser.setAvatar(User.Visitor().getAvatar());
         }
 
         Intent intent = new Intent();
@@ -185,7 +184,7 @@ public class MeFragment extends Fragment {
         intent.putExtra("status", "start");
         getActivity().sendBroadcast(intent);
 
-        meViewModel.setUser(Constant.CurrentUser);
+        meViewModel.setUser(Constant.currentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
         menuItems.add(new Pair<>("我的收藏", R.drawable.collect));
         menuItems.add(new Pair<>("隐私设置", R.drawable.privacy));

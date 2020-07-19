@@ -10,7 +10,6 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -167,8 +166,8 @@ public class UserInfoActivity extends FragmentActivity {
 
     private void setOnButtonClickListener() {
         // 如果当前是自己，或者没登录。就不显示这两个Button
-        if (userInfoViewModel.getUser().getValue().getUserId() == Constant.CurrentUser.getUserId()
-            || Constant.CurrentUser.getUserId() == 0) {
+        if (userInfoViewModel.getUser().getValue().getUserId() == Constant.currentUser.getUserId()
+            || Constant.currentUser.getUserId() == 0) {
             activityUserInfoBinding.subscribeButton.setVisibility(View.INVISIBLE);
             activityUserInfoBinding.chatButton.setVisibility(View.INVISIBLE);
         }
@@ -190,7 +189,7 @@ public class UserInfoActivity extends FragmentActivity {
                 if (CommonUtils.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
                     MessageVO message = new MessageVO();
                     message.setMsgType("unfollow");
-                    message.setSenderId(Constant.CurrentUser.getUserId());
+                    message.setSenderId(Constant.currentUser.getUserId());
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("关注");
@@ -200,7 +199,7 @@ public class UserInfoActivity extends FragmentActivity {
                     // 本来没关注，那按钮就是关注
                     MessageVO message = new MessageVO();
                     message.setMsgType("follow");
-                    message.setSenderId(Constant.CurrentUser.getUserId());
+                    message.setSenderId(Constant.currentUser.getUserId());
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("取消关注");

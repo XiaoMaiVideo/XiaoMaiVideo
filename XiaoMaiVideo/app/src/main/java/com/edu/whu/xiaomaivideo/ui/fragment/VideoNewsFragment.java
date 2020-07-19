@@ -8,7 +8,6 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,19 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.adapter.VideoNewsAdapter;
-import com.edu.whu.xiaomaivideo.databinding.FragmentHotBinding;
 import com.edu.whu.xiaomaivideo.databinding.VideoNewsFragmentBinding;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
-import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
-import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.VideoNewsViewModel;
 import com.jiajie.load.LoadingDialog;
 
