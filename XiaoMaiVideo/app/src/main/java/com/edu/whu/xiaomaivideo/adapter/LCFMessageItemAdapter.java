@@ -29,15 +29,15 @@ import java.util.List;
  * Author: 李季东，张俊杰，叶俊豪
  * Create Time: 2020/7/15
  * Update Time: 2020/7/18
- * 被@到的具体消息item的adapter
+ * 具体消息item的adapter
  */
-public class LSCMessageItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class LCFMessageItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context mContext;
     private List<MessageVO> mMessages;
     List<User> mUsers;
     String mType;
-    public LSCMessageItemAdapter(Context context, List<MessageVO> messages, List<User> users, String type)
+    public LCFMessageItemAdapter(Context context, List<MessageVO> messages, List<User> users, String type)
     {
         this.mContext = context;
         this.mMessages = messages;
@@ -53,7 +53,6 @@ public class LSCMessageItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         LCFMessageViewHolder messageViewHolder = (LCFMessageViewHolder)viewHolder;
-        // 只需要知道用户昵称和头像就可以了
         Glide.with(mContext).load(mUsers.get(position).getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(messageViewHolder.image);
         ((LCFMessageViewHolder)viewHolder).name.setText(mUsers.get(position).getNickname());
         if (mType.equals("like")) {

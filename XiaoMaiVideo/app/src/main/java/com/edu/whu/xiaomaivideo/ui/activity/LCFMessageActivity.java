@@ -1,6 +1,7 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.LSCMessageAdapter;
+import com.edu.whu.xiaomaivideo.adapter.LCFMessageAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLcfMessageBinding;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.MessageVOPool;
@@ -31,10 +32,10 @@ import java.util.Objects;
  * Update Time: 2020/7/18
  * 点赞/评论/新粉丝的提醒页面
  */
-public class LSFMessageActivity extends AppCompatActivity {
+public class LCFMessageActivity extends AppCompatActivity {
     MentionedModel mentionedModel;
     ActivityLcfMessageBinding activityLcfMessageBinding;
-    LSCMessageAdapter mAdapter;
+    LCFMessageAdapter mAdapter;
     List<User> oldUsers, newUsers;
     List<MessageVO> oldMessageVOs, newMessageVOs;
     String mType;
@@ -53,7 +54,8 @@ public class LSFMessageActivity extends AppCompatActivity {
         oldMessageVOs = LitePal.where("msgType = ?", mType).find(MessageVO.class);
         // 从Pool获取新的
         newMessageVOs = MessageVOPool.getMessageVOs(mType);
-        MessageVOPool.clear(mType);
+        Log.e("LCFMessageActivity", newMessageVOs.size()+"_");
+
         // 访问网络
         List<Long> userIds = new ArrayList<>();
         for (MessageVO messageVO: oldMessageVOs) {
@@ -61,6 +63,7 @@ public class LSFMessageActivity extends AppCompatActivity {
         }
         for (MessageVO messageVO: newMessageVOs) {
             userIds.add(messageVO.getSenderId());
+            // Log.e("LCFMessageActivity添加", newMessageVOs.size()+"_");
         }
         UserRestService.getUserSimpleInfoList(userIds, new UserRestCallback() {
             @Override
@@ -73,14 +76,17 @@ public class LSFMessageActivity extends AppCompatActivity {
                 for (int i=oldMessageVOs.size();i<users.size();i++) {
                     newUsers.add(users.get(i));
                 }
+                Log.e("LCFMessageActivity-newUsers", newUsers.size()+"_");
+                Log.e("LCFMessageActivity-newMessageVOs", newMessageVOs.size()+"_");
                 initAdapter();
                 dialog.dismiss();
+                MessageVOPool.clear(mType);
             }
         });
 
     }
     private void initAdapter() {
-        mAdapter = new LSCMessageAdapter(this, mType, oldUsers, newUsers, oldMessageVOs, newMessageVOs);
+        mAdapter = new LCFMessageAdapter(this, mType, oldUsers, newUsers, oldMessageVOs, newMessageVOs);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         activityLcfMessageBinding.recyclerViewMentioned.setLayoutManager(linearLayoutManager);
         activityLcfMessageBinding.recyclerViewMentioned.setAdapter(mAdapter);

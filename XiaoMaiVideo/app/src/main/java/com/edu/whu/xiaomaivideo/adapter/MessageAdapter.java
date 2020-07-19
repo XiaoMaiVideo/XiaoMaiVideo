@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.ui.activity.MessageChatActivity;
-import com.edu.whu.xiaomaivideo.ui.activity.LSFMessageActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.LCFMessageActivity;
 
 /**
  * Author:李季东
@@ -50,7 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View view)
                 {
-                    Intent intent = new Intent(mContext, LSFMessageActivity.class);
+                    Intent intent = new Intent(mContext, LCFMessageActivity.class);
                     intent.putExtra("type", "like");
                     mContext.startActivity(intent);
                 }
@@ -64,7 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View view)
                 {
-                    Intent intent = new Intent(mContext, LSFMessageActivity.class);
+                    Intent intent = new Intent(mContext, LCFMessageActivity.class);
                     intent.putExtra("type", "comment");
                     mContext.startActivity(intent);
                 }
@@ -78,7 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View view)
                 {
-                    Intent intent = new Intent(mContext, LSFMessageActivity.class);
+                    Intent intent = new Intent(mContext, LCFMessageActivity.class);
                     intent.putExtra("type", "follow");
                     mContext.startActivity(intent);
                 }

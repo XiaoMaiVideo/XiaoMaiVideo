@@ -138,8 +138,15 @@ public class UserController {
         if (user.getPassword() == null || "".equals(user.getPassword())) {
             user.setPassword(user1.getPassword());
         }
+        // 也不知道为什么update以后就出问题了，先留着
         user.setMovies(user1.getMovies());
-        // TODO: 好像会把自己发的movie的userid变成null？慎用
+        user.setShares(user1.getShares());
+        user.setComments(user1.getComments());
+        user.setLikeMovies(user1.getLikeMovies());
+        user.setFollowers(user1.getFollowers());
+        user.setFollowing(user.getFollowing());
+        user.setReceivemsgs(user.getReceivemsgs());
+        user.setSendmsgs(user.getSendmsgs());
         userRestService.updateUser(user);
         return AjaxResponse.success();
     }

@@ -40,6 +40,7 @@ import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
+import com.google.android.material.button.MaterialButton;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -89,12 +90,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.publishTime.setText(mMovies.get(position).getPublishTime());
         holder.movieDescription.setText(mMovies.get(position).getDescription());
 
-        // TODO: 其他消息暂未显示到item上
+        // TODO: 类别的标签还没显示
         holder.likeButton.setChecked(Constant.CurrentUser.isLikeMovie(mMovies.get(position).getMovieId()));
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
-
+        if (mMovies.get(position).getLocation().equals("")) {
+            holder.locationInfoButton.setVisibility(View.GONE);
+        }
+        else {
+            holder.locationInfoButton.setText(mMovies.get(position).getLocation());
+        }
     }
     @Override
     public int getItemCount() {
@@ -107,6 +113,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         TextView userNickname, publishTime, movieDescription, likeNum, commentNum, shareNum;
         ShineButton likeButton;
         ConstraintLayout videoInfoLayout;
+        MaterialButton locationInfoButton;
         public MyViewHolder(View itemView) {
             super(itemView);
             userAvatar = itemView.findViewById(R.id.authorImage);
@@ -121,6 +128,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             commentNum = itemView.findViewById(R.id.commentNum);
             shareNum = itemView.findViewById(R.id.shareNum);
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
+            locationInfoButton = itemView.findViewById(R.id.locationInfoButton);
+
+
+
 
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,27 +165,28 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                         likeButton.setChecked(false);
                     }
                     else {
+                        Movie currentMovie = mMovies.get(getAdapterPosition());
                         // 按下点赞按钮
                         // 如果用户没点赞，就是点赞
                         if (likeButton.isChecked()) {
-                            mMovies.get(getAdapterPosition()).setLikednum(mMovies.get(getAdapterPosition()).getLikednum()+1);
-                            likeNum.setText(mMovies.get(getAdapterPosition()).getLikednum()+"");
+                            currentMovie.setLikednum(currentMovie.getLikednum()+1);
+                            likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("like");
                             message.setSenderId(Constant.CurrentUser.getUserId());
-                            message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
-                            message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
+                            message.setReceiverId(currentMovie.getPublisher().getUserId());
+                            message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                         }
                         // 如果用户点了赞，就是取消点赞
                         else {
-                            mMovies.get(getAdapterPosition()).setLikednum(mMovies.get(getAdapterPosition()).getLikednum()-1);
-                            likeNum.setText(mMovies.get(getAdapterPosition()).getLikednum()+"");
+                            mMovies.get(getAdapterPosition()).setLikednum(currentMovie.getLikednum()-1);
+                            likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("unlike");
                             message.setSenderId(Constant.CurrentUser.getUserId());
-                            message.setReceiverId(mMovies.get(getAdapterPosition()).getPublisher().getUserId());
-                            message.setMovieId(mMovies.get(getAdapterPosition()).getMovieId());
+                            message.setReceiverId(currentMovie.getPublisher().getUserId());
+                            message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                         }
                     }
@@ -185,11 +197,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Movie currentMovie = mMovies.get(getAdapterPosition());
                     new ShowCommentDialog(context, mMovies.get(getAdapterPosition()), new ShowCommentDialog.OnAddCommentListener() {
                         @Override
                         public void onAddComment() {
-                            mMovies.get(getAdapterPosition()).setCommentnum(mMovies.get(getAdapterPosition()).getCommentnum()+1);
-                            commentNum.setText(mMovies.get(getAdapterPosition()).getCommentnum()+"");
+                            currentMovie.setCommentnum(currentMovie.getCommentnum()+1);
+                            commentNum.setText(currentMovie.getCommentnum()+"");
                         }
                     }).show();
                 }
@@ -200,6 +213,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 public void onClick(View view) {
                     // mListener.onShareButtonClick(getAdapterPosition(), shareButton);
                     // 按下分享按钮
+                    Movie currentMovie = mMovies.get(getAdapterPosition());
                     new XPopup.Builder(context)
                             .atView(shareButton)
                             .asAttachList(new String[]{"分享到动态", "分享到其他应用"},
@@ -217,8 +231,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                     popupView.delayDismiss(1500);
                                                 }
                                                 else {
-                                                    mMovies.get(getAdapterPosition()).setSharenum(mMovies.get(getAdapterPosition()).getSharenum()+1);
-                                                    shareNum.setText(mMovies.get(getAdapterPosition()).getSharenum()+"");
+                                                    currentMovie.setSharenum(currentMovie.getSharenum()+1);
+                                                    shareNum.setText(currentMovie.getSharenum()+"");
                                                     // TODO: 应用内分享，发送后端请求
                                                 }
                                             }
@@ -230,7 +244,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                 new XPopup.Builder(context)
                                                         .asCustom(progressDialog)
                                                         .show();
-                                                int downloadId = PRDownloader.download(mMovies.get(getAdapterPosition()).getUrl(), filePath, fileName)
+                                                int downloadId = PRDownloader.download(currentMovie.getUrl(), filePath, fileName)
                                                         .build()
                                                         .setOnProgressListener(progress -> progressDialog.setProgress((int) (((float)progress.currentBytes/(float)progress.totalBytes)*100)))
                                                         .start(new OnDownloadListener() {

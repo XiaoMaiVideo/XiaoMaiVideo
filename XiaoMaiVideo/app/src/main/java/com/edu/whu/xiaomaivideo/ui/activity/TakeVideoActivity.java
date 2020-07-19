@@ -36,6 +36,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
@@ -74,6 +76,8 @@ public class TakeVideoActivity extends AppCompatActivity {
     ProgressBar progressBar;
     EditText editText;
     CheckBox checkBox;
+
+    double latitude, longitude;
 
     //获取当前经纬坐标位置
     LocationManager manager;
@@ -142,6 +146,9 @@ public class TakeVideoActivity extends AppCompatActivity {
                 Log.e("维度是:", location.getLongitude() + "");
                 Log.e("海拔是:", location.getAltitude() + "");
                 Log.e("速度", location.getSpeed() + "");
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                manager.removeUpdates(this);
             }
 
             @Override
@@ -169,7 +176,6 @@ public class TakeVideoActivity extends AppCompatActivity {
         }
         //第一个参数 位置提供器 第二个参数 位置变化的事件间隔 第三个参数 位置变化的距离间隔 事件监听LocationListener
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
 
 
         takeVideoButton.setOnClickListener(v -> {
@@ -263,13 +269,7 @@ public class TakeVideoActivity extends AppCompatActivity {
         });
     }
 
-    private void upload(String path, String description, List<String> selectLabels) {
-        if (checkBox.isChecked()) {
-            // 调后端接口返回城市
-        }
-        else {
-            //
-        }
+    private void sendVideo(String path, String description, List<String> selectLabels, String location) {
         StringBuilder labelString = new StringBuilder();
         for (String label: selectLabels) {
             labelString.append(label).append(";");
@@ -288,6 +288,7 @@ public class TakeVideoActivity extends AppCompatActivity {
                 movie.setDescription(description);
                 movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
                 movie.setCategories(labelString.toString());
+                movie.setLocation(location);
                 UserRestService.addUserMovie(movie, new RestCallback() {
                     @Override
                     public void onSuccess(int resultCode) {
@@ -304,6 +305,36 @@ public class TakeVideoActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void upload(String path, String description, List<String> selectLabels) {
+        if (checkBox.isChecked()) {
+            // 调后端接口返回城市
+            Uri.Builder builder = Uri.parse(Constant.BASEURL+"location").buildUpon();
+            String locationString = longitude+","+latitude;
+            builder.appendQueryParameter("location", locationString);
+            HttpUtil.sendGetRequest(builder.toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    JSONObject jsonObject = JSON.parseObject(responseData);
+                    String address = jsonObject.getString("data");
+                    List<Map<String, String>> table = CommonUtils.addressResolution(address);
+                    String city = table.get(0).get("province")+table.get(0).get("city");
+                    sendVideo(path, description, selectLabels, city);
+                }
+            });
+        }
+        else {
+            // 不发送位置信息
+            sendVideo(path, description, selectLabels, "");
+        }
+
     }
 
     //选择视频

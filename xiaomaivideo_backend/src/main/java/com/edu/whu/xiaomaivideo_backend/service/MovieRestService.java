@@ -26,4 +26,6 @@ public interface MovieRestService {
     Page<Movie> getAll(int page, int total);
 
     Page<Movie> getAllByCategoriesLike(int page, int total,String categories);
+
+    Page<Movie> getAllByLocation(int page, int total, String location);
 }

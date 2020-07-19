@@ -78,7 +78,7 @@ public class FindSubFragment extends Fragment {
         }
         else if (mType.equals(Constant.LOCAL_HOT)) {
             // 本地热点
-            MovieRestService.getMovies(0, new MovieRestCallback() {
+            MovieRestService.getMoviesByLocation("广西壮族自治区梧州市", 0, new MovieRestCallback() {
                 @Override
                 public void onSuccess(int resultCode, List<Movie> movies) {
                     super.onSuccess(resultCode, movies);

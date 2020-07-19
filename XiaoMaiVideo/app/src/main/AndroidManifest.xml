@@ -26,7 +26,7 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.VideoDetailActivity" />
         <activity android:name=".ui.activity.MessageChatActivity" />
-        <activity android:name=".ui.activity.LSFMessageActivity" />
+        <activity android:name=".ui.activity.LCFMessageActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
