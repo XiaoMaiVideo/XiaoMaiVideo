@@ -9,6 +9,8 @@ package com.edu.whu.xiaomaivideo_backend.model;
 
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class User {
 
     @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "follow_tabel",joinColumns = @JoinColumn(name = "followers_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id"))
     private List<User> following;

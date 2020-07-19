@@ -46,7 +46,9 @@ public class UserController {
             return new AjaxResponse(4, "The user already exists", false);
         }
         try {
-            // TODO: 注册的时候给一个默认的昵称和头像
+            // 给一个默认的昵称和头像
+            user.setNickname(user.getUsername());
+            user.setAvatar("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1093847288,3038136586&fm=26&gp=0.jpg");
             userRestService.saveUser(user);
             //@JsonIgnoreProperties(value="password", allowSetters=true)
             //不会返回密码
@@ -132,10 +134,11 @@ public class UserController {
     @PutMapping("/user")
     public @ResponseBody AjaxResponse updateUser(@RequestBody User user) {
         // 传上来密码是空的，先填个密码
+        User user1 = userRestService.getUser(user.getUsername());
         if (user.getPassword() == null || "".equals(user.getPassword())) {
-            User user1 = userRestService.getUserById(user.getUserId());
             user.setPassword(user1.getPassword());
         }
+        user.setMovies(user1.getMovies());
         // TODO: 好像会把自己发的movie的userid变成null？慎用
         userRestService.updateUser(user);
         return AjaxResponse.success();

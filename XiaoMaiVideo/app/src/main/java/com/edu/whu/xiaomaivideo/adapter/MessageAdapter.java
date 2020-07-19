@@ -84,27 +84,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
-        else {
-            ((MessageViewHolder) viewHolder).textView.setText("雷军");
-            ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.ic_launcher_background);
-            ((MessageViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    mListener.onClick(i);
-                    Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mContext, MessageChatActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
-        }
     }
 
     @Override
     public int getItemCount()
-    {return 4; }
+    {return 3; }
     //@我的
     class MessageViewHolder extends RecyclerView.ViewHolder
     {
