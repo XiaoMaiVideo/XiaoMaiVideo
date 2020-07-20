@@ -31,6 +31,7 @@ import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
 
 import java.util.List;
@@ -44,9 +45,8 @@ public class UserVideoWorksFragment extends Fragment {
     private UserVideoWorksViewModel userVideoWorksViewModel;
     UserVideoWorksFragmentBinding fragmentUserVideoWorksBinding;
     List<Movie> movieList;
+    MovieRecyclerView movieRecyclerView;
 
-    public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
-    public JzvdStd videoView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         userVideoWorksViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(UserVideoWorksViewModel.class);
@@ -70,91 +70,6 @@ public class UserVideoWorksFragment extends Fragment {
     private void setRecyclerView() {
         fragmentUserVideoWorksBinding.myVideoWorksFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentUserVideoWorksBinding.myVideoWorksFragmentRecyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
-        fragmentUserVideoWorksBinding.myVideoWorksFragmentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                VisibleCount = lastVisibleItem - firstVisibleItem;
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE://停止滚动
-                        /**在这里执行，视频的自动播放与停止*/
-                        autoPlayVideo(recyclerView);
-                        break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING://拖动
-                        autoPlayVideo(recyclerView);
-                        break;
-                    case RecyclerView.SCROLL_STATE_SETTLING://性滑动
-                        JzvdStd.releaseAllVideos();
-                        break;
-                }
-
-            }
-        });
-    }
-
-    @Nullable
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    private void autoPlayVideo(RecyclerView recyclerView) {
-        for(int i=0;i<VisibleCount;i++) {
-            if (recyclerView != null && recyclerView.getChildAt(i) != null &&recyclerView.getChildAt(i).findViewById(R.id.video) != null){
-                videoView = (JzvdStd) recyclerView.getChildAt(i).findViewById(R.id.video);
-                Rect rect = new Rect();
-                videoView.getLocalVisibleRect(rect);//获取视图本身的可见坐标，把值传入到rect对象中
-                int videoHeight = videoView.getHeight();//获取视频的高度
-                if(rect.top==0&&rect.bottom==videoHeight){
-                    if(videoView.state == Jzvd.STATE_NORMAL||videoView.state==Jzvd.STATE_PAUSE){
-                        videoView.startVideo();
-                    }
-                    return;
-                }
-                videoView.releaseAllVideos();
-            } else{
-                if(videoView!=null){
-                    videoView.releaseAllVideos();
-                }
-            }
-        }
+        movieRecyclerView = new MovieRecyclerView(fragmentUserVideoWorksBinding.myVideoWorksFragmentRecyclerView);
     }
 }
-/*public class UserVideoWorksFragment extends Fragment {
-
-    private UserVideoWorksViewModel mViewModel;
-    private UserVideoWorksFragmentBinding userVideoWorksFragmentBinding;
-
-    public static UserVideoWorksFragment newInstance() {
-        return new UserVideoWorksFragment();
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(UserVideoWorksViewModel.class);
-
-        userVideoWorksFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.user_video_works_fragment, container, false);
-        userVideoWorksFragmentBinding.setViewmodel(mViewModel);
-        userVideoWorksFragmentBinding.setLifecycleOwner(getActivity());
-
-        userVideoWorksFragmentBinding.myVideoWorksFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        userVideoWorksFragmentBinding.myVideoWorksFragmentRecyclerView.setAdapter(new SettingsFriendAdpater(getActivity(), new SettingsFriendAdpater.OnItemClickListener()
-        {
-            @Override
-            public void onClick(int pos)
-            {
-                Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
-            }
-        }));
-
-        return userVideoWorksFragmentBinding.getRoot();
-    }
-
-}*/

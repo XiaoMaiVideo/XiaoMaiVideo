@@ -8,6 +8,7 @@ package com.edu.whu.xiaomaivideo.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.donkingliang.labels.LabelsView;
 import com.downloader.Error;
 import com.downloader.OnDownloadListener;
 import com.downloader.PRDownloader;
@@ -32,6 +34,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
@@ -88,19 +91,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 .into(holder.userAvatar);
         holder.userNickname.setText(mMovies.get(position).getPublisher().getNickname());
         holder.publishTime.setText(mMovies.get(position).getPublishTime());
-        holder.movieDescription.setText(mMovies.get(position).getDescription());
-
-        // TODO: 类别的标签还没显示
         holder.likeButton.setChecked(Constant.currentUser.isLikeMovie(mMovies.get(position).getMovieId()));
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
+        // 设置位置信息按钮
         if (mMovies.get(position).getLocation().equals("")) {
             holder.locationInfoButton.setVisibility(View.GONE);
         }
         else {
             holder.locationInfoButton.setText(mMovies.get(position).getLocation());
         }
+
+        // 设置标签
+        if (mMovies.get(position).getCategoryList().size() == 0) {
+            holder.tags.setVisibility(View.GONE);
+        }
+        else {
+            holder.tags.setLabels(mMovies.get(position).getCategoryList());
+        }
+
+        // 设置描述
+        if (mMovies.get(position).getDescription() == null || mMovies.get(position).getDescription().equals("")) {
+            holder.movieDescription.setVisibility(View.GONE);
+        }
+        else {
+            holder.movieDescription.setText(mMovies.get(position).getDescription());
+        }
+
     }
     @Override
     public int getItemCount() {
@@ -114,6 +132,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         ShineButton likeButton;
         ConstraintLayout videoInfoLayout;
         MaterialButton locationInfoButton;
+        LabelsView tags;
         public MyViewHolder(View itemView) {
             super(itemView);
             userAvatar = itemView.findViewById(R.id.authorImage);
@@ -129,9 +148,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             shareNum = itemView.findViewById(R.id.shareNum);
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
             locationInfoButton = itemView.findViewById(R.id.locationInfoButton);
-
-
-
+            tags = itemView.findViewById(R.id.tags);
 
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,6 +166,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 public void onClick(View view) {
                     Intent intent = new Intent(context, UserInfoActivity.class);
                     intent.putExtra("user", Parcels.wrap(User.class, mMovies.get(getAdapterPosition()).getPublisher()));
+                    context.startActivity(intent);
+                }
+            });
+
+            tags.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
+                @Override
+                public void onLabelClick(TextView label, Object data, int position) {
+                    Log.e("MovieAdapter", String.valueOf(data)+"_");
+                    Intent intent=new Intent(context, MovieTypeActivity.class);
+                    intent.putExtra("type", String.valueOf(data));
                     context.startActivity(intent);
                 }
             });

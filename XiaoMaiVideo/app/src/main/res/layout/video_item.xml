@@ -102,16 +102,23 @@
             app:layout_constraintStart_toEndOf="@+id/authorImage"
             app:layout_constraintTop_toBottomOf="@+id/authorText" />
 
-        <cn.droidlover.tagedittext.TagTextView
+        <com.donkingliang.labels.LabelsView
             android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:text="#测试#"
-            android:textSize="14sp"
+            app:labelBackground="@drawable/label_bg"
+            app:labelTextColor="@color/red"
+            app:labelTextPaddingBottom="4dp"
+            app:labelTextPaddingLeft="8dp"
+            app:labelTextPaddingRight="8dp"
+            app:labelTextPaddingTop="4dp"
+            app:labelTextSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/videoDescription"
+            app:lineMargin="8dp"
+            app:wordMargin="8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -59,17 +59,23 @@
             app:layout_constraintStart_toEndOf="@+id/forwarderImage"
             app:layout_constraintTop_toBottomOf="@+id/forwarderText" />
 
-        <cn.droidlover.tagedittext.TagTextView
-            android:id="@+id/tags"
+        <com.donkingliang.labels.LabelsView
+            android:id="@+id/tags3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:text="#测试#"
-            android:textSize="14sp"
+            app:labelBackground="@drawable/label_bg"
+            app:labelTextColor="@color/red"
+            app:labelTextPaddingBottom="4dp"
+            app:labelTextPaddingLeft="8dp"
+            app:labelTextPaddingRight="8dp"
+            app:labelTextPaddingTop="4dp"
+            app:labelTextSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forwarderVideoDescription" />
-
+            app:layout_constraintTop_toBottomOf="@+id/forwarderVideoDescription"
+            app:lineMargin="8dp"
+            app:wordMargin="8dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -152,17 +158,23 @@
             app:layout_constraintStart_toEndOf="@+id/originatorImage"
             app:layout_constraintTop_toBottomOf="@+id/originatorText" />
 
-        <cn.droidlover.tagedittext.TagTextView
+        <com.donkingliang.labels.LabelsView
             android:id="@+id/tags2"
-            android:layout_width="239dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:text="#测试#"
-            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:labelBackground="@drawable/label_bg"
+            app:labelTextColor="@color/red"
+            app:labelTextPaddingBottom="4dp"
+            app:labelTextPaddingLeft="8dp"
+            app:labelTextPaddingRight="8dp"
+            app:labelTextPaddingTop="4dp"
+            app:labelTextSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/originatorVideoDescription"
-            app:layout_constraintTop_toTopOf="@+id/originatorPostTime" />
-
+            app:layout_constraintTop_toTopOf="@+id/originatorPostTime"
+            app:lineMargin="8dp"
+            app:wordMargin="8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
