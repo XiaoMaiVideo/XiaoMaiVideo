@@ -18,7 +18,7 @@ import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.util.TimeUtils;
+import com.edu.whu.xiaomaivideo.util.TimeUtil;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ public class LCFMessageAdapter extends GroupedRecyclerViewAdapter {
             }
 
             if (!mType.equals("follow")) {
-                date.setText(TimeUtils.getRecentTimeSpanByNow(System.currentTimeMillis()));
+                date.setText(TimeUtil.getRecentTimeSpanByNow(System.currentTimeMillis()));
             } else {
                 date.setText("");
             }
@@ -134,7 +134,7 @@ public class LCFMessageAdapter extends GroupedRecyclerViewAdapter {
             }
 
             if (!mType.equals("follow")) {
-                date.setText(TimeUtils.getRecentTimeSpanByNow(System.currentTimeMillis()));
+                date.setText(TimeUtil.getRecentTimeSpanByNow(System.currentTimeMillis()));
             } else {
                 date.setText("");
             }

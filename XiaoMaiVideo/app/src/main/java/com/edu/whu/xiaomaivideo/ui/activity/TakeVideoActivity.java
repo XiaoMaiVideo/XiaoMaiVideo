@@ -6,23 +6,12 @@
 
 package com.edu.whu.xiaomaivideo.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,20 +23,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
-import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
-import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
-import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.util.CommonUtils;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
@@ -56,14 +38,11 @@ import com.vincent.videocompressor.VideoCompress;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.mustafagercek.library.LoadingButton;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class TakeVideoActivity extends AppCompatActivity {
@@ -206,7 +185,7 @@ public class TakeVideoActivity extends AppCompatActivity {
                 Movie movie = new Movie();
                 movie.setUrl(responseData);
                 movie.setDescription(description);
-                movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
+                movie.setPublishTime(CommonUtil.convertTimeToDateString(System.currentTimeMillis()));
                 movie.setCategories(labelString.toString());
                 movie.setLocation(location);
                 UserRestService.addUserMovie(movie, new RestCallback() {

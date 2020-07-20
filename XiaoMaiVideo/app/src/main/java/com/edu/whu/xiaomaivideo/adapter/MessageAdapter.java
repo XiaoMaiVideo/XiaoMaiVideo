@@ -68,7 +68,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         } else if (i==2){
-            ((MessageViewHolder) viewHolder).textView.setText("粉丝");
+            ((MessageViewHolder) viewHolder).textView.setText("新粉丝");
             ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.like);
             ((MessageViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener()

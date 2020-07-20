@@ -37,7 +37,7 @@ import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
-import com.edu.whu.xiaomaivideo.util.CommonUtils;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.widget.MyViewPager;
@@ -291,7 +291,7 @@ public class MainActivity extends FragmentActivity {
                         String responseData = response.body().string();
                         JSONObject jsonObject = JSON.parseObject(responseData);
                         String address = jsonObject.getString("data");
-                        List<Map<String, String>> table = CommonUtils.addressResolution(address);
+                        List<Map<String, String>> table = CommonUtil.addressResolution(address);
                         String city = table.get(0).get("province")+table.get(0).get("city");
                         Constant.currentLocation.postValue(city);
                         Log.e("MainActivity", Constant.currentLocation+"_");

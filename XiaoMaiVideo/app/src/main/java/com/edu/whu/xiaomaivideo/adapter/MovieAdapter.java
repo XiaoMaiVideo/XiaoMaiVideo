@@ -8,7 +8,7 @@ package com.edu.whu.xiaomaivideo.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -38,6 +38,7 @@ import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.ShareDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -82,7 +83,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
+        // TODO: 加载很慢，原因不明
         holder.jzvdStd.setUp(mMovies.get(position).getUrl(), "", Jzvd.SCREEN_NORMAL);
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
 
         Glide.with(context)
                 .load(mMovies.get(position).getPublisher().getAvatar())
@@ -238,7 +241,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // mListener.onShareButtonClick(getAdapterPosition(), shareButton);
                     // 按下分享按钮
                     Movie currentMovie = mMovies.get(getAdapterPosition());
                     new XPopup.Builder(context)
@@ -258,13 +260,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                     popupView.delayDismiss(1500);
                                                 }
                                                 else {
-                                                    currentMovie.setSharenum(currentMovie.getSharenum()+1);
-                                                    shareNum.setText(currentMovie.getSharenum()+"");
-                                                    // TODO: 应用内分享，发送后端请求
+                                                    BasePopupView popupView = new XPopup.Builder(context)
+                                                            .asCustom(new ShareDialog(context, currentMovie, new ShareDialog.OnShareMsgSendListener() {
+                                                                @Override
+                                                                public void onShareMsgSend() {
+                                                                    currentMovie.setSharenum(currentMovie.getSharenum()+1);
+                                                                    shareNum.setText(currentMovie.getSharenum()+"");
+                                                                }
+                                                            }))
+                                                            .show();
                                                 }
                                             }
                                             else {
-                                                // TODO: 应用外分享
+                                                // TODO: 修复BUG
                                                 String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
                                                 String fileName = System.currentTimeMillis() + ".mp4";
                                                 ProgressDialog progressDialog = new ProgressDialog(context);

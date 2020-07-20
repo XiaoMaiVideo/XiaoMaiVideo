@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CommonUtils {
+public class CommonUtil {
 
     /**
      * 判断是否为电话号码的正则表达式

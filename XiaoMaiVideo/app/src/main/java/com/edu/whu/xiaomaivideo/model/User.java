@@ -34,6 +34,7 @@ public class User {
     private List<Movie> likeMovies;
     private List<User> followers;
     private List<User> following;
+    private List<Share> shares;
 
     public User() {
 
@@ -180,6 +181,14 @@ public class User {
         this.likeMovies = likeMovies;
     }
 
+    public List<Share> getShares() {
+        return shares;
+    }
+
+    public void setShares(List<Share> shares) {
+        this.shares = shares;
+    }
+
     public void addLikeMovies(Movie movie) {
         if (this.likeMovies == null) {
             likeMovies = new ArrayList<>();
@@ -192,6 +201,16 @@ public class User {
             movies = new ArrayList<>();
         }
         movies.add(movie);
+    }
+
+    public void addShareMovies(Movie movie, String msg) {
+        if (this.shares == null) {
+            shares = new ArrayList<>();
+        }
+        Share share = new Share();
+        share.setMsg(msg);
+        share.setMovie(movie);
+        shares.add(share);
     }
 
     // 判断某个用户是否点赞

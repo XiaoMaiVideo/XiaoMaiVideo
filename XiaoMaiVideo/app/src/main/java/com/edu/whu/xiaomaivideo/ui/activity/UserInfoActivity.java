@@ -41,7 +41,7 @@ import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserLikedVideoFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserVideoWorksFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.VideoNewsFragment;
-import com.edu.whu.xiaomaivideo.util.CommonUtils;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.viewModel.UserInfoViewModel;
@@ -175,7 +175,7 @@ public class UserInfoActivity extends FragmentActivity {
             activityUserInfoBinding.subscribeButton.setVisibility(View.VISIBLE);
             activityUserInfoBinding.chatButton.setVisibility(View.VISIBLE);
         }
-        if (CommonUtils.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+        if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
             // 本来关注了，那按钮就是取消关注
             activityUserInfoBinding.subscribeButton.setText("取消关注");
         }
@@ -186,7 +186,7 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonUtils.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+                if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
                     MessageVO message = new MessageVO();
                     message.setMsgType("unfollow");
                     message.setSenderId(Constant.currentUser.getUserId());

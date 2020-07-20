@@ -136,25 +136,25 @@ public class UserRestService {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public static void addUserLike(final long movieId, final RestCallback restCallback) {
+    public static void addUserShare(final long movieId, final String msg, final RestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
             RestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... numbers) {
                 // 发同步请求
-                String url = Constant.BASEURL+"userLike";
+                String url = Constant.BASEURL+"shareMovies";
                 User user = new User();
                 user.setUsername(Constant.currentUser.getUsername());
-                user.addLikeMovies(new Movie(numbers[0]));
+                user.addShareMovies(new Movie(numbers[0]), msg);
                 String json = JSON.toJSONString(user);
-                // Log.e("UserRestService发送", json);
+                Log.e("UserRestService发送", json);
                 return HttpUtil.sendPostRequest(url, json);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // Log.e("UserRestService", s);
+                Log.e("UserRestService", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 callback.onSuccess(responseNum);

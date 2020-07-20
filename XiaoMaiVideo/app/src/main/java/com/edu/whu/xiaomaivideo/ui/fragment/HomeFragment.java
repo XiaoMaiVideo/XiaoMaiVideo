@@ -51,10 +51,10 @@ public class HomeFragment extends Fragment {
                 switch (position) {
                     default:
                     case 0:
-                        fragment = new FriendFragment();
+                        fragment = new HotFragment();
                         break;
                     case 1:
-                        fragment = new HotFragment();
+                        fragment = new FriendFragment();
                         break;
                 }
                 return fragment;
@@ -72,10 +72,10 @@ public class HomeFragment extends Fragment {
                 switch (position) {
                     default:
                     case 0:
-                        tab.setText("朋友");
+                        tab.setText("热点");
                         break;
                     case 1:
-                        tab.setText("热点");
+                        tab.setText("朋友");
                         break;
                 }
             }

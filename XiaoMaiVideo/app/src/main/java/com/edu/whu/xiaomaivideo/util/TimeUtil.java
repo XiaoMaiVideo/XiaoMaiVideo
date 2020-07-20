@@ -10,7 +10,7 @@ package com.edu.whu.xiaomaivideo.util;
 
 import java.util.Locale;
 
-public class TimeUtils {
+public class TimeUtil {
 
     public static String getRecentTimeSpanByNow(final long millis) {
         long now = System.currentTimeMillis();
