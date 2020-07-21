@@ -14,19 +14,24 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowersFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowingFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.parceler.Parcels;
+
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
     TabLayout tabLayout;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         setContentView(R.layout.activity_follow);
         viewPage=findViewById(R.id.viewPage);
         tabLayout=findViewById(R.id.tabLayout2);
@@ -40,10 +45,10 @@ public class FollowActivity extends AppCompatActivity {
                 switch (position) {
                     default:
                     case 0:
-                        fragment = new FollowingFragment();
+                        fragment = new FollowingFragment(user);
                         break;
                     case 1:
-                        fragment = new FollowersFragment();
+                        fragment = new FollowersFragment(user);
                         break;
                 }
                 return fragment;
@@ -61,10 +66,10 @@ public class FollowActivity extends AppCompatActivity {
                 switch (position) {
                     default:
                     case 0:
-                        tab.setText("关注 "+ Constant.currentUser.getFollowing().size());
+                        tab.setText("关注 "+ user.getFollowing().size());
                         break;
                     case 1:
-                        tab.setText("粉丝 "+ Constant.currentUser.getFollowers().size());
+                        tab.setText("粉丝 "+ user.getFollowers().size());
                         break;
                 }
             }

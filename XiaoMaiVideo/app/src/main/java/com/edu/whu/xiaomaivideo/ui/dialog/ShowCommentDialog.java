@@ -67,7 +67,7 @@ public class ShowCommentDialog {
         for (Comment c : movie.getComments())
         {
             Log.e("Comment",c.getMsg());
-            data.add(c);
+            data.add(0,c);
         }
     }
 

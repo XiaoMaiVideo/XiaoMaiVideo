@@ -159,6 +159,8 @@ public class UserInfoActivity extends FragmentActivity {
             public void onClick(View view) {
                 // 跳转关注和粉丝列表页面
                 Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
+                User user=userInfoViewModel.getUser().getValue();
+                intent.putExtra("user", Parcels.wrap(user));
                 startActivity(intent);
             }
         });

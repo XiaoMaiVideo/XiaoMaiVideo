@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,12 @@ public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerV
         ImageView imageView= ((FollowersAndFollowingViewHolder)holder).avatar;
         Glide.with(mContext).load(Constant.currentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
         //((FollowersAndFollowingViewHolder)holder).username.setText(users.get(position).getUsername());
-        ((FollowersAndFollowingViewHolder)holder).username.setText("测试");
-        ((FollowersAndFollowingViewHolder)holder).description.setText("ceshi");
+        for (User u:users)
+        {
+            ((FollowersAndFollowingViewHolder)holder).username.setText(u.getNickname());
+            ((FollowersAndFollowingViewHolder)holder).description.setText(u.getDescription());
+            ((FollowersAndFollowingViewHolder)holder).avatar.setImageURI(Uri.parse(u.getAvatar()));
+        }
         if (isFollow){
             ((FollowersAndFollowingViewHolder)holder).button.setText("回关");
             ((FollowersAndFollowingViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +95,8 @@ public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public int getItemCount() {
-        //return users.size();
-        return 20;
+        return users.size();
+       // return 20;
     }
 
     class FollowersAndFollowingViewHolder extends RecyclerView.ViewHolder

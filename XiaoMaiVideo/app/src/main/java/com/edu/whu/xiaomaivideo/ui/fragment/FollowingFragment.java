@@ -26,6 +26,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.FollowersAndFollowingAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FollowersFragmentBinding;
 import com.edu.whu.xiaomaivideo.databinding.FollowingFragmentBinding;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.viewModel.FollowersViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.FollowingViewModel;
 
@@ -35,9 +36,13 @@ public class FollowingFragment extends Fragment {
     private FollowingViewModel followingViewModel;
     private FollowingFragmentBinding followingFragmentBinding;
     private FollowersAndFollowingAdapter followersAndFollowingAdapter;
+    private User user;
 
-    public static FollowingFragment newInstance() {
-        return new FollowingFragment();
+    public FollowingFragment(User user){
+        this.user=user;
+    }
+    public static FollowingFragment newInstance( User user) {
+        return new FollowingFragment(user);
     }
 
     @Override
@@ -59,7 +64,7 @@ public class FollowingFragment extends Fragment {
         followingFragmentBinding.recyclerView.setAdapter(followersAndFollowingAdapter);
 
         followingViewModel.getFollowers().observe(getViewLifecycleOwner(),users -> {
-            followersAndFollowingAdapter.setUsers(users);
+            followersAndFollowingAdapter.setUsers(user.getFollowing());
             followersAndFollowingAdapter.notifyDataSetChanged();
         });
 

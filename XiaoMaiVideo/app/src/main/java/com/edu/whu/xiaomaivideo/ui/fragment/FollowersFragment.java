@@ -26,6 +26,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.EditUserInfoAdapter;
 import com.edu.whu.xiaomaivideo.adapter.FollowersAndFollowingAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FollowersFragmentBinding;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.ui.activity.EditUserInfoActivity;
 import com.edu.whu.xiaomaivideo.viewModel.FindViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.FollowersViewModel;
@@ -48,10 +49,13 @@ public class FollowersFragment extends Fragment {
     private FollowersViewModel followersViewModel;
     private FollowersFragmentBinding followersFragmentBinding;
     private FollowersAndFollowingAdapter followersAndFollowingAdapter;
+    private User user;
 
-    public static FollowersFragment newInstance() {
-        return new FollowersFragment();
+    public FollowersFragment(User user){
+        this.user=user;
     }
+
+    public static FollowersFragment newInstance(User user) { return new FollowersFragment(user); }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,7 +78,7 @@ public class FollowersFragment extends Fragment {
         followersFragmentBinding.recyclerView.setAdapter(followersAndFollowingAdapter);
 
         followersViewModel.getFollowers().observe(getViewLifecycleOwner(),users -> {
-            followersAndFollowingAdapter.setUsers(users);
+            followersAndFollowingAdapter.setUsers(user.getFollowers());
             followersAndFollowingAdapter.notifyDataSetChanged();
         });
 
