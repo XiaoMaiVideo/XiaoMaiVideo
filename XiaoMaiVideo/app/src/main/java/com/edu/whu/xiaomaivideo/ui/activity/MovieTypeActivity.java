@@ -57,8 +57,10 @@ public class MovieTypeActivity extends Activity {
     public JzvdStd videoView;
 
     private int imageIds[] = {
-            R.drawable.picture1, R.drawable.picture2,
-            R.drawable.picture3, R.drawable.picture4,
+            R.drawable.picture1,
+            R.drawable.picture2,
+            R.drawable.picture3,
+            R.drawable.picture4,
             R.drawable.picture5
     };
 
@@ -68,7 +70,7 @@ public class MovieTypeActivity extends Activity {
     private int currentItem; //当前页面
     private ScheduledExecutorService scheduledExecutorService;
     //图片标题
-    private String titles[] = new String[]{"图片1", "图片2", "图片3", "图片4", "图片5"};
+    private String titles[] = new String[]{"小麦1", "小麦2", "小麦3", "小麦4", "小麦5"};
     private ArrayList<View> dots = new ArrayList<View>();;
     private TextView title;
 
@@ -108,6 +110,8 @@ public class MovieTypeActivity extends Activity {
             public void onPageSelected(int position) {
                 //设置页面刷新后的图片标题
                 title.setText(titles[position]);
+                dots.get(position).setBackgroundResource(R.drawable.dot_yes);
+                dots.get(oldPosition).setBackgroundResource(R.drawable.dot_no);
                 oldPosition = position;
                 currentItem = position;
             }
@@ -172,6 +176,7 @@ public class MovieTypeActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             vp.setCurrentItem(currentItem);
+            //
         }
     };
 
@@ -196,9 +201,6 @@ public class MovieTypeActivity extends Activity {
                 dialog.dismiss();
             }
         });
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_type);
-
         Slide();//实现滑动功能的函数
     }
 
