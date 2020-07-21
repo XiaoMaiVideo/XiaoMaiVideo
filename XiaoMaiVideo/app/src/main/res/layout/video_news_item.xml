@@ -10,289 +10,146 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="20dp" >
+    android:paddingBottom="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/videoInfoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:paddingBottom="16dp">
-
-        <ImageView
-            android:id="@+id/forwarderImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/forwarderText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="用户昵称"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/forwarderImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/forwarderVideoDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="视频描述"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forwarderImage" />
-
-        <TextView
-            android:id="@+id/forwarderPostTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="发布时间"
-            app:layout_constraintStart_toEndOf="@+id/forwarderImage"
-            app:layout_constraintTop_toBottomOf="@+id/forwarderText" />
-
-        <com.donkingliang.labels.LabelsView
-            android:id="@+id/tags3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:labelBackground="@drawable/label_bg"
-            app:labelTextColor="@color/red"
-            app:labelTextPaddingBottom="4dp"
-            app:labelTextPaddingLeft="8dp"
-            app:labelTextPaddingRight="8dp"
-            app:labelTextPaddingTop="4dp"
-            app:labelTextSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forwarderVideoDescription"
-            app:lineMargin="8dp"
-            app:wordMargin="8dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/shareVideoCardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/wheat">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        android:scaleType="fitXY">
 
-        <ImageView
-            android:id="@+id/originatorImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/originatorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="用户昵称"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/originatorImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <cn.jzvd.JzvdStd
-            android:id="@+id/originatorVideo"
-            android:layout_width="267dp"
-            android:layout_height="153dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.825"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tags2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/locationInfoButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:paddingStart="10dp"
-            android:text="位置信息"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
-            android:textSize="12sp"
-            app:icon="@drawable/location"
-            app:iconPadding="7dp"
-            app:iconSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/originatorVideo" />
-
-        <TextView
-            android:id="@+id/originatorVideoDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="视频描述"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/originatorImage" />
-
-        <TextView
-            android:id="@+id/originatorPostTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="发布时间"
-            app:layout_constraintStart_toEndOf="@+id/originatorImage"
-            app:layout_constraintTop_toBottomOf="@+id/originatorText" />
-
-        <com.donkingliang.labels.LabelsView
-            android:id="@+id/tags2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:labelBackground="@drawable/label_bg"
-            app:labelTextColor="@color/red"
-            app:labelTextPaddingBottom="4dp"
-            app:labelTextPaddingLeft="8dp"
-            app:labelTextPaddingRight="8dp"
-            app:labelTextPaddingTop="4dp"
-            app:labelTextSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/originatorVideoDescription"
-            app:layout_constraintTop_toTopOf="@+id/originatorPostTime"
-            app:lineMargin="8dp"
-            app:wordMargin="8dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/videoInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
 
-        <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/likebutton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerInParent="true"
-            android:src="@android:color/darker_gray"
-            app:allow_random_color="false"
-            app:big_shine_color="#FFFF00"
-            app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FFFF00"
-            app:click_animation_duration="200"
-            app:enable_flashing="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView6"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shine_animation_duration="1500"
-            app:shine_count="8"
-            app:shine_turn_angle="10"
-            app:siShape="@raw/like"
-            app:small_shine_color="#CC9999"
-            app:small_shine_offset_angle="20" />
+                <ImageView
+                    android:id="@+id/forwarderImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="60dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/starbutton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/likebutton"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/forwarderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="用户昵称"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/forwarderImage"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/starbutton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerInParent="true"
-            android:src="@android:color/darker_gray"
-            app:allow_random_color="false"
-            app:big_shine_color="#FFFF00"
-            app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FFFF00"
-            app:click_animation_duration="200"
-            app:enable_flashing="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView7"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shine_animation_duration="1500"
-            app:shine_count="8"
-            app:shine_turn_angle="10"
-            app:siShape="@raw/star"
-            app:small_shine_color="#CC9999"
-            app:small_shine_offset_angle="20" />
+                <TextView
+                    android:id="@+id/forwarderVideoDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="分享内容"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/forwarderImage" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="60dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/detailCommentButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/starbutton"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/forwarderPostTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="发布时间"
+                    app:layout_constraintStart_toEndOf="@+id/forwarderImage"
+                    app:layout_constraintTop_toBottomOf="@+id/forwarderText" />
 
-        <ImageView
-            android:id="@+id/detailCommentButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="60dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/detailShareButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/detailCommentButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/originVideoCardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitXY"
+                app:cardCornerRadius="16dp">
 
-        <ImageView
-            android:id="@+id/detailShareButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="@color/wheat">
+
+                    <ImageView
+                        android:id="@+id/originatorImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/originatorText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="用户昵称"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/originatorImage"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <cn.jzvd.JzvdStd
+                        android:id="@+id/originatorVideo"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/originatorVideoDescription" />
+
+                    <TextView
+                        android:id="@+id/originatorVideoDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="视频描述"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/originatorPostTime" />
+
+                    <TextView
+                        android:id="@+id/originatorPostTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:text="发布时间"
+                        app:layout_constraintStart_toEndOf="@+id/originatorImage"
+                        app:layout_constraintTop_toBottomOf="@+id/originatorText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

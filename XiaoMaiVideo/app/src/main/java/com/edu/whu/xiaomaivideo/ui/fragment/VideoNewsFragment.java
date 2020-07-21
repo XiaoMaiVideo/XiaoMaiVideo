@@ -26,6 +26,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.VideoNewsAdapter;
 import com.edu.whu.xiaomaivideo.databinding.VideoNewsFragmentBinding;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.viewModel.VideoNewsViewModel;
@@ -45,29 +46,26 @@ public class VideoNewsFragment extends Fragment {
 
     public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
     public JzvdStd videoView;
+
+    User mUser;
+
+    public VideoNewsFragment(User user) {
+        mUser = user;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         videoNewsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(VideoNewsViewModel.class);
         videoNewsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.video_news_fragment, container, false);
         videoNewsFragmentBinding.setViewmodel(videoNewsViewModel);
         videoNewsFragmentBinding.setLifecycleOwner(getActivity());
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
-        dialog.show();
-        MovieRestService.getMovies(0, new MovieRestCallback() {
-            @Override
-            public void onSuccess(int resultCode, List<Movie> movies) {
-                super.onSuccess(resultCode, movies);
-                movieList = movies;
-                setRecyclerView();
-                dialog.dismiss();
-            }
-        });
+        setRecyclerView();
         return videoNewsFragmentBinding.getRoot();
     }
 
     private void setRecyclerView() {
         videoNewsFragmentBinding.videoNewsFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        videoNewsFragmentBinding.videoNewsFragmentRecyclerView.setAdapter(new VideoNewsAdapter(getActivity(), movieList));
+        videoNewsFragmentBinding.videoNewsFragmentRecyclerView.setAdapter(new VideoNewsAdapter(getActivity(), mUser.getShares(), mUser));
         videoNewsFragmentBinding.videoNewsFragmentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

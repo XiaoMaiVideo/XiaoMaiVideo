@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.model.MessageVOPool;
 import com.edu.whu.xiaomaivideo.ui.activity.LCFMessageActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -48,12 +47,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((MessageViewHolder)viewHolder).textView.setText("赞");
             ((MessageViewHolder)viewHolder).image.setImageResource(R.drawable.like);
             ((MessageViewHolder)viewHolder).icon.setImageResource(R.drawable.ic_action_go);
-            /*if (MessageVOPool.getMessageVOs("like").size()>0) {
-                ((MessageViewHolder)viewHolder).indicator.setVisibility(View.VISIBLE);
-            }
-            else {
-                ((MessageViewHolder)viewHolder).indicator.setVisibility(View.INVISIBLE);
-            }*/
             Constant.currentLikeMessage.observe((LifecycleOwner) mContext, new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
@@ -90,12 +83,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 }
             });
-            if (MessageVOPool.getMessageVOs("comment").size()>0) {
-
-            }
-            else {
-
-            }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -110,12 +97,17 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((MessageViewHolder) viewHolder).textView.setText("新粉丝");
             ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.like);
             ((MessageViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
-            if (MessageVOPool.getMessageVOs("follow").size()>0) {
-                ((MessageViewHolder)viewHolder).indicator.setVisibility(View.VISIBLE);
-            }
-            else {
-                ((MessageViewHolder)viewHolder).indicator.setVisibility(View.INVISIBLE);
-            }
+            Constant.currentFollowMessage.observe((LifecycleOwner) mContext, new Observer<Integer>() {
+                @Override
+                public void onChanged(Integer integer) {
+                    if (integer == 0) {
+                        ((MessageViewHolder)viewHolder).indicator.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        ((MessageViewHolder)viewHolder).indicator.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
             viewHolder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override

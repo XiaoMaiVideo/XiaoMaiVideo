@@ -53,12 +53,15 @@ public class UserRestService {
             protected String doInBackground(User... users) {
                 String url = Constant.BASEURL+"user";
                 String json = JSON.toJSONString(users[0]);
+                Log.e(TAG, "发送"+json);
+                // return "";
                 return HttpUtil.sendPutRequest(url, json);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 Callback.onSuccess(jsonObject.getInteger("code"));
             }

@@ -167,7 +167,7 @@ public class MeFragment extends Fragment {
                 else if (pos == 3) {
                     // 清除缓存
                     new XPopup.Builder(getActivity())
-                            .asConfirm("清除缓存吗？", "", new OnConfirmListener() {
+                            .asConfirm("清除缓存吗？", "清除缓存可能会影响你的访问速度", new OnConfirmListener() {
                                 @Override
                                 public void onConfirm() {
                                     try {
@@ -183,7 +183,7 @@ public class MeFragment extends Fragment {
                 else if (pos == 4) {
                     // 退出登录
                     new XPopup.Builder(getActivity())
-                            .asConfirm("退出登录吗？", "", new OnConfirmListener() {
+                            .asConfirm("退出登录吗？", "你可以点击上方头像再次登录", new OnConfirmListener() {
                                 @Override
                                 public void onConfirm() {
                                     onLogOut();
@@ -259,7 +259,7 @@ public class MeFragment extends Fragment {
         intent.setAction(Constant.SET_WEBSOCKET);
         intent.putExtra("status", "start");
         getActivity().sendBroadcast(intent);
-        Constant.CurrentUser.setEnter_uesr_center("进入个人中心>>");
+        Constant.currentUser.setEnter_uesr_center("进入个人中心>>");
 
         meViewModel.setUser(Constant.currentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));

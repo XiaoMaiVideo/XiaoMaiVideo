@@ -125,7 +125,7 @@ public class UserInfoActivity extends FragmentActivity {
                         fragment = new UserVideoWorksFragment();
                         break;
                     case 1:
-                        fragment = new VideoNewsFragment();
+                        fragment = new VideoNewsFragment(userInfoViewModel.getUser().getValue());
                         break;
                     case 2:
                         fragment = new UserLikedVideoFragment();

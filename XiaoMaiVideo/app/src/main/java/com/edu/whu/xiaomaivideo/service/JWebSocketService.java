@@ -17,7 +17,6 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
-import com.edu.whu.xiaomaivideo.model.MessageVOPool;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.JWebSocketClient;

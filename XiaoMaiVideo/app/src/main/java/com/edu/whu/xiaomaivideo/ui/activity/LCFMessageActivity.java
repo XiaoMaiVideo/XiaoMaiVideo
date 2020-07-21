@@ -2,13 +2,11 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +17,6 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.LCFMessageAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLcfMessageBinding;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
-import com.edu.whu.xiaomaivideo.model.MessageVOPool;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
@@ -28,10 +25,8 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MentionedModel;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.litepal.LitePal;
-import org.litepal.util.Const;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
