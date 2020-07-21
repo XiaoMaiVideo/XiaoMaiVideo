@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.util.CommonUtil;
@@ -35,6 +36,8 @@ import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
 import com.lxj.xpopup.XPopup;
 import com.vincent.videocompressor.VideoCompress;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 import java.io.IOException;
@@ -197,7 +200,9 @@ public class TakeVideoActivity extends AppCompatActivity {
                             } else if (notCompressButton.isInProgress()) {
                                 notCompressButton.onStopLoading();
                             }
-                            setResult(RESULT_OK);
+                            Intent intent = new Intent();
+                            intent.putExtra("movie", Parcels.wrap(Movie.class, movie));
+                            setResult(RESULT_OK, intent);
                             TakeVideoActivity.this.finish();
                         }
                     }

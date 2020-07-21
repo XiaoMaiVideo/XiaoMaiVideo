@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
@@ -52,6 +53,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -200,11 +203,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == Constant.TAKE_VIDEO) {
             if (resultCode == RESULT_OK) {
                 // 可能需要对刚刚发的视频做一定的操作
+                Movie newMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
+                Log.e("MainActivity", newMovie.getUrl()+"_");
                 BasePopupView popupView = new XPopup.Builder(this)
                         .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功"))
                         .show();
