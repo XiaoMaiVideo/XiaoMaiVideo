@@ -1,9 +1,13 @@
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +20,7 @@ import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.util.CheckPermissionUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
@@ -78,15 +83,43 @@ public class FindSubFragment extends Fragment {
         }
         else if (mType.equals(Constant.LOCAL_HOT)) {
             // 本地热点
-            MovieRestService.getMoviesByLocation("广西壮族自治区梧州市", 0, new MovieRestCallback() {
-                @Override
-                public void onSuccess(int resultCode, List<Movie> movies) {
-                    super.onSuccess(resultCode, movies);
-                    movieList = movies;
-                    setRecyclerView();
-                    dialog.dismiss();
+            // 开了定位权限才行
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // 提示没有定位
+            } else {
+                // 定位没准备好
+                if (Constant.currentLocation.getValue().equals("")) {
+                    Constant.currentLocation.observe(getActivity(), new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            if (!s.equals("")) {
+                                MovieRestService.getMoviesByLocation(s, 0, new MovieRestCallback() {
+                                    @Override
+                                    public void onSuccess(int resultCode, List<Movie> movies) {
+                                        super.onSuccess(resultCode, movies);
+                                        movieList = movies;
+                                        setRecyclerView();
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
-            });
+                // 定位准备好了
+                else {
+                    MovieRestService.getMoviesByLocation(Constant.currentLocation.getValue(), 0, new MovieRestCallback() {
+                        @Override
+                        public void onSuccess(int resultCode, List<Movie> movies) {
+                            super.onSuccess(resultCode, movies);
+                            movieList = movies;
+                            setRecyclerView();
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }
         }
         return rootView;
     }

@@ -23,6 +23,7 @@ import com.edu.whu.xiaomaivideo.util.HttpUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MovieRestService {
@@ -73,7 +74,18 @@ public class MovieRestService {
                 int responseNum = jsonObject.getInteger("code");
                 JSONObject dataObject = jsonObject.getJSONObject("data");
                 Movie movie = JSON.toJavaObject(dataObject, Movie.class);
-                movieRestCallback.onSuccess(responseNum,movie);
+                // 处理类别
+                if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                    // 类别不为空
+                    String[] categoryArray = movie.getCategories().split(";");
+                    List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                    movie.setCategoryList(categoryList);
+                }
+                else {
+                    // 类别为空
+                    movie.setCategoryList(new ArrayList<>());
+                }
+                movieRestCallback.onSuccess(responseNum, movie);
             }
         }.execute();
     }
@@ -103,6 +115,17 @@ public class MovieRestService {
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
                     Movie movie = JSON.toJavaObject(jsonObj, Movie.class);
+                    // 处理类别
+                    if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                        // 类别不为空
+                        String[] categoryArray = movie.getCategories().split(";");
+                        List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                        movie.setCategoryList(categoryList);
+                    }
+                    else {
+                        // 类别为空
+                        movie.setCategoryList(new ArrayList<>());
+                    }
                     movies.add(movie);
                 }
                 movieRestCallback.onSuccess(responseNum, movies);
@@ -136,6 +159,17 @@ public class MovieRestService {
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
                     Movie movie = JSON.toJavaObject(jsonObj, Movie.class);
+                    // 处理类别
+                    if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                        // 类别不为空
+                        String[] categoryArray = movie.getCategories().split(";");
+                        List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                        movie.setCategoryList(categoryList);
+                    }
+                    else {
+                        // 类别为空
+                        movie.setCategoryList(new ArrayList<>());
+                    }
                     movies.add(movie);
                 }
                 movieRestCallback.onSuccess(responseNum, movies);
@@ -169,6 +203,17 @@ public class MovieRestService {
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
                     Movie movie = JSON.toJavaObject(jsonObj, Movie.class);
+                    // 处理类别
+                    if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                        // 类别不为空
+                        String[] categoryArray = movie.getCategories().split(";");
+                        List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                        movie.setCategoryList(categoryList);
+                    }
+                    else {
+                        // 类别为空
+                        movie.setCategoryList(new ArrayList<>());
+                    }
                     movies.add(movie);
                 }
                 movieRestCallback.onSuccess(responseNum, movies);

@@ -7,18 +7,14 @@
 package com.edu.whu.xiaomaivideo.restservice;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.PropertyFilter;
-import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -81,6 +77,7 @@ public class UserRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
@@ -107,6 +104,12 @@ public class UserRestService {
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
+                if (user.getFollowing() == null) {
+                    user.setFollowing(new ArrayList<>());
+                }
+                if (user.getFollowers() == null) {
+                    user.setFollowers(new ArrayList<>());
+                }
                 userRestCallback.onSuccess(responseNum, user);
             }
         }.execute(user);
@@ -121,7 +124,7 @@ public class UserRestService {
                 // 发同步请求
                 String url = Constant.BASEURL+"userMovies";
                 User user = new User();
-                user.setUsername(Constant.CurrentUser.getUsername());
+                user.setUsername(Constant.currentUser.getUsername());
                 user.addMovies(movies[0]);
                 String json = JSON.toJSONString(user);
                 // Log.e("UserRestService发送", json);
@@ -140,25 +143,25 @@ public class UserRestService {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public static void addUserLike(final long movieId, final RestCallback restCallback) {
+    public static void addUserShare(final long movieId, final String msg, final RestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
             RestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... numbers) {
                 // 发同步请求
-                String url = Constant.BASEURL+"userLike";
+                String url = Constant.BASEURL+"shareMovies";
                 User user = new User();
-                user.setUsername(Constant.CurrentUser.getUsername());
-                user.addLikeMovies(new Movie(numbers[0]));
+                user.setUsername(Constant.currentUser.getUsername());
+                user.addShareMovies(new Movie(numbers[0]), msg);
                 String json = JSON.toJSONString(user);
-                // Log.e("UserRestService发送", json);
+                Log.e("UserRestService发送", json);
                 return HttpUtil.sendPostRequest(url, json);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // Log.e("UserRestService", s);
+                Log.e("UserRestService", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 callback.onSuccess(responseNum);
@@ -194,9 +197,6 @@ public class UserRestService {
                     users.add(user);
                 }
                 userRestCallback.onSuccess(responseNum, users);
-                // int responseNum = jsonObject.getInteger("code");
-                // List<User> users = new ArrayList<>();
-                // userRestCallback.onSuccess();
             }
         }.execute(userIds.toArray(new Long[userIds.size()]));
     }

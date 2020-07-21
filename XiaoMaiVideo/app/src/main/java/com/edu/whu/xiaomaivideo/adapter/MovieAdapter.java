@@ -8,6 +8,7 @@ package com.edu.whu.xiaomaivideo.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.donkingliang.labels.LabelsView;
 import com.downloader.Error;
 import com.downloader.OnDownloadListener;
 import com.downloader.PRDownloader;
@@ -32,9 +34,11 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.ShareDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -79,7 +83,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
+        // TODO: 加载很慢，原因不明
         holder.jzvdStd.setUp(mMovies.get(position).getUrl(), "", Jzvd.SCREEN_NORMAL);
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
 
         Glide.with(context)
                 .load(mMovies.get(position).getPublisher().getAvatar())
@@ -88,19 +94,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 .into(holder.userAvatar);
         holder.userNickname.setText(mMovies.get(position).getPublisher().getNickname());
         holder.publishTime.setText(mMovies.get(position).getPublishTime());
-        holder.movieDescription.setText(mMovies.get(position).getDescription());
-
-        // TODO: 类别的标签还没显示
-        holder.likeButton.setChecked(Constant.CurrentUser.isLikeMovie(mMovies.get(position).getMovieId()));
+        holder.likeButton.setChecked(Constant.currentUser.isLikeMovie(mMovies.get(position).getMovieId()));
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
+        // 设置位置信息按钮
         if (mMovies.get(position).getLocation().equals("")) {
             holder.locationInfoButton.setVisibility(View.GONE);
         }
         else {
             holder.locationInfoButton.setText(mMovies.get(position).getLocation());
         }
+
+        // 设置标签
+        if (mMovies.get(position).getCategoryList().size() == 0) {
+            holder.tags.setVisibility(View.GONE);
+        }
+        else {
+            holder.tags.setLabels(mMovies.get(position).getCategoryList());
+        }
+
+        // 设置描述
+        if (mMovies.get(position).getDescription() == null || mMovies.get(position).getDescription().equals("")) {
+            holder.movieDescription.setVisibility(View.GONE);
+        }
+        else {
+            holder.movieDescription.setText(mMovies.get(position).getDescription());
+        }
+
     }
     @Override
     public int getItemCount() {
@@ -112,8 +133,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         ImageView userAvatar, shareButton, commentButton;
         TextView userNickname, publishTime, movieDescription, likeNum, commentNum, shareNum;
         ShineButton likeButton;
-        ConstraintLayout videoInfoLayout;
+        ConstraintLayout videoInfoLayout, likeLayout, commentLayout, shareLayout;
         MaterialButton locationInfoButton;
+        LabelsView tags;
         public MyViewHolder(View itemView) {
             super(itemView);
             userAvatar = itemView.findViewById(R.id.authorImage);
@@ -129,8 +151,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             shareNum = itemView.findViewById(R.id.shareNum);
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
             locationInfoButton = itemView.findViewById(R.id.locationInfoButton);
-
-
+            tags = itemView.findViewById(R.id.tags);
+            likeLayout = itemView.findViewById(R.id.likeLayout);
+            commentLayout = itemView.findViewById(R.id.commentLayout);
+            shareLayout = itemView.findViewById(R.id.shareLayout);
 
 
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
@@ -153,10 +177,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 }
             });
 
+            tags.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
+                @Override
+                public void onLabelClick(TextView label, Object data, int position) {
+                    Log.e("MovieAdapter", String.valueOf(data)+"_");
+                    Intent intent=new Intent(context, MovieTypeActivity.class);
+                    intent.putExtra("type", String.valueOf(data));
+                    context.startActivity(intent);
+                }
+            });
+
             likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(View view, boolean checked) {
-                    if (Constant.CurrentUser.getUserId() == 0) {
+                    if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许操作
                         BasePopupView popupView = new XPopup.Builder(context)
                                 .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能点赞哦"))
@@ -173,7 +207,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                             likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("like");
-                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setSenderId(Constant.currentUser.getUserId());
                             message.setReceiverId(currentMovie.getPublisher().getUserId());
                             message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
@@ -184,7 +218,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                             likeNum.setText(currentMovie.getLikednum()+"");
                             MessageVO message = new MessageVO();
                             message.setMsgType("unlike");
-                            message.setSenderId(Constant.CurrentUser.getUserId());
+                            message.setSenderId(Constant.currentUser.getUserId());
                             message.setReceiverId(currentMovie.getPublisher().getUserId());
                             message.setMovieId(currentMovie.getMovieId());
                             EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
@@ -193,8 +227,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 }
             });
 
+            likeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 弹出点赞用户弹窗
+                }
+            });
+
             //评论
-            commentButton.setOnClickListener(new View.OnClickListener() {
+            commentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Movie currentMovie = mMovies.get(getAdapterPosition());
@@ -208,10 +249,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 }
             });
 
-            shareButton.setOnClickListener(new View.OnClickListener() {
+            shareLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // mListener.onShareButtonClick(getAdapterPosition(), shareButton);
                     // 按下分享按钮
                     Movie currentMovie = mMovies.get(getAdapterPosition());
                     new XPopup.Builder(context)
@@ -223,7 +263,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                         public void onSelect(int position, String text) {
                                             if (position == 0) {
                                                 // TODO: 应用内分享
-                                                if (Constant.CurrentUser.getUserId() == 0) {
+                                                if (Constant.currentUser.getUserId() == 0) {
                                                     // 没登录，不允许操作
                                                     BasePopupView popupView = new XPopup.Builder(context)
                                                             .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能分享哦"))
@@ -231,13 +271,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                     popupView.delayDismiss(1500);
                                                 }
                                                 else {
-                                                    currentMovie.setSharenum(currentMovie.getSharenum()+1);
-                                                    shareNum.setText(currentMovie.getSharenum()+"");
-                                                    // TODO: 应用内分享，发送后端请求
+                                                    BasePopupView popupView = new XPopup.Builder(context)
+                                                            .asCustom(new ShareDialog(context, currentMovie, new ShareDialog.OnShareMsgSendListener() {
+                                                                @Override
+                                                                public void onShareMsgSend() {
+                                                                    currentMovie.setSharenum(currentMovie.getSharenum()+1);
+                                                                    shareNum.setText(currentMovie.getSharenum()+"");
+                                                                }
+                                                            }))
+                                                            .show();
                                                 }
                                             }
                                             else {
-                                                // TODO: 应用外分享
+                                                // TODO: 修复BUG
                                                 String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
                                                 String fileName = System.currentTimeMillis() + ".mp4";
                                                 ProgressDialog progressDialog = new ProgressDialog(context);

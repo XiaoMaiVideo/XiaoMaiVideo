@@ -53,6 +53,7 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
 import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
+import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -73,9 +74,8 @@ public class  HotFragment extends Fragment {
     private HotViewModel hotViewModel;
     FragmentHotBinding fragmentHotBinding;
     List<Movie> movieList;
+    MovieRecyclerView movieRecyclerView;
 
-    public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
-    public JzvdStd videoView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         hotViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(HotViewModel.class);
@@ -99,53 +99,6 @@ public class  HotFragment extends Fragment {
     private void setRecyclerView() {
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
-        fragmentHotBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                VisibleCount = lastVisibleItem - firstVisibleItem;
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE://停止滚动
-                        /**在这里执行，视频的自动播放与停止*/
-                        autoPlayVideo(recyclerView);
-                        break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING://拖动
-                        autoPlayVideo(recyclerView);
-                        break;
-                    case RecyclerView.SCROLL_STATE_SETTLING://性滑动
-                        JzvdStd.releaseAllVideos();
-                        break;
-                }
-
-            }
-        });
-    }
-
-    private void autoPlayVideo(RecyclerView recyclerView) {
-        for(int i=0;i<VisibleCount;i++) {
-            if (recyclerView != null && recyclerView.getChildAt(i) != null &&recyclerView.getChildAt(i).findViewById(R.id.video) != null){
-                videoView = (JzvdStd) recyclerView.getChildAt(i).findViewById(R.id.video);
-                Rect rect = new Rect();
-                videoView.getLocalVisibleRect(rect);//获取视图本身的可见坐标，把值传入到rect对象中
-                int videoHeight = videoView.getHeight();//获取视频的高度
-                if(rect.top==0&&rect.bottom==videoHeight){
-                    if(videoView.state == Jzvd.STATE_NORMAL||videoView.state==Jzvd.STATE_PAUSE){
-                        videoView.startVideo();
-                    }
-                    return;
-                }
-                videoView.releaseAllVideos();
-            } else{
-                if(videoView!=null){
-                    videoView.releaseAllVideos();
-                }
-            }
-        }
+        movieRecyclerView = new MovieRecyclerView(fragmentHotBinding.recyclerView);
     }
 }

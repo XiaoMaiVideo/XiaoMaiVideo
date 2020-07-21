@@ -21,6 +21,9 @@ public class Movie {
     private String description;
     private String location;
 
+    @JSONField(serialize = false)
+    private List<String> categoryList;
+
     private User publisher;
     private String categories;
     private List<User> likers;
@@ -135,5 +138,13 @@ public class Movie {
 
     public void setLikednum(int likednum) {
         this.likednum = likednum;
+    }
+
+    public List<String> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<String> categoryList) {
+        this.categoryList = categoryList;
     }
 }

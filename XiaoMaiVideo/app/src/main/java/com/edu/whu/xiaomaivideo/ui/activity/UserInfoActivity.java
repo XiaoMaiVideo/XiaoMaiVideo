@@ -1,8 +1,8 @@
 /**
- * Author: 张俊杰、叶俊豪
+ * Author: 张俊杰、叶俊豪、李季东
  * Create Time: 2020/7/10
- * Update Time: 2020/7/18
- */
+ * Update Time: 2020/7/21
+ * */
 
 package com.edu.whu.xiaomaivideo.ui.activity;
 
@@ -10,9 +10,9 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -42,7 +42,7 @@ import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserLikedVideoFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.UserVideoWorksFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.VideoNewsFragment;
-import com.edu.whu.xiaomaivideo.util.CommonUtils;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.viewModel.UserInfoViewModel;
@@ -54,6 +54,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.util.Objects;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class UserInfoActivity extends FragmentActivity {
 
@@ -88,6 +90,8 @@ public class UserInfoActivity extends FragmentActivity {
             public void onSuccess(int resultCode, User user) {
                 super.onSuccess(resultCode, user);
                 // TODO: 把用户的作品/动态/点赞列表分开，赋给三个tab
+                userInfoViewModel.setUser(user);
+                setVisibility();
                 setTabs();
                 setRecyclerView();
                 setUserSFNumClickListener();
@@ -95,6 +99,14 @@ public class UserInfoActivity extends FragmentActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void setVisibility() {
+        if (userInfoViewModel.getUser().getValue().isPrivateUser()) {
+            // 私密账户，看不到其他东西
+            activityUserInfoBinding.userDescription.setVisibility(View.GONE);
+            activityUserInfoBinding.recyclerView.setVisibility(View.GONE);
+        }
     }
 
     private void setTabs() {
@@ -158,17 +170,24 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.userSFNums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 跳转关注和粉丝列表页面
-                Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
-                startActivity(intent);
+                if (Constant.currentUser.isFollowListAccessible()) {
+                    // 设置了允许看，就可以跳转关注和粉丝列表页面
+                    Intent intent = new Intent(UserInfoActivity.this, FollowActivity.class);
+                    User user = userInfoViewModel.getUser().getValue();
+                    intent.putExtra("user", Parcels.wrap(user));
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(UserInfoActivity.this, "该用户设置了不允许看关注列表哦！", LENGTH_LONG).show();
+                }
             }
         });
     }
 
     private void setOnButtonClickListener() {
         // 如果当前是自己，或者没登录。就不显示这两个Button
-        if (userInfoViewModel.getUser().getValue().getUserId() == Constant.CurrentUser.getUserId()
-            || Constant.CurrentUser.getUserId() == 0) {
+        if (userInfoViewModel.getUser().getValue().getUserId() == Constant.currentUser.getUserId()
+            || Constant.currentUser.getUserId() == 0) {
             activityUserInfoBinding.subscribeButton.setVisibility(View.INVISIBLE);
             activityUserInfoBinding.chatButton.setVisibility(View.INVISIBLE);
         }
@@ -176,7 +195,7 @@ public class UserInfoActivity extends FragmentActivity {
             activityUserInfoBinding.subscribeButton.setVisibility(View.VISIBLE);
             activityUserInfoBinding.chatButton.setVisibility(View.VISIBLE);
         }
-        if (CommonUtils.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+        if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
             // 本来关注了，那按钮就是取消关注
             activityUserInfoBinding.subscribeButton.setText("取消关注");
         }
@@ -187,10 +206,10 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonUtils.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+                if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
                     MessageVO message = new MessageVO();
                     message.setMsgType("unfollow");
-                    message.setSenderId(Constant.CurrentUser.getUserId());
+                    message.setSenderId(Constant.currentUser.getUserId());
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("关注");
@@ -200,7 +219,7 @@ public class UserInfoActivity extends FragmentActivity {
                     // 本来没关注，那按钮就是关注
                     MessageVO message = new MessageVO();
                     message.setMsgType("follow");
-                    message.setSenderId(Constant.CurrentUser.getUserId());
+                    message.setSenderId(Constant.currentUser.getUserId());
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("取消关注");

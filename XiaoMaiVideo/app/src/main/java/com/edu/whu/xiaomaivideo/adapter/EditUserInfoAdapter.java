@@ -63,7 +63,7 @@ public class EditUserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void commit() {
-        User user = Constant.CurrentUser;
+        User user = Constant.currentUser;
         for (EditUserInfoViewModel.InfoMap item: userInfoList) {
             // editor.putString(item.key,item.value);
             // editor.apply();
@@ -88,7 +88,7 @@ public class EditUserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     break;
             }
         }
-        Constant.CurrentUser = user;
+        Constant.currentUser = user;
     }
 
     public void updateBirthday(String birthday) {

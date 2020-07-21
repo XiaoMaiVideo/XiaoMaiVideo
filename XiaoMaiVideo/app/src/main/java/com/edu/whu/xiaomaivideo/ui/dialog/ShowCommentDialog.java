@@ -1,7 +1,7 @@
 /**
  * Author: 未知、李季东
  * Create Time: 未知
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/21
  */
 package com.edu.whu.xiaomaivideo.ui.dialog;
 
@@ -18,21 +18,20 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.CommentDialogSingleAdapter;
 import com.edu.whu.xiaomaivideo.model.Comment;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
-import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
-import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.widget.CommentRecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.alibaba.fastjson.JSON;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -70,7 +69,7 @@ public class ShowCommentDialog {
         for (Comment c : movie.getComments())
         {
             Log.e("Comment",c.getMsg());
-            data.add(c);
+            data.add(0,c);
         }
     }
 
@@ -165,9 +164,17 @@ public class ShowCommentDialog {
             inputTextMsgDialog.setmOnTextSendListener(new InputTextMsgDialog.OnTextSendListener() {
                 @Override
                 public void onTextSend(String msg) {
-                    addComment(isReply,headImg,position,msg);
+                    if (Constant.currentUser.getUserId() == 0) {
+                        // 没登录，不允许评论
+                        BasePopupView popupView = new XPopup.Builder(mContext)
+                                .asCustom(new SimpleBottomDialog(mContext, R.drawable.success, "没有登录，不能发评论哦"))
+                                .show();
+                        popupView.delayDismiss(1500);
+                    }
+                    else {
+                        addComment(isReply, headImg, position, msg);
+                    }
                 }
-
                 @Override
                 public void dismiss() {
                     scrollLocation(-offsetY);
@@ -182,13 +189,13 @@ public class ShowCommentDialog {
         Log.e("ShowCommentDialog", "发评论");
         MessageVO message = new MessageVO();
         message.setMsgType("comment");
-        message.setSenderId(Constant.CurrentUser.getUserId());
+        message.setSenderId(Constant.currentUser.getUserId());
         message.setReceiverId(movie.getPublisher().getUserId());
         message.setMovieId(movie.getMovieId());
         message.setText(msg);
         EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
         Comment comment = new Comment();
-        comment.setCommenter(Constant.CurrentUser);
+        comment.setCommenter(Constant.currentUser);
         comment.setMovie(movie);
         comment.setMsg(msg);
         comment.setTime(new Date());

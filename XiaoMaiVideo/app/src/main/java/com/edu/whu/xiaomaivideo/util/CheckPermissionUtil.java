@@ -39,31 +39,6 @@ public class CheckPermissionUtil {
     public static int bufferSizeInBytes = 0;
 
     /**
-     * @return true 已经授权 获取地理位置权限
-     */
-    public static boolean isLocationPermGrantedAndOpen(){
-        boolean result = false;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Log.i(TAG,"isLocationPermGrantedAndOpen()---  Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ");
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED )
-            {
-                Log.i(TAG,"isLocationPermGrantedAndOpen()---  result = false");
-                result = false;
-            } else {
-                if(isOPenGPS(getContext())){
-                    Log.i(TAG,"isLocationPermGrantedAndOpen()---  result = true");
-                    result = true;
-                }
-            }
-        } else {
-            Log.i(TAG,"isLocationPermGrantedAndOpen()---  Build.VERSION.SDK_INT < Build.VERSION_CODES.M ");
-            result = true;
-        }
-        return result;
-    }
-
-    /**
      * @return true 照相机权限
      */
     public static boolean isCameraGranted(){

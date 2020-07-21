@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.Comment;
-import com.edu.whu.xiaomaivideo.util.TimeUtils;
+import com.edu.whu.xiaomaivideo.util.TimeUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 
@@ -45,7 +45,7 @@ public class CommentDialogSingleAdapter extends BaseQuickAdapter<Comment, BaseVi
         tv_like_count.setVisibility(content.getLikeCount() <= 0 ? View.GONE : View.VISIBLE);
         tv_content.setText(content.getMsg());
         tv_user_name.setText(content.getCommenter().getNickname());
-        tv_time.setText(TimeUtils.getRecentTimeSpanByNow(content.getTime().getTime()));
+        tv_time.setText(TimeUtil.getRecentTimeSpanByNow(content.getTime().getTime()));
 
         Glide.with(mContext).load(content.getCommenter().getAvatar()).into(iv_header);
     }

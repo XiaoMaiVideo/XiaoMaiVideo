@@ -36,12 +36,12 @@ public class EditUserInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<InfoMap>> getAllUserInfo() {
         List<InfoMap> list = new ArrayList<>();
-        list.add(new InfoMap(USER_ALL_INFO[0], Constant.CurrentUser.getNickname()));
-        list.add(new InfoMap(USER_ALL_INFO[1], Constant.CurrentUser.getDescription()));
-        list.add(new InfoMap(USER_ALL_INFO[2], Constant.CurrentUser.getWorkplace()));
-        list.add(new InfoMap(USER_ALL_INFO[3], Constant.CurrentUser.getGender()));
-        list.add(new InfoMap(USER_ALL_INFO[4], Constant.CurrentUser.getBirthday()));
-        list.add(new InfoMap(USER_ALL_INFO[5], Constant.CurrentUser.getArea()));
+        list.add(new InfoMap(USER_ALL_INFO[0], Constant.currentUser.getNickname()));
+        list.add(new InfoMap(USER_ALL_INFO[1], Constant.currentUser.getDescription()));
+        list.add(new InfoMap(USER_ALL_INFO[2], Constant.currentUser.getWorkplace()));
+        list.add(new InfoMap(USER_ALL_INFO[3], Constant.currentUser.getGender()));
+        list.add(new InfoMap(USER_ALL_INFO[4], Constant.currentUser.getBirthday()));
+        list.add(new InfoMap(USER_ALL_INFO[5], Constant.currentUser.getArea()));
         userInfoList.setValue(list);
         return userInfoList;
     }

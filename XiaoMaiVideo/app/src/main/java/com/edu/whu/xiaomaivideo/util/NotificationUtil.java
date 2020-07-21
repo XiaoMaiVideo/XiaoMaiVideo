@@ -17,7 +17,7 @@ public class NotificationUtil {
         String name = "name";
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         Notification notification = null;
-        NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
+        NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
         notificationManager.createNotificationChannel(mChannel);
         notification = new Notification.Builder(context)
                 .setChannelId(id)
