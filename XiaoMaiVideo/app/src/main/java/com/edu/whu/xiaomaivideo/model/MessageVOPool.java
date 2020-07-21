@@ -37,11 +37,6 @@ public class MessageVOPool {
         messageVos.get(type).clear();
     }
 
-    // TODO: 有新消息的话提醒消息页面显示红点
-    public static void hasNew(String type) {
-
-    }
-
     public static List<MessageVO> getMessageVOs(String type) {
         if (!(type.equals("like")||type.equals("comment")||type.equals("follow"))) {
             return null;

@@ -49,6 +49,9 @@ public class Constant {
     public static boolean isCameraPermissionGiven = true;
     public static boolean isStoragePermissionGiven = true;
     public static MutableLiveData<String> currentLocation = new MutableLiveData<>("");
+    public static MutableLiveData<Integer> currentLikeMessage = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> currentCommentMessage = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> currentFollowMessage = new MutableLiveData<>(0);
 
     public static final int MSEC = 1;
     public static final int SEC  = 1000;

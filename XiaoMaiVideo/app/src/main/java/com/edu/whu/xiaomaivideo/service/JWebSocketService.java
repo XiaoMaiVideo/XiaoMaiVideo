@@ -117,7 +117,8 @@ public class JWebSocketService extends Service {
                         // 消息统一存到本地数据库里，打开消息提醒页面以后再加载
                         messageVO.save();
                         // 先存到暂存池里，打开“消息”页面直接加载
-                        MessageVOPool.addMessageVO("like", messageVO);
+                        // MessageVOPool.addMessageVO("like", messageVO);
+                        Constant.currentLikeMessage.postValue(Constant.currentLikeMessage.getValue()+1);
                         // 调用系统推送
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你点了赞，快去看看吧...");
                     }
@@ -126,7 +127,8 @@ public class JWebSocketService extends Service {
                     if (Constant.currentUser.isCanAcceptCommentMessage()) {
                         Log.e("JWebSocketClientService", "收到的消息：评论");
                         messageVO.save();
-                        MessageVOPool.addMessageVO("comment", messageVO);
+                        // MessageVOPool.addMessageVO("comment", messageVO);
+                        Constant.currentCommentMessage.postValue(Constant.currentCommentMessage.getValue()+1);
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你评论，快去看看吧...");
                     }
                 }
@@ -138,7 +140,8 @@ public class JWebSocketService extends Service {
                     if (Constant.currentUser.isCanAcceptFollowMessage()) {
                         Log.e("JWebSocketClientService", "收到的消息：关注");
                         messageVO.save();
-                        MessageVOPool.addMessageVO("follow", messageVO);
+                        // MessageVOPool.addMessageVO("follow", messageVO);
+                        Constant.currentFollowMessage.postValue(Constant.currentFollowMessage.getValue()+1);
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
                     }
                 }

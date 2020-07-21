@@ -66,12 +66,22 @@ public class LCFMessageActivity extends AppCompatActivity {
         dialog.show();
 
         // 从本地数据库获取对应的信息，把后面几个当成新的消息来看待
-        List<MessageVO> tempNewMsgList = MessageVOPool.getMessageVOs(mType);
+        // List<MessageVO> tempNewMsgList = MessageVOPool.getMessageVOs(mType);
+        int newMessageCount = 0;
+        if (mType.equals("like")) {
+            newMessageCount = Constant.currentLikeMessage.getValue();
+        }
+        else if (mType.equals("comment")) {
+            newMessageCount = Constant.currentCommentMessage.getValue();
+        }
+        else if (mType.equals("follow")) {
+            newMessageCount = Constant.currentFollowMessage.getValue();
+        }
         newMessageVOs = new ArrayList<>();
         oldMessageVOs = new ArrayList<>();
         List<MessageVO> tempMsgList = LitePal.where("msgType = ?", mType).find(MessageVO.class);
         for (int i=tempMsgList.size()-1; i>=0; i--) {
-            if (tempMsgList.size()-i-1<tempNewMsgList.size()) {
+            if (tempMsgList.size()-i-1<newMessageCount) {
                 newMessageVOs.add(tempMsgList.get(i));
             }
             else {
@@ -100,7 +110,15 @@ public class LCFMessageActivity extends AppCompatActivity {
                 }
                 initAdapter();
                 dialog.dismiss();
-                MessageVOPool.clear(mType);
+                if (mType.equals("like")) {
+                    Constant.currentLikeMessage.setValue(0);
+                }
+                else if (mType.equals("comment")) {
+                        Constant.currentCommentMessage.setValue(0);
+                }
+                else if (mType.equals("follow")) {
+                    Constant.currentFollowMessage.setValue(0);
+                }
             }
         });
 
