@@ -32,21 +32,27 @@ import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SettingsAdapter;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.EditUserInfoActivity;
 import com.edu.whu.xiaomaivideo.databinding.FragmentMeBinding;
 import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
+import com.edu.whu.xiaomaivideo.ui.dialog.SettingDialog;
 import com.edu.whu.xiaomaivideo.util.CleanMessageUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import de.mustafagercek.library.LoadingButton;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -98,9 +104,65 @@ public class MeFragment extends Fragment {
                 }
                 else if (pos == 1) {
                     // 隐私设置
+                    List<String> settingNameList = new ArrayList<>();
+                    settingNameList.add("设置本账户为私密账户");
+                    settingNameList.add("禁止其他人看到自己的关注/粉丝列表");
+                    List<String> settingDescriptionList = new ArrayList<>();
+                    settingDescriptionList.add("其他人点进你的个人主页，只能看到你的头像与昵称信息");
+                    settingDescriptionList.add("其他人不能看到你关注的人以及关注你的人");
+                    List<Boolean> statusList = new ArrayList<>();
+                    statusList.add(Constant.currentUser.isPrivateUser());
+                    statusList.add(!Constant.currentUser.isFollowListAccessible());
+                    new XPopup.Builder(getActivity())
+                            .asCustom(new SettingDialog(getActivity(), "隐私设置", settingNameList, settingDescriptionList, statusList, new SettingDialog.OnConfirmButtonClickListener() {
+                                @Override
+                                public void onClick(LoadingButton button, SettingDialog dialog, List<Boolean> statusList) {
+                                    button.onStartLoading();
+                                    Constant.currentUser.setPrivateUser(statusList.get(0));
+                                    Constant.currentUser.setFollowListAccessible(!statusList.get(1));
+                                    UserRestService.modifyUser(Constant.currentUser, new RestCallback() {
+                                        @Override
+                                        public void onSuccess(int resultCode) {
+                                            button.onStopLoading();
+                                            dialog.dismiss();
+                                            Toast.makeText(getActivity(), "设置成功！", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            })).show();
                 }
                 else if (pos == 2) {
                     // 通知设置
+                    List<String> settingNameList = new ArrayList<>();
+                    settingNameList.add("允许接收点赞的消息");
+                    settingNameList.add("允许接收评论的消息");
+                    settingNameList.add("允许接收新粉丝的消息");
+                    List<String> settingDescriptionList = new ArrayList<>();
+                    settingDescriptionList.add("当别人给你发布的视频点赞时，你可以接收到消息提醒");
+                    settingDescriptionList.add("当别人给你发布的视频发表了评论时，你可以接收到消息提醒");
+                    settingDescriptionList.add("当别人关注了你，你可以接收到消息提醒");
+                    List<Boolean> statusList = new ArrayList<>();
+                    statusList.add(Constant.currentUser.isCanAcceptLikeMessage());
+                    statusList.add(Constant.currentUser.isCanAcceptCommentMessage());
+                    statusList.add(Constant.currentUser.isCanAcceptFollowMessage());
+                    new XPopup.Builder(getActivity())
+                            .asCustom(new SettingDialog(getActivity(), "通知设置", settingNameList, settingDescriptionList, statusList, new SettingDialog.OnConfirmButtonClickListener() {
+                                @Override
+                                public void onClick(LoadingButton button, SettingDialog dialog, List<Boolean> statusList) {
+                                    button.onStartLoading();
+                                    Constant.currentUser.setCanAcceptLikeMessage(statusList.get(0));
+                                    Constant.currentUser.setCanAcceptCommentMessage(statusList.get(1));
+                                    Constant.currentUser.setCanAcceptFollowMessage(statusList.get(2));
+                                    UserRestService.modifyUser(Constant.currentUser, new RestCallback() {
+                                        @Override
+                                        public void onSuccess(int resultCode) {
+                                            button.onStopLoading();
+                                            dialog.dismiss();
+                                            Toast.makeText(getActivity(), "设置成功！", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            })).show();
                 }
                 else if (pos == 3) {
                     // 清除缓存

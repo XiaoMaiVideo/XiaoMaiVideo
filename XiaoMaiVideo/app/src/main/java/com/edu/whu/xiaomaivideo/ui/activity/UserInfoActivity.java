@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,8 @@ import org.parceler.Parcels;
 
 import java.util.Objects;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class UserInfoActivity extends FragmentActivity {
 
     private UserInfoViewModel userInfoViewModel;
@@ -88,6 +91,7 @@ public class UserInfoActivity extends FragmentActivity {
                 super.onSuccess(resultCode, user);
                 // TODO: 把用户的作品/动态/点赞列表分开，赋给三个tab
                 userInfoViewModel.setUser(user);
+                setVisibility();
                 setTabs();
                 setRecyclerView();
                 setUserSFNumClickListener();
@@ -95,6 +99,14 @@ public class UserInfoActivity extends FragmentActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void setVisibility() {
+        if (userInfoViewModel.getUser().getValue().isPrivateUser()) {
+            // 私密账户，看不到其他东西
+            activityUserInfoBinding.userDescription.setVisibility(View.GONE);
+            activityUserInfoBinding.recyclerView.setVisibility(View.GONE);
+        }
     }
 
     private void setTabs() {
@@ -158,11 +170,16 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.userSFNums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 跳转关注和粉丝列表页面
-                Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
-                User user = userInfoViewModel.getUser().getValue();
-                intent.putExtra("user", Parcels.wrap(user));
-                startActivity(intent);
+                if (Constant.currentUser.isFollowListAccessible()) {
+                    // 设置了允许看，就可以跳转关注和粉丝列表页面
+                    Intent intent = new Intent(UserInfoActivity.this, FollowActivity.class);
+                    User user = userInfoViewModel.getUser().getValue();
+                    intent.putExtra("user", Parcels.wrap(user));
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(UserInfoActivity.this, "该用户设置了不允许看关注列表哦！", LENGTH_LONG).show();
+                }
             }
         });
     }

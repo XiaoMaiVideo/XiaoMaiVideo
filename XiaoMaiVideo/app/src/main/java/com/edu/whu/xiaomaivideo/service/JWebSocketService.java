@@ -111,30 +111,36 @@ public class JWebSocketService extends Service {
                 JSONObject jsonObject = JSON.parseObject(message);
                 MessageVO messageVO = JSON.toJavaObject(jsonObject, MessageVO.class);
                 if (messageVO.getMsgType().equals("like")) {
-                    // 点赞，发送点赞通知
-                    Log.e("JWebSocketClientService", "收到的消息：点赞");
-                    // 消息统一存到本地数据库里，打开消息提醒页面以后再加载
-                    messageVO.save();
-                    // 先存到暂存池里，打开“消息”页面直接加载
-                    MessageVOPool.addMessageVO("like", messageVO);
-                    // 调用系统推送
-                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你点了赞，快去看看吧...");
+                    if (Constant.currentUser.isCanAcceptLikeMessage()) {
+                        // 点赞，发送点赞通知
+                        Log.e("JWebSocketClientService", "收到的消息：点赞");
+                        // 消息统一存到本地数据库里，打开消息提醒页面以后再加载
+                        messageVO.save();
+                        // 先存到暂存池里，打开“消息”页面直接加载
+                        MessageVOPool.addMessageVO("like", messageVO);
+                        // 调用系统推送
+                        NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你点了赞，快去看看吧...");
+                    }
                 }
                 else if (messageVO.getMsgType().equals("comment")) {
-                    Log.e("JWebSocketClientService", "收到的消息：评论");
-                    messageVO.save();
-                    MessageVOPool.addMessageVO("comment", messageVO);
-                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你评论，快去看看吧...");
+                    if (Constant.currentUser.isCanAcceptCommentMessage()) {
+                        Log.e("JWebSocketClientService", "收到的消息：评论");
+                        messageVO.save();
+                        MessageVOPool.addMessageVO("comment", messageVO);
+                        NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你评论，快去看看吧...");
+                    }
                 }
                 else if (messageVO.getMsgType().equals("msg")) {
                     // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
                     // EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
                 }
                 else if (messageVO.getMsgType().equals("follow")) {
-                    Log.e("JWebSocketClientService", "收到的消息：关注");
-                    messageVO.save();
-                    MessageVOPool.addMessageVO("follow", messageVO);
-                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
+                    if (Constant.currentUser.isCanAcceptFollowMessage()) {
+                        Log.e("JWebSocketClientService", "收到的消息：关注");
+                        messageVO.save();
+                        MessageVOPool.addMessageVO("follow", messageVO);
+                        NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
+                    }
                 }
 
             }

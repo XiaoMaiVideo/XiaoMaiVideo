@@ -26,6 +26,11 @@ public class User {
     private String birthday;
     private String area;
     private String workplace;
+    private boolean canAcceptLikeMessage; // 是否接收点赞消息
+    private boolean canAcceptCommentMessage; // 是否接收评论消息
+    private boolean canAcceptFollowMessage; // 是否接收新粉丝消息
+    private boolean isPrivateUser; // 是否为私密账户，若是则只能看到头像与昵称，不能看到其他个人信息
+    private boolean isFollowListAccessible; // 是否允许别人看关注/粉丝列表
 
     private List<Comment> comments;
     private List<Message> sendmsgs;
@@ -227,5 +232,45 @@ public class User {
             }
         }
         return false;
+    }
+
+    public boolean isCanAcceptLikeMessage() {
+        return canAcceptLikeMessage;
+    }
+
+    public void setCanAcceptLikeMessage(boolean canAcceptLikeMessage) {
+        this.canAcceptLikeMessage = canAcceptLikeMessage;
+    }
+
+    public boolean isCanAcceptCommentMessage() {
+        return canAcceptCommentMessage;
+    }
+
+    public void setCanAcceptCommentMessage(boolean canAcceptCommentMessage) {
+        this.canAcceptCommentMessage = canAcceptCommentMessage;
+    }
+
+    public boolean isCanAcceptFollowMessage() {
+        return canAcceptFollowMessage;
+    }
+
+    public void setCanAcceptFollowMessage(boolean canAcceptFollowMessage) {
+        this.canAcceptFollowMessage = canAcceptFollowMessage;
+    }
+
+    public boolean isPrivateUser() {
+        return isPrivateUser;
+    }
+
+    public void setPrivateUser(boolean privateUser) {
+        isPrivateUser = privateUser;
+    }
+
+    public boolean isFollowListAccessible() {
+        return isFollowListAccessible;
+    }
+
+    public void setFollowListAccessible(boolean followListAccessible) {
+        isFollowListAccessible = followListAccessible;
     }
 }
