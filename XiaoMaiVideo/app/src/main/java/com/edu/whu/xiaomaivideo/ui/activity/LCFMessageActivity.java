@@ -1,5 +1,6 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,20 +13,26 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
+import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.LCFMessageAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityLcfMessageBinding;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.MessageVOPool;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MentionedModel;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.litepal.LitePal;
+import org.litepal.util.Const;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +111,32 @@ public class LCFMessageActivity extends AppCompatActivity {
         activityLcfMessageBinding.recyclerViewMentioned.setLayoutManager(linearLayoutManager);
         activityLcfMessageBinding.recyclerViewMentioned.setAdapter(mAdapter);
         activityLcfMessageBinding.stickyLayout.setSticky(true);
+        mAdapter.setOnChildClickListener(new GroupedRecyclerViewAdapter.OnChildClickListener() {
+            @Override
+            public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition, int childPosition) {
+                if (mType.equals("follow")) {
+                    // 关注消息，跳转关注粉丝列表
+                    Intent intent = new Intent(LCFMessageActivity.this, FollowActivity.class);
+                    intent.putExtra("user", Parcels.wrap(User.class, Constant.currentUser));
+                    startActivity(intent);
+                }
+                else {
+                    // 点赞和评论消息，点击进入视频详情页面
+                    if (groupPosition == 0) {
+                        // 新消息
+                        Intent intent = new Intent(LCFMessageActivity.this, VideoDetailActivity.class);
+                        intent.putExtra("movie", Parcels.wrap(Movie.class, new Movie(newMessageVOs.get(childPosition).getMovieId())));
+                        startActivity(intent);
+                    }
+                    else {
+                        // 旧消息
+                        Intent intent = new Intent(LCFMessageActivity.this, VideoDetailActivity.class);
+                        intent.putExtra("movie", Parcels.wrap(Movie.class, new Movie(oldMessageVOs.get(childPosition).getMovieId())));
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
     }
 
     @Override

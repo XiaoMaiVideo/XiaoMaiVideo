@@ -77,6 +77,7 @@ public class UserRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
@@ -103,6 +104,12 @@ public class UserRestService {
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
+                if (user.getFollowing() == null) {
+                    user.setFollowing(new ArrayList<>());
+                }
+                if (user.getFollowers() == null) {
+                    user.setFollowers(new ArrayList<>());
+                }
                 userRestCallback.onSuccess(responseNum, user);
             }
         }.execute(user);
@@ -190,9 +197,6 @@ public class UserRestService {
                     users.add(user);
                 }
                 userRestCallback.onSuccess(responseNum, users);
-                // int responseNum = jsonObject.getInteger("code");
-                // List<User> users = new ArrayList<>();
-                // userRestCallback.onSuccess();
             }
         }.execute(userIds.toArray(new Long[userIds.size()]));
     }

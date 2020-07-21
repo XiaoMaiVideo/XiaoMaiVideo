@@ -253,13 +253,13 @@
             android:layout_marginEnd="60dp"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/commentButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailCommentButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/starbutton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/commentButton"
+            android:id="@+id/detailCommentButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:scaleType="centerCrop"
@@ -278,13 +278,13 @@
             android:layout_marginEnd="60dp"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/shareButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailShareButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/commentButton"
+            app:layout_constraintStart_toEndOf="@+id/detailCommentButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/shareButton"
+            android:id="@+id/detailShareButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:scaleType="centerCrop"

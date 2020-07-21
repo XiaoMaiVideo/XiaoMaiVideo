@@ -30,6 +30,8 @@ import com.edu.whu.xiaomaivideo.widget.CommentRecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.alibaba.fastjson.JSON;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -162,9 +164,17 @@ public class ShowCommentDialog {
             inputTextMsgDialog.setmOnTextSendListener(new InputTextMsgDialog.OnTextSendListener() {
                 @Override
                 public void onTextSend(String msg) {
-                    addComment(isReply,headImg,position,msg);
+                    if (Constant.currentUser.getUserId() == 0) {
+                        // 没登录，不允许评论
+                        BasePopupView popupView = new XPopup.Builder(mContext)
+                                .asCustom(new SimpleBottomDialog(mContext, R.drawable.success, "没有登录，不能发评论哦"))
+                                .show();
+                        popupView.delayDismiss(1500);
+                    }
+                    else {
+                        addComment(isReply, headImg, position, msg);
+                    }
                 }
-
                 @Override
                 public void dismiss() {
                     scrollLocation(-offsetY);

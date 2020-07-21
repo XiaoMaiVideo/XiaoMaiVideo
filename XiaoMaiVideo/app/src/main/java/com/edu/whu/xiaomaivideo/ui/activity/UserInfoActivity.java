@@ -87,6 +87,7 @@ public class UserInfoActivity extends FragmentActivity {
             public void onSuccess(int resultCode, User user) {
                 super.onSuccess(resultCode, user);
                 // TODO: 把用户的作品/动态/点赞列表分开，赋给三个tab
+                userInfoViewModel.setUser(user);
                 setTabs();
                 setRecyclerView();
                 setUserSFNumClickListener();
@@ -159,7 +160,7 @@ public class UserInfoActivity extends FragmentActivity {
             public void onClick(View view) {
                 // 跳转关注和粉丝列表页面
                 Intent intent=new Intent(UserInfoActivity.this,FollowActivity.class);
-                User user=userInfoViewModel.getUser().getValue();
+                User user = userInfoViewModel.getUser().getValue();
                 intent.putExtra("user", Parcels.wrap(user));
                 startActivity(intent);
             }

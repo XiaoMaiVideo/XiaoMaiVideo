@@ -110,7 +110,7 @@ public class VideoNewsAdapter extends RecyclerView.Adapter<VideoNewsAdapter.MyVi
             originator_publishTime = itemView.findViewById(R.id.originatorPostTime);
             originator_movieDescription = itemView.findViewById(R.id.originatorVideoDescription);
             jzvdStd = itemView.findViewById(R.id.originatorVideo);
-            shareButton = itemView.findViewById(R.id.shareButton);
+            shareButton = itemView.findViewById(R.id.detailShareButton);
             likeButton = itemView.findViewById(R.id.likebutton);
             starButton = itemView.findViewById(R.id.starbutton);
             likeNum = itemView.findViewById(R.id.textView6);

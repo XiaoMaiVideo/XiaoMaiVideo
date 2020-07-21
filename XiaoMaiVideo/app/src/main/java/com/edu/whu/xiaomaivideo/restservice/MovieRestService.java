@@ -74,7 +74,18 @@ public class MovieRestService {
                 int responseNum = jsonObject.getInteger("code");
                 JSONObject dataObject = jsonObject.getJSONObject("data");
                 Movie movie = JSON.toJavaObject(dataObject, Movie.class);
-                movieRestCallback.onSuccess(responseNum,movie);
+                // 处理类别
+                if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                    // 类别不为空
+                    String[] categoryArray = movie.getCategories().split(";");
+                    List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                    movie.setCategoryList(categoryList);
+                }
+                else {
+                    // 类别为空
+                    movie.setCategoryList(new ArrayList<>());
+                }
+                movieRestCallback.onSuccess(responseNum, movie);
             }
         }.execute();
     }

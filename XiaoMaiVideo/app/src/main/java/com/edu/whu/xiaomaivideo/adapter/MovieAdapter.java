@@ -133,7 +133,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         ImageView userAvatar, shareButton, commentButton;
         TextView userNickname, publishTime, movieDescription, likeNum, commentNum, shareNum;
         ShineButton likeButton;
-        ConstraintLayout videoInfoLayout;
+        ConstraintLayout videoInfoLayout, likeLayout, commentLayout, shareLayout;
         MaterialButton locationInfoButton;
         LabelsView tags;
         public MyViewHolder(View itemView) {
@@ -152,6 +152,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             videoInfoLayout = itemView.findViewById(R.id.videoInfoLayout);
             locationInfoButton = itemView.findViewById(R.id.locationInfoButton);
             tags = itemView.findViewById(R.id.tags);
+            likeLayout = itemView.findViewById(R.id.likeLayout);
+            commentLayout = itemView.findViewById(R.id.commentLayout);
+            shareLayout = itemView.findViewById(R.id.shareLayout);
+
 
             videoInfoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -223,8 +227,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 }
             });
 
+            likeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 弹出点赞用户弹窗
+                }
+            });
+
             //评论
-            commentButton.setOnClickListener(new View.OnClickListener() {
+            commentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Movie currentMovie = mMovies.get(getAdapterPosition());
@@ -238,7 +249,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 }
             });
 
-            shareButton.setOnClickListener(new View.OnClickListener() {
+            shareLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // 按下分享按钮

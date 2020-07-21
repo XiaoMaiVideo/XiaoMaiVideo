@@ -18,11 +18,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -34,9 +36,11 @@ import com.edu.whu.xiaomaivideo.ui.activity.EditUserInfoActivity;
 import com.edu.whu.xiaomaivideo.databinding.FragmentMeBinding;
 import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
+import com.edu.whu.xiaomaivideo.util.CleanMessageUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.parceler.Parcels;
 
@@ -93,26 +97,36 @@ public class MeFragment extends Fragment {
                     startActivityForResult(intent, Constant.SET_USER_INFO);
                 }
                 else if (pos == 1) {
-                    // 我的收藏
-                }
-                else if (pos == 2) {
                     // 隐私设置
                 }
-                else if (pos == 3) {
+                else if (pos == 2) {
                     // 通知设置
                 }
-                else if (pos == 4) {
+                else if (pos == 3) {
                     // 清除缓存
+                    new XPopup.Builder(getActivity())
+                            .asConfirm("清除缓存吗？", "", new OnConfirmListener() {
+                                @Override
+                                public void onConfirm() {
+                                    try {
+                                        CleanMessageUtil.clearAllCache(Objects.requireNonNull(getActivity()).getApplicationContext());
+                                        Toast.makeText(getActivity(), "清除缓存成功！", Toast.LENGTH_LONG).show();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .show();
                 }
-                else if (pos == 5) {
+                else if (pos == 4) {
                     // 退出登录
                     new XPopup.Builder(getActivity())
-                            .asBottomList("退出登录吗？", new String[]{"是", "否"},
-                                    (position, text) -> {
-                                        if (position == 0) {
-                                            onLogOut();
-                                        }
-                                    })
+                            .asConfirm("退出登录吗？", "", new OnConfirmListener() {
+                                @Override
+                                public void onConfirm() {
+                                    onLogOut();
+                                }
+                            })
                             .show();
                 }
             }
@@ -186,7 +200,6 @@ public class MeFragment extends Fragment {
 
         meViewModel.setUser(Constant.currentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
-        menuItems.add(new Pair<>("我的收藏", R.drawable.collect));
         menuItems.add(new Pair<>("隐私设置", R.drawable.privacy));
         menuItems.add(new Pair<>("通知设置", R.drawable.notification));
         menuItems.add(new Pair<>("清除缓存", R.drawable.clean));

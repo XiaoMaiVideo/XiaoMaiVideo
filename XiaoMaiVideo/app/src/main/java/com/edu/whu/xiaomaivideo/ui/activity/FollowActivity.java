@@ -23,6 +23,8 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
     TabLayout tabLayout;
@@ -35,6 +37,12 @@ public class FollowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_follow);
         viewPage=findViewById(R.id.viewPage);
         tabLayout=findViewById(R.id.tabLayout2);
+        if (user.getFollowers() == null) {
+            user.setFollowers(new ArrayList<>());
+        }
+        if (user.getFollowing() == null) {
+            user.setFollowing(new ArrayList<>());
+        }
         viewPage.setAdapter(new FragmentStateAdapter(this) {
             private int count = 2;
 
