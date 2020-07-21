@@ -217,7 +217,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                     new XPopup.Builder(context)
                             .atView(shareButton)
                             .asAttachList(new String[]{"分享到动态", "分享到其他应用"},
-                                    new int[]{R.drawable.game, R.drawable.food},
+                                    new int[]{R.drawable.moments, R.drawable.app},
                                     new OnSelectListener() {
                                         @Override
                                         public void onSelect(int position, String text) {

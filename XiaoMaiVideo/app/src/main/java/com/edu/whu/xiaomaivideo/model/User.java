@@ -1,5 +1,5 @@
 /**
- * Author: 张俊杰、叶俊豪、李季东
+ * Author: 张俊杰、叶俊豪、李季东、方胜强
  * Create Time: 2020/7/8
  * Update Time: 2020/7/18
  */
@@ -19,6 +19,7 @@ public class User {
     private long userId;
     private String username;
     private String password;
+    private String enter_uesr_center;
     private String gender;
     private String nickname;
     private String avatar;
@@ -44,6 +45,7 @@ public class User {
         User user = new User();
         user.setUserId(0);
         user.setUsername("尚未登录...");
+        user.setEnter_uesr_center("点击进行登录");
         user.setAvatar("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1093847288,3038136586&fm=26&gp=0.jpg");
         return user;
     }
@@ -78,6 +80,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEnter_uesr_center(){
+        return enter_uesr_center;
+    }
+
+    public void setEnter_uesr_center(String enter_uesr_center) {
+        this.enter_uesr_center= enter_uesr_center;
     }
 
     public long getUserId() {

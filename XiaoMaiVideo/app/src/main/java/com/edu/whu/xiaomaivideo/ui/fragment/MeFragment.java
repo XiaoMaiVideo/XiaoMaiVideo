@@ -184,6 +184,7 @@ public class MeFragment extends Fragment {
         intent.setAction(Constant.SET_WEBSOCKET);
         intent.putExtra("status", "start");
         getActivity().sendBroadcast(intent);
+        Constant.CurrentUser.setEnter_uesr_center("进入个人中心>>");
 
         meViewModel.setUser(Constant.CurrentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));
