@@ -214,7 +214,6 @@ public class UserInfoActivity extends FragmentActivity {
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("关注");
-                    // TODO: 让后端接口再做个User的关注数和粉丝数，获赞不做了
                 }
                 else {
                     // 本来没关注，那按钮就是关注
@@ -233,6 +232,7 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 // TODO: 聊天功能
+                Constant.currentChattingId = userInfoViewModel.getUser().getValue().getUserId();
                 Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
                 startActivity(intent);
             }

@@ -221,7 +221,6 @@ public class MovieRestService {
         }.execute();
     }
 
-    // TODO: 搜索
     public static void searchMovie(final String keyword, final MovieRestCallback restCallback) {
         new AsyncTask<String, Integer, String>() {
             MovieRestCallback movieRestCallback = restCallback;

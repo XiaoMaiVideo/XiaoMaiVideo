@@ -23,6 +23,7 @@ public class Constant {
     public static final String RESPONSE_ERROR = "Response Error!";
 
     public static User currentUser = User.Visitor(); // 尚未登录
+    public static Long currentChattingId = (long) -1; // 当前正在聊天的用户ID，-1表示不在聊天
 
     public static final int RESULT_SUCCESS = 200;
     public static final int RESULT_FAILURE = 400;
@@ -37,7 +38,6 @@ public class Constant {
     public static final int SHARE_OUTSIDE = 7;
 
     public static final String PAGE_LIMIT = "10";
-
     public static final String[] LABELS = {"音乐","影视","社会","游戏","美食","儿童","生活","体育","文化","时尚","科技"};
     public static final String SET_WEBSOCKET = "Set WebSocket";
     public static final String SEND_MESSAGE = "Send WebSocket Message";
