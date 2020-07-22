@@ -7,6 +7,7 @@
 
 package com.edu.whu.xiaomaivideo_backend.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.whu.xiaomaivideo_backend.model.*;
 import com.edu.whu.xiaomaivideo_backend.service.CommentRestService;
 import com.edu.whu.xiaomaivideo_backend.service.MessageRestService;
@@ -88,35 +89,68 @@ public class OneToOneWebsocketServer {
         User receiver = userRestService.getUserById(messageVO.getReceiverId());
         switch (messageVO.getMsgType()) {
             case "msg":
+                Date currentTime = new Date();
                 //发送私信消息以websocket形式
                 Message message1=new Message();
                 message1.setSender(sender);
                 message1.setReceiver(receiver);
                 message1.setText(messageVO.getText());
-                message1.setTime(new Date());
+                message1.setTime(currentTime);
                 message1.setMsgType(messageVO.getMsgType());
+
+                Message message1_ = new Message();
+                User sender1_ = new User();
+                sender1_.setUserId(messageVO.getSenderId());
+                sender1_.setAvatar(sender.getAvatar());
+                sender1_.setNickname(sender.getNickname());
+                message1_.setSender(sender1_);
+                message1_.setMsgType(messageVO.getMsgType());
+                message1_.setText(messageVO.getText());
+                message1_.setTime(currentTime);
+                String message_str = JSON.toJSONString(message1_);
                 try {
                     messageRestService.saveMessage(message1);
                     log.info("成功保存信息{}",message1.getText());
+
                 } catch (Exception e){
 
                 }
+                this.sendMessage(message_str, messageVO.getReceiverId());
                 break;
             case "at":
                 //@
+                Date currentTime_ = new Date();
+                Movie movie_ = movieRestService.getMovieById(messageVO.getMovieId());
                 Message message2=new Message();
                 message2.setSender(sender);
                 message2.setReceiver(receiver);
                 message2.setText(messageVO.getText());
-                message2.setTime(new Date());
-                message2.setAtMovie(movieRestService.getMovieById(messageVO.getMovieId()));
+                message2.setTime(currentTime_);
+                message2.setAtMovie(movie_);
                 message2.setMsgType(messageVO.getMsgType());
+
+                Message message2_ = new Message();
+                User sender2_ = new User();
+                Movie movie2_ = new Movie();
+                sender2_.setUserId(messageVO.getSenderId());
+                sender2_.setAvatar(sender.getAvatar());
+                sender2_.setNickname(sender.getNickname());
+                movie2_.setDescription(movie_.getDescription());
+                message2_.setSender(sender2_);
+                message2_.setMsgType(messageVO.getMsgType());
+                message2_.setText(messageVO.getText());
+                message2_.setTime(currentTime_);
+                message2_.setAtMovie(movie2_);
+
+                String message2_str = JSON.toJSONString(message2_);
                 try {
                     messageRestService.saveMessage(message2);
                     log.info("成功保存@信息{}",message2.getText());
+
                 } catch (Exception e){
 
                 }
+                this.sendMessage(message2_str, messageVO.getReceiverId());
                 break;
             case "like":
                 // 点赞使用websocket
@@ -126,9 +160,11 @@ public class OneToOneWebsocketServer {
                 sender.setLikeMovies(movies);
                 try {
                     userRestService.saveUser(sender);
+
                 }
                 catch (Exception e) {
                 }
+                this.sendMessageVO(messageVO);
                 break;
             case "unlike":
                 // 取消点赞使用websocket
@@ -152,6 +188,7 @@ public class OneToOneWebsocketServer {
                 try{
                     commentRestService.saveComment(comment);
                     log.info("成功保存评论{}", comment.getMsg());
+                    this.sendMessageVO(messageVO);
                 }catch (Exception e){
 
                 }
@@ -164,6 +201,7 @@ public class OneToOneWebsocketServer {
                 try{
                     userRestService.saveUser(sender);
                     log.info("成功关注{}", messageVO.getText());
+                    this.sendMessageVO(messageVO);
                 }catch (Exception e){
 
                 }
@@ -181,10 +219,10 @@ public class OneToOneWebsocketServer {
                 }
                 break;
         }
-        this.sendTo(messageVO);
+
     }
 
-    private void sendTo(MessageVO message) {
+    private void sendMessageVO(MessageVO message) {
         Session s;
         try{
             s = clients.get(message.getReceiverId()).session;
@@ -195,6 +233,23 @@ public class OneToOneWebsocketServer {
         if (s != null) {
             try {
                 s.getBasicRemote().sendText(gson.toJson(message));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void sendMessage(String message, Long receiverId) {
+        Session s;
+        try{
+            s = clients.get(receiverId).session;
+        }catch (Exception e){
+            log.info("当前用户不在线，不做推送:{}", message);
+            return;
+        }
+        if (s != null) {
+            try {
+                s.getBasicRemote().sendText(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
