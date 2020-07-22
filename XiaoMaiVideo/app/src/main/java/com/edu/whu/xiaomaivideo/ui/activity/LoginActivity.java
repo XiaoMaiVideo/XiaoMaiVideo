@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -28,6 +30,7 @@ import com.edu.whu.xiaomaivideo.viewModel.LoginViewModel;
 import java.util.Objects;
 
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.widget.MyVideo;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         activityLoginBinding.setViewmodel(loginViewModel);
         activityLoginBinding.setLifecycleOwner(this);
+        activityLoginBinding.myvideo.findViewById(R.id.myvideo);
 
         activityLoginBinding.editRePassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -185,5 +189,33 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        initView();
+    }
+    public void initView(){
+        //播放路径
+        activityLoginBinding.myvideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.myvideo));
+        //播放
+        activityLoginBinding.myvideo.start();
+        //循环播放
+        activityLoginBinding.myvideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                activityLoginBinding.myvideo.start();
+            }
+        });
+    }
+    @Override
+    protected void onRestart() {
+        //返回重新加载
+        initView();
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onStop() {
+        //防止锁屏或者弹出的时候，音乐在播放
+        activityLoginBinding.myvideo.stopPlayback();
+        super.onStop();
     }
 }

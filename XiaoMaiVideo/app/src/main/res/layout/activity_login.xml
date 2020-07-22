@@ -14,11 +14,18 @@
             name="viewmodel"
             type="com.edu.whu.xiaomaivideo.viewModel.LoginViewModel" />
     </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.edu.whu.xiaomaivideo.widget.MyVideo
+            android:id="@+id/myvideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wheatbackground">
+        android:background="#00000000">
 
         <TextView
             android:layout_marginTop="80dp"
@@ -154,4 +161,6 @@
             app:layout_constraintEnd_toEndOf="@id/loginBtn"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
 </layout>

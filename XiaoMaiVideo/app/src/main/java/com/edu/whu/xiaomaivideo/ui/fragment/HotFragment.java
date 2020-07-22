@@ -60,7 +60,6 @@ import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
-import com.scwang.smart.refresh.header.BezierRadarHeader;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;

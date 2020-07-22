@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -54,6 +56,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
@@ -98,6 +101,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            //根据url获取缩略图
+            retriever.setDataSource(mMovies.get(position).getUrl(), new HashMap());
+            //获得第一帧图片
+            bitmap = retriever.getFrameAtTime();
+        holder.cover.setImageBitmap(bitmap);
+        holder.cover.setVisibility(View.VISIBLE);
         // 设置位置信息按钮
         if (mMovies.get(position).getLocation().equals("")) {
             holder.locationInfoButton.setVisibility(View.GONE);
@@ -130,7 +141,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         JzvdStd jzvdStd;
-        ImageView userAvatar, shareButton, commentButton;
+        ImageView userAvatar, shareButton, commentButton,cover;
         TextView userNickname, publishTime, movieDescription, likeNum, commentNum, shareNum;
         ShineButton likeButton;
         ConstraintLayout videoInfoLayout, likeLayout, commentLayout, shareLayout;
@@ -143,6 +154,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             publishTime = itemView.findViewById(R.id.postTime);
             movieDescription = itemView.findViewById(R.id.videoDescription);
             jzvdStd = itemView.findViewById(R.id.video);
+            cover=itemView.findViewById(R.id.iv_first_frame);
             shareButton = itemView.findViewById(R.id.shareButton);
             commentButton = itemView.findViewById(R.id.commentButton);
             likeButton = itemView.findViewById(R.id.likeButton);

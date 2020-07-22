@@ -16,232 +16,254 @@
         android:layout_margin="10dp"
         android:scaleType="fitXY"
         app:cardBackgroundColor="#FFFFFF">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="20dp" >
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/videoInfoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp">
-
-
-        <ImageView
-            android:id="@+id/authorImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/authorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="用户昵称"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/authorImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <cn.jzvd.JzvdStd
-            android:id="@+id/video"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tags" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/locationInfoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:insetLeft="0dp"
-            android:insetRight="0dp"
-            android:text="位置信息"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
-            android:textSize="12sp"
-            android:paddingStart="10dp"
-            app:icon="@drawable/location"
-            app:iconPadding="7dp"
-            app:iconSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/video" />
-
-        <TextView
-            android:id="@+id/videoDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="视频描述"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authorImage" />
-
-        <TextView
-            android:id="@+id/postTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="发布时间"
-            app:layout_constraintStart_toEndOf="@+id/authorImage"
-            app:layout_constraintTop_toBottomOf="@+id/authorText" />
-
-        <com.donkingliang.labels.LabelsView
-            android:id="@+id/tags"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:labelBackground="@drawable/label_bg"
-            app:labelTextColor="@color/red"
-            app:labelTextPaddingBottom="4dp"
-            app:labelTextPaddingLeft="8dp"
-            app:labelTextPaddingRight="8dp"
-            app:labelTextPaddingTop="4dp"
-            app:labelTextSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoDescription"
-            app:lineMargin="8dp"
-            app:wordMargin="8dp" />
+            android:orientation="vertical"
+            android:paddingBottom="20dp" >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/likeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="80dp"
-                app:layout_constraintEnd_toStartOf="@+id/commentLayout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent">
+                android:id="@+id/videoInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
 
-                <com.sackcentury.shinebuttonlib.ShineButton
-                    android:id="@+id/likeButton"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:src="@android:color/darker_gray"
-                    app:allow_random_color="false"
-                    app:big_shine_color="#FF6666"
-                    app:btn_color="@android:color/darker_gray"
-                    app:btn_fill_color="#FF6666"
-                    app:click_animation_duration="200"
-                    app:enable_flashing="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/likeNum"
-                    app:layout_constraintHorizontal_bias="0.5"
+
+                <ImageView
+                    android:id="@+id/authorImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shine_animation_duration="1500"
-                    app:shine_count="8"
-                    app:shine_turn_angle="10"
-                    app:siShape="@raw/like"
-                    app:small_shine_color="#CC9999"
-                    app:small_shine_offset_angle="20" />
+                    tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/likeNum"
+                    android:id="@+id/authorText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/likeButton"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/likeButton"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="用户昵称"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/authorImage"
                     app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/commentLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="80dp"
-                app:layout_constraintEnd_toStartOf="@+id/shareLayout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/likeLayout">
 
-                <ImageView
-                    android:id="@+id/commentButton"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/comment"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/commentNum"
-                    app:layout_constraintHorizontal_bias="0.5"
+                <TextView
+                    android:id="@+id/videoDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="视频描述"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/authorImage" />
 
                 <TextView
-                    android:id="@+id/commentNum"
+                    android:id="@+id/postTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/commentButton"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/commentButton"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="发布时间"
+                    app:layout_constraintStart_toEndOf="@+id/authorImage"
+                    app:layout_constraintTop_toBottomOf="@+id/authorText" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shareLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/commentLayout">
-
-                <ImageView
-                    android:id="@+id/shareButton"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/share"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/shareNum"
-                    app:layout_constraintHorizontal_bias="0.5"
+                <com.donkingliang.labels.LabelsView
+                    android:id="@+id/tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    app:labelBackground="@drawable/label_bg"
+                    app:labelTextColor="@color/red"
+                    app:labelTextPaddingBottom="4dp"
+                    app:labelTextPaddingLeft="8dp"
+                    app:labelTextPaddingRight="8dp"
+                    app:labelTextPaddingTop="4dp"
+                    app:labelTextSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/videoDescription"
+                    app:lineMargin="8dp"
+                    app:wordMargin="8dp" />
 
-                <TextView
-                    android:id="@+id/shareNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/shareButton"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/shareButton"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                tools:ignore="MissingConstraints">
+
+                <cn.jzvd.JzvdStd
+                    android:id="@+id/video"
+                    android:layout_width="337dp"
+                    android:layout_height="186dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_first_frame"
+                        android:layout_width="330dp"
+                        android:layout_height="186dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"/>
+                </cn.jzvd.JzvdStd>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="20dp" >
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/locationInfoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:text="位置信息"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+                    android:textSize="12sp"
+                    android:paddingStart="10dp"
+                    app:icon="@drawable/location"
+                    app:iconPadding="7dp"
+                    app:iconSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/video" />
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/likeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="80dp"
+                    app:layout_constraintEnd_toStartOf="@+id/commentLayout"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/likeButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@android:color/darker_gray"
+                        app:allow_random_color="false"
+                        app:big_shine_color="#FF6666"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="#FF6666"
+                        app:click_animation_duration="200"
+                        app:enable_flashing="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/likeNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shine_animation_duration="1500"
+                        app:shine_count="8"
+                        app:shine_turn_angle="10"
+                        app:siShape="@raw/like"
+                        app:small_shine_color="#CC9999"
+                        app:small_shine_offset_angle="20" />
+
+                    <TextView
+                        android:id="@+id/likeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/likeButton"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/likeButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/commentLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="80dp"
+                    app:layout_constraintEnd_toStartOf="@+id/shareLayout"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/likeLayout">
+
+                    <ImageView
+                        android:id="@+id/commentButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/comment"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/commentNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/commentNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/commentButton"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/commentButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/shareLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/commentLayout">
+
+                    <ImageView
+                        android:id="@+id/shareButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/shareNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/shareNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/shareButton"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/shareButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
