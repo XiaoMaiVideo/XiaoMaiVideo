@@ -88,6 +88,7 @@ public class MainActivity extends FragmentActivity {
 
         initView();
         checkPermission();
+        getAddress();
         tryLogin();
     }
 
@@ -256,7 +257,6 @@ public class MainActivity extends FragmentActivity {
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     Constant.currentUser = user;
                     startWebSocketService();
-                    getAddress();
                 } else if (resultCode == Constant.USER_NOT_EXISTS) {
                     // 用户不存在
                 } else {

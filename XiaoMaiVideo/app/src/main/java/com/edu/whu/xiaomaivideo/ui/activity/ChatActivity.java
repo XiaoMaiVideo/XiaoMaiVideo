@@ -14,17 +14,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.ChatAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityChatBinding;
 import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MessageRestCallback;
+import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MessageRestService;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.viewModel.ChatViewModel;
@@ -74,6 +81,7 @@ public class ChatActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         activityChatBinding.recyclerView.setLayoutManager(linearLayoutManager);
         activityChatBinding.recyclerView.setAdapter(chatAdapter);
+        activityChatBinding.recyclerView.scrollToPosition(messageList.size()-1);
     }
 
     public void setSubmitListener() {
@@ -100,6 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                 message1.setTime(new Date());
                 messageList.add(message1);
                 chatAdapter.notifyItemInserted(messageList.size()-1);
+                activityChatBinding.recyclerView.scrollToPosition(messageList.size()-1);
             }
         });
     }
@@ -115,7 +124,20 @@ public class ChatActivity extends AppCompatActivity {
     public void onEventBusMessage(EventBusMessage message) {
         if (message.getType().equals(Constant.RECEIVE_MESSAGE)) {
             // 获取新消息的json串
+            JSONObject jsonObject = JSON.parseObject(message.getMessage());
+            Message receiveMessage = JSON.toJavaObject(jsonObject, Message.class);
+            receiveMessage.setReceiver(null);
+            // 加上8个小时
+            receiveMessage.setTime(new Date(receiveMessage.getTime().getTime()+8*Constant.HOUR));
             // 添加到Adapter里面去
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    messageList.add(receiveMessage);
+                    chatAdapter.notifyItemInserted(messageList.size() - 1);
+                    activityChatBinding.recyclerView.scrollToPosition(messageList.size()-1);
+                }
+            });
         }
     }
 }

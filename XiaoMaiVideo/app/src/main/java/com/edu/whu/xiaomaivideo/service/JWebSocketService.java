@@ -144,7 +144,6 @@ public class JWebSocketService extends Service {
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
                     }
                 }
-
             }
 
             @Override
