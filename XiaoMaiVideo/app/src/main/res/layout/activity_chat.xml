@@ -44,7 +44,7 @@
                 android:layout_marginRight="45dp"
                 android:background="@null"
                 android:gravity="top|left"
-                android:hint="留下你的精彩评论吧~~"
+                android:hint="想聊些什么...？"
                 android:imeActionLabel="发送"
                 android:imeOptions="actionDone"
                 android:lineSpacingMultiplier="1.1"

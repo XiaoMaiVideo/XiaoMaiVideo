@@ -19,9 +19,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
@@ -30,9 +32,12 @@ import com.edu.whu.xiaomaivideo.databinding.FindFragmentBinding;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
+import com.edu.whu.xiaomaivideo.ui.activity.SearchResultActivity;
 import com.edu.whu.xiaomaivideo.viewModel.FindViewModel;
 import com.google.android.material.appbar.AppBarLayout;
+import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 
 import java.util.List;
 import java.util.Objects;
@@ -59,6 +64,7 @@ public class FindFragment extends Fragment {
         findFragmentBinding.setLifecycleOwner(getActivity());
         init();
         initTypeButtonClickListener();
+        initSearch();
         return findFragmentBinding.getRoot();
     }
 
@@ -195,6 +201,35 @@ public class FindFragment extends Fragment {
                         }
                     }, 100);
                 }
+            }
+        });
+    }
+
+    private void initSearch() {
+        findFragmentBinding.searchType.setCheckedPosition(0);
+        findFragmentBinding.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                // 不用管这个报错，我也不知道为什么这里报错
+                int type = findFragmentBinding.searchType.getCheckedPosition();
+                if (type == 0) {
+                    Intent intent=new Intent(getActivity(), SearchResultActivity.class);
+                    intent.putExtra("keyword", s);
+                    intent.putExtra("type", "movie");
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent=new Intent(getActivity(), SearchResultActivity.class);
+                    intent.putExtra("keyword", s);
+                    intent.putExtra("type", "user");
+                    startActivity(intent);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
     }

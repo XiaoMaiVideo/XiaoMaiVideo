@@ -201,8 +201,8 @@ public class UserController {
         return AjaxResponse.success(users);
     }
 
-    @GetMapping("/getUsersByUsernameLike")
-    public @ResponseBody AjaxResponse getUsersByUsernameLike(@RequestParam int page, @RequestParam int total,@RequestParam String username) {
-        return AjaxResponse.success(userRestService.getAllByUsernameLike(page, total,"%"+username+"%"));
+    @GetMapping("/getUsersByNicknameLike")
+    public @ResponseBody AjaxResponse getUsersByUsernameLike(@RequestParam int page, @RequestParam int total, @RequestParam String nickname) {
+        return AjaxResponse.success(userRestService.getAllByNicknameLike(page, total,"%"+nickname+"%"));
     }
 }

@@ -94,12 +94,6 @@ public class VideoNewsFragment extends Fragment {
         });
     }
 
-    @Nullable
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     private void autoPlayVideo(RecyclerView recyclerView) {
         for(int i=0;i<VisibleCount;i++) {
             if (recyclerView != null && recyclerView.getChildAt(i) != null &&recyclerView.getChildAt(i).findViewById(R.id.video) != null){

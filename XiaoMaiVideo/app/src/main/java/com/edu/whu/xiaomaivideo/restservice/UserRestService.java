@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo.restservice;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserRestService {
@@ -46,6 +48,7 @@ public class UserRestService {
         }.execute(user);
     }
 
+    // TODO: 好像有时候修改个人信息会有BUG，观望
     public static void modifyUser(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
             RestCallback Callback = restCallback;
@@ -202,5 +205,40 @@ public class UserRestService {
                 userRestCallback.onSuccess(responseNum, users);
             }
         }.execute(userIds.toArray(new Long[userIds.size()]));
+    }
+
+    // TODO: 搜索
+    public static void searchUser(final String keyword, final UserRestCallback restCallback) {
+        new AsyncTask<String, Integer, String>() {
+            UserRestCallback userRestCallback = restCallback;
+            @Override
+            protected String doInBackground(String... strings) {
+                // TODO: 改URL
+                Uri.Builder builder = Uri.parse(Constant.BASEURL+"/getUsersByNicknameLike").buildUpon();
+                builder.appendQueryParameter("page", "0");
+                builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
+                builder.appendQueryParameter("nickname", strings[0]);
+                return HttpUtil.sendGetRequest(builder.toString());
+                // return "";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.e("UserRestService", s);
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                JSONObject dataObject = jsonObject.getJSONObject("data");
+                JSONArray jsonArray = dataObject.getJSONArray("content");
+                List<User> users = new ArrayList<>();
+                for (int i=0;i<jsonArray.size();i++) {
+                    JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    User user = JSON.toJavaObject(jsonObj, User.class);
+                    users.add(user);
+                }
+                // User user = jsonObject.getObject("data", User.class);
+                userRestCallback.onSuccess(responseNum, users);
+            }
+        }.execute(keyword);
     }
 }

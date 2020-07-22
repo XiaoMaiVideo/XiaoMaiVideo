@@ -18,7 +18,7 @@ android {
 
         ndk {
             //目前已支持 "armeabi-v7a","arm64-v8a","x86","x86_64" 平台架构
-            abiFilters "armeabi-v7a","arm64-v8a","x86","x86_64"
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
 
@@ -60,15 +60,12 @@ dependencies {
     implementation 'com.mapzen:on-the-road:0.8.1'
     // 图片压缩库
     implementation 'com.jkt:tcompress:1.2.3'
-
-
+    // 搜索时用于用户/视频切换的控件
+    implementation 'com.llollox:androidtoggleswitch:2.0.1'
     // Parcelable框架
     implementation 'org.parceler:parceler-api:1.1.12'
-
     //视频压缩
     implementation project(path: ':videocompressor')
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
-
     annotationProcessor 'org.parceler:parceler:1.1.12'
     // 点赞/收藏按钮
     implementation 'com.sackcentury:shinebutton:1.0.0'
@@ -111,11 +108,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //下拉刷新上滑更多
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.1'
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'
-}
 
+
+}

@@ -17,6 +17,6 @@ public interface UserRepository extends PagingAndSortingRepository<User,Long> {
 
     User findDistinctByUsername(String username);
 
-    Page<User> findByUsernameLike(String username, Pageable pageable);
+    Page<User> findByNicknameLike(String nickname, Pageable pageable);
 
 }

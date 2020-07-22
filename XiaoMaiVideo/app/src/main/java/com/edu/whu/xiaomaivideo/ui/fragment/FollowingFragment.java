@@ -9,7 +9,6 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -23,11 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.FollowersAndFollowingAdapter;
-import com.edu.whu.xiaomaivideo.databinding.FollowersFragmentBinding;
+import com.edu.whu.xiaomaivideo.adapter.UserAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FollowingFragmentBinding;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.viewModel.FollowersViewModel;
 import com.edu.whu.xiaomaivideo.viewModel.FollowingViewModel;
 
 import java.util.Objects;
@@ -35,7 +32,7 @@ import java.util.Objects;
 public class FollowingFragment extends Fragment {
     private FollowingViewModel followingViewModel;
     private FollowingFragmentBinding followingFragmentBinding;
-    private FollowersAndFollowingAdapter followersAndFollowingAdapter;
+    private UserAdapter userAdapter;
     private User user;
 
     public FollowingFragment(User user){
@@ -54,18 +51,12 @@ public class FollowingFragment extends Fragment {
         followingFragmentBinding.setLifecycleOwner(getActivity());
 
         followingFragmentBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        followersAndFollowingAdapter = new FollowersAndFollowingAdapter(getActivity(), new FollowersAndFollowingAdapter.OnItemClickListener() {
-
-            @Override
-            public void onClick(int pos) {
-
-            }
-        },false);
-        followingFragmentBinding.recyclerView.setAdapter(followersAndFollowingAdapter);
+        userAdapter = new UserAdapter(getActivity(), false);
+        followingFragmentBinding.recyclerView.setAdapter(userAdapter);
 
         followingViewModel.getFollowers().observe(getViewLifecycleOwner(),users -> {
-            followersAndFollowingAdapter.setUsers(user.getFollowing());
-            followersAndFollowingAdapter.notifyDataSetChanged();
+            userAdapter.setUsers(user.getFollowing());
+            userAdapter.notifyDataSetChanged();
         });
 
         return followingFragmentBinding.getRoot();
