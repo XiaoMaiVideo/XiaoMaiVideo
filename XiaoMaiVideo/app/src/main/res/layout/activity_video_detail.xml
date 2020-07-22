@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Author: 李季东 张俊杰
+ * Author: 李季东，张俊杰，叶俊豪
  * Create Time: 2020/7/14
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/21
 -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,76 +18,237 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/friendImage"
-            android:layout_width="58dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:avatarSrc="@{viewmodel.movie.publisher.avatar}" />
-
-        <TextView
-            android:id="@+id/friendText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="36dp"
-            android:text="@{viewmodel.movie.publisher.nickname}"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/friendImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <VideoView
-            android:id="@+id/friendVideo"
-            android:layout_width="395dp"
-            android:layout_height="301dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friendImage" />
-
-        <Button
-            android:id="@+id/friendLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:text="like"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friendVideo" />
-
-        <Button
-            android:id="@+id/friendComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="comment"
-            app:layout_constraintEnd_toStartOf="@+id/friendForward"
-            app:layout_constraintHorizontal_bias="0.584"
-            app:layout_constraintStart_toEndOf="@+id/friendLike"
-            app:layout_constraintTop_toBottomOf="@+id/friendVideo" />
-
-        <Button
-            android:id="@+id/friendForward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="forward"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friendVideo" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView2"
-            android:layout_width="0dp"
+        <cn.jzvd.JzvdStd
+            android:id="@+id/detailVideo"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="1dp"
+            app:videoUrl="@{viewmodel.movie.url}"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </cn.jzvd.JzvdStd>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friendComment" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/detailAuthorImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars"
+                app:avatarSrc="@{viewmodel.movie.publisher.avatar}"/>
+
+            <TextView
+                android:id="@+id/detailAuthorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{viewmodel.movie.publisher.nickname}"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/detailAuthorImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detailPostTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@{viewmodel.movie.publishTime}"
+                app:layout_constraintStart_toEndOf="@+id/detailAuthorImage"
+                app:layout_constraintTop_toBottomOf="@+id/detailAuthorText" />
+
+            <TextView
+                android:id="@+id/detailVideoDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@{viewmodel.movie.description}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailAuthorImage" />
+
+            <com.donkingliang.labels.LabelsView
+                android:id="@+id/detailTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                app:labelBackground="@drawable/label_bg"
+                app:labelTextColor="@color/red"
+                app:labelTextPaddingBottom="4dp"
+                app:labelTextPaddingLeft="8dp"
+                app:labelTextPaddingRight="8dp"
+                app:labelTextPaddingTop="4dp"
+                app:labelTextSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailVideoDescription"
+                app:labels="@{viewmodel.movie.categoryList}"
+                app:lineMargin="8dp"
+                app:wordMargin="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detailLocationInfoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:paddingStart="10dp"
+                android:text="@{viewmodel.movie.location}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+                android:textSize="12sp"
+                app:icon="@drawable/location"
+                app:iconPadding="7dp"
+                app:iconSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailTags" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailLocationInfoButton">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="80dp"
+                    app:layout_constraintEnd_toStartOf="@+id/detailComment"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/detailLikeButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:baselineAligned="false"
+                        android:src="@android:color/darker_gray"
+                        app:allow_random_color="false"
+                        app:big_shine_color="#FF6666"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="#FF6666"
+                        app:click_animation_duration="200"
+                        app:enable_flashing="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/detailLikeNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shine_animation_duration="1500"
+                        app:shine_count="8"
+                        app:shine_turn_angle="10"
+                        app:siShape="@raw/like"
+                        app:small_shine_color="#CC9999"
+                        app:small_shine_offset_angle="20" />
+
+                    <TextView
+                        android:id="@+id/detailLikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:baselineAligned="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/detailLikeButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="80dp"
+                    app:layout_constraintEnd_toStartOf="@+id/detailShare"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/detailLike"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/detailCommentButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/comment"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/detailCommentNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detailCommentNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/detailCommentButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/detailComment"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/detailShareButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/detailShareNum"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detailShareNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/detailShareButton"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/detailShareButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

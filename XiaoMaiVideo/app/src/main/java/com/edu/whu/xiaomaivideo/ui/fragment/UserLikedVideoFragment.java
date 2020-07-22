@@ -8,8 +8,8 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,51 +20,56 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.SettingsFriendAdpater;
 import com.edu.whu.xiaomaivideo.databinding.UserLikedVideoFragmentBinding;
 import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
-import com.edu.whu.xiaomaivideo.viewModel.UserVideoWorksViewModel;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
+import com.jiajie.load.LoadingDialog;
+
+import java.util.List;
 import java.util.Objects;
+
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 public class UserLikedVideoFragment extends Fragment {
 
-    private UserLikedVideoViewModel mViewModel;
-    private UserLikedVideoFragmentBinding userLikedVideoFragmentBinding;
+    private UserLikedVideoViewModel userLikedVideoViewModel;
+    UserLikedVideoFragmentBinding fragmentUserLikedVideoBinding;
+    List<Movie> movieList;
+    MovieRecyclerView movieRecyclerView;
 
-    public static UserLikedVideoFragment newInstance() {
-        return new UserLikedVideoFragment();
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(UserLikedVideoViewModel.class);
-
-        userLikedVideoFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.user_liked_video_fragment, container, false);
-        userLikedVideoFragmentBinding.setViewmodel(mViewModel);
-        userLikedVideoFragmentBinding.setLifecycleOwner(getActivity());
-
-        userLikedVideoFragmentBinding.userLikedVideoFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        userLikedVideoFragmentBinding.userLikedVideoFragmentRecyclerView.setAdapter(new SettingsFriendAdpater(getActivity(), new SettingsFriendAdpater.OnItemClickListener() {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        userLikedVideoViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(UserLikedVideoViewModel.class);
+        fragmentUserLikedVideoBinding = DataBindingUtil.inflate(inflater, R.layout.user_liked_video_fragment, container, false);
+        fragmentUserLikedVideoBinding.setViewmodel(userLikedVideoViewModel);
+        fragmentUserLikedVideoBinding.setLifecycleOwner(getActivity());
+        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
+        dialog.show();
+        MovieRestService.getMovies(0, new MovieRestCallback() {
             @Override
-            public void onClick(int pos) {
-                Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
+            public void onSuccess(int resultCode, List<Movie> movies) {
+                super.onSuccess(resultCode, movies);
+                movieList = movies;
+                setRecyclerView();
+                dialog.dismiss();
             }
-        }));
-
-
-        return userLikedVideoFragmentBinding.getRoot();
+        });
+        return fragmentUserLikedVideoBinding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(UserLikedVideoViewModel.class);
-        // TODO: Use the ViewModel
+    private void setRecyclerView() {
+        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
+        movieRecyclerView = new MovieRecyclerView(fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView);
     }
-
 }

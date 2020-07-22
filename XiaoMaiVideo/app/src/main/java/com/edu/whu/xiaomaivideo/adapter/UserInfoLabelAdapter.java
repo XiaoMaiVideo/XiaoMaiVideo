@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰，叶俊豪
  * Create Time: 2020/7/10
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
@@ -24,11 +24,9 @@ public class UserInfoLabelAdapter extends RecyclerView.Adapter<UserInfoLabelAdap
 {
     private List<String> mLabels;
     private Context mContext;
-    private OnItemClickListener mListener;
 
-    public UserInfoLabelAdapter(Context context, OnItemClickListener listener, List<String> labels) {
+    public UserInfoLabelAdapter(Context context, List<String> labels) {
         this.mContext = context;
-        this.mListener = listener;
         this.mLabels = labels;
     }
 
@@ -41,7 +39,6 @@ public class UserInfoLabelAdapter extends RecyclerView.Adapter<UserInfoLabelAdap
     @Override
     public void onBindViewHolder(@NonNull UserInfoLabelViewHolder holder, final int position) {
         holder.textView.setText(mLabels.get(position));
-        holder.itemView.setOnClickListener(view -> mListener.onClick(position));
     }
 
     @Override
@@ -57,10 +54,6 @@ public class UserInfoLabelAdapter extends RecyclerView.Adapter<UserInfoLabelAdap
             super(itemView);
             textView = itemView.findViewById(R.id.label_item_text);
         }
-    }
-
-    public interface OnItemClickListener {
-        void onClick(int pos);
     }
 }
 

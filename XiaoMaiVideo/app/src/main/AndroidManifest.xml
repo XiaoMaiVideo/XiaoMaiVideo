@@ -7,8 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,12 +28,7 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.VideoDetailActivity" />
         <activity android:name=".ui.activity.MessageChatActivity" />
-        <activity android:name=".ui.activity.MessageMentionedActivity" />
-        <activity android:name=".ui.activity.MessageCommentActivity" />
-        <activity android:name=".ui.activity.MessageLikeActivity" />
-        <activity android:name=".ui.activity.MessageSubscribeActivity" />
-        <activity android:name=".ui.activity.CommentActivity" />
-        <activity android:name=".ui.activity.CommentSingleActivity" />
+        <activity android:name=".ui.activity.LCFMessageActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

@@ -1,3 +1,8 @@
+/**
+ * Author: 未知、李季东
+ * Create Time: 未知
+ * Update Time: 2020/7/21
+ */
 package com.edu.whu.xiaomaivideo.ui.dialog;
 
 import android.content.Context;
@@ -13,22 +18,30 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.CommentDialogSingleAdapter;
-import com.edu.whu.xiaomaivideo.model.FirstLevelComment;
-import com.edu.whu.xiaomaivideo.ui.activity.CommentSingleActivity;
+import com.edu.whu.xiaomaivideo.model.Comment;
+import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.widget.CommentRecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.alibaba.fastjson.JSON;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListener {
+public class ShowCommentDialog {
 
-    private List<FirstLevelComment> data = new ArrayList<>();
+    private List<Comment> data = new ArrayList<>();
     private CommentRecyclerView mCommentRecyclerView;
     private BottomSheetDialog bottomSheetDialog;
     private InputTextMsgDialog inputTextMsgDialog;
@@ -40,27 +53,23 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
     private RecyclerView rv_dialog_lists;
     private long totalCount = 30;//总条数不得超过它
     private int offsetY;
+    private Movie movie;
+    OnAddCommentListener mListener;
 
-    public ShowCommentDialog(Context context) {
+    public ShowCommentDialog(Context context, Movie movie, OnAddCommentListener listener) {
         mContext = context;
         mCommentRecyclerView = new CommentRecyclerView();
+        this.movie = movie;
+        this.mListener = listener;
         initData();
         showSheetDialog();
     }
-
+    //界面初始化
     private void initData() {
-        for (int i = 0; i < 10; i++) {
-            FirstLevelComment firstLevelComment = new FirstLevelComment();
-            firstLevelComment.setContent("第" + (i + 1) + "人评论内容" + (i % 3 == 0 ? content + (i + 1) + "次" : ""));
-            firstLevelComment.setCreateTime(System.currentTimeMillis());
-            firstLevelComment.setHeadImg("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3370302115,85956606&fm=26&gp=0.jpg");
-            firstLevelComment.setId(i + "");
-            firstLevelComment.setUserId("UserId" + i);
-            firstLevelComment.setIsLike(0);
-            firstLevelComment.setPosition(i);
-            firstLevelComment.setLikeCount(i);
-            firstLevelComment.setUserName("星梦缘" + (i + 1));
-            data.add(firstLevelComment);
+        for (Comment c : movie.getComments())
+        {
+            Log.e("Comment",c.getMsg());
+            data.add(0,c);
         }
     }
 
@@ -92,7 +101,7 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         rv_dialog_lists.setLayoutManager(new LinearLayoutManager(mContext));
         rv_dialog_lists.setItemAnimator(new DefaultItemAnimator());
         bottomSheetAdapter.setLoadMoreView(new SimpleLoadMoreView());
-        bottomSheetAdapter.setOnLoadMoreListener(this, rv_dialog_lists);
+        // bottomSheetAdapter.setOnLoadMoreListener(this, rv_dialog_lists);
         rv_dialog_lists.setAdapter(bottomSheetAdapter);
 
         initListener();
@@ -122,25 +131,26 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         });
     }
 
+
+    // 点击事件
     private void initListener() {
-        // 点击事件
-        bottomSheetAdapter.setOnItemChildClickListener((adapter, view1, position) -> {
-            FirstLevelComment firstLevelComment = bottomSheetAdapter.getData().get(position);
-            Log.e("ShowCommentDialog", "Click"+position);
-            if (firstLevelComment == null) return;
-            Log.e("ShowCommentDialog", "Click1"+position);
-            if (view1.getId() == R.id.ll_like) {
-                Log.e("ShowCommentDialog", "Click2"+position);
-                //一级评论点赞 项目中还得通知服务器 成功才可以修改
-                firstLevelComment.setLikeCount(firstLevelComment.getLikeCount() + (firstLevelComment.getIsLike() == 0 ? 1 : -1));
-                firstLevelComment.setIsLike(firstLevelComment.getIsLike() == 0 ? 1 : 0);
-                data.set(position, firstLevelComment);
-                // bottomSheetAdapter.notifyItemChanged(firstLevelComment.getPosition());
-                bottomSheetAdapter.notifyDataSetChanged();
-            }
-        });
-        //滚动事件
-        if (mCommentRecyclerView != null) mCommentRecyclerView.initScrollListener(rv_dialog_lists);
+//        bottomSheetAdapter.setOnItemChildClickListener((adapter, view1, position) -> {
+//            FirstLevelComment firstLevelComment = bottomSheetAdapter.getData().get(position);
+//            Log.e("ShowCommentDialog", "Click"+position);
+//            if (firstLevelComment == null) return;
+//            Log.e("ShowCommentDialog", "Click1"+position);
+//            if (view1.getId() == R.id.ll_like) {
+//                Log.e("ShowCommentDialog", "Click2"+position);
+//                //一级评论点赞 项目中还得通知服务器 成功才可以修改
+//                firstLevelComment.setLikeCount(firstLevelComment.getLikeCount() + (firstLevelComment.getIsLike() == 0 ? 1 : -1));
+//                firstLevelComment.setIsLike(firstLevelComment.getIsLike() == 0 ? 1 : 0);
+//                data.set(position, firstLevelComment);
+//                // bottomSheetAdapter.notifyItemChanged(firstLevelComment.getPosition());
+//                bottomSheetAdapter.notifyDataSetChanged();
+//            }
+//        });
+//        //滚动事件
+//        if (mCommentRecyclerView != null) mCommentRecyclerView.initScrollListener(rv_dialog_lists);
     }
 
     private void initInputTextMsgDialog(View view, final boolean isReply, final String headImg, final int position) {
@@ -154,9 +164,17 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
             inputTextMsgDialog.setmOnTextSendListener(new InputTextMsgDialog.OnTextSendListener() {
                 @Override
                 public void onTextSend(String msg) {
-                    addComment(isReply,headImg,position,msg);
+                    if (Constant.currentUser.getUserId() == 0) {
+                        // 没登录，不允许评论
+                        BasePopupView popupView = new XPopup.Builder(mContext)
+                                .asCustom(new SimpleBottomDialog(mContext, R.drawable.success, "没有登录，不能发评论哦"))
+                                .show();
+                        popupView.delayDismiss(1500);
+                    }
+                    else {
+                        addComment(isReply, headImg, position, msg);
+                    }
                 }
-
                 @Override
                 public void dismiss() {
                     scrollLocation(-offsetY);
@@ -168,15 +186,31 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
 
     private void addComment(boolean isReply, String headImg, final int position, String msg) {
         //添加一级评论
-        FirstLevelComment firstLevelComment = new FirstLevelComment();
-        firstLevelComment.setUserName("赵丽颖");
-        firstLevelComment.setId(bottomSheetAdapter.getItemCount() + 1 + "");
-        firstLevelComment.setHeadImg("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1918451189,3095768332&fm=26&gp=0.jpg");
-        firstLevelComment.setCreateTime(System.currentTimeMillis());
-        firstLevelComment.setContent(msg);
-        firstLevelComment.setLikeCount(0);
-        data.add(0, firstLevelComment);
+        Log.e("ShowCommentDialog", "发评论");
+        MessageVO message = new MessageVO();
+        message.setMsgType("comment");
+        message.setSenderId(Constant.currentUser.getUserId());
+        message.setReceiverId(movie.getPublisher().getUserId());
+        message.setMovieId(movie.getMovieId());
+        message.setText(msg);
+        EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+        Comment comment = new Comment();
+        comment.setCommenter(Constant.currentUser);
+        comment.setMovie(movie);
+        comment.setMsg(msg);
+        comment.setTime(new Date());
+        data.add(0, comment);
+        bottomSheetAdapter.notifyDataSetChanged();
+//        FirstLevelComment firstLevelComment = new FirstLevelComment();
+//        firstLevelComment.setUserName("赵丽颖");
+//        firstLevelComment.setId(bottomSheetAdapter.getItemCount() + 1 + "");
+//        firstLevelComment.setHeadImg("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1918451189,3095768332&fm=26&gp=0.jpg");
+//        firstLevelComment.setCreateTime(System.currentTimeMillis());
+//        firstLevelComment.setContent(msg);
+//        firstLevelComment.setLikeCount(0);
+//        data.add(0, firstLevelComment);
         rv_dialog_lists.scrollToPosition(0);
+        mListener.onAddComment();
     }
 
     private void dismissInputDialog() {
@@ -198,28 +232,28 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
     }
 
     //在项目中是从服务器获取数据，其实就是一级评论分页获取
-    @Override
     public void onLoadMoreRequested() {
-        Log.e("ShowCommentDialog", "加载更多");
-        if (data.size() >= totalCount) {
-            bottomSheetAdapter.loadMoreEnd(false);
-            return;
-        }
-        //加载更多
-        for (int i = 0; i < 10; i++) {
-            Log.e("ShowCommentDialog", "加载中");
-            FirstLevelComment firstLevelComment = new FirstLevelComment();
-            firstLevelComment.setUserName("赵丽颖 add more" + i);
-            firstLevelComment.setId(bottomSheetAdapter.getItemCount() + (i + 1) + "");
-            firstLevelComment.setHeadImg("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1918451189,3095768332&fm=26&gp=0.jpg");
-            firstLevelComment.setCreateTime(System.currentTimeMillis());
-            firstLevelComment.setContent("add more" + i);
-            firstLevelComment.setLikeCount(0);
-            firstLevelComment.setIsLike(0);
-            data.add(firstLevelComment);
-            bottomSheetAdapter.notifyItemInserted(data.size()-1);
-        }
         bottomSheetAdapter.loadMoreComplete();
+//        Log.e("ShowCommentDialog", "加载更多");
+//        if (data.size() >= totalCount) {
+//            bottomSheetAdapter.loadMoreEnd(false);
+//            return;
+//        }
+//        //加载更多
+//        for (int i = 0; i < 10; i++) {
+//            Log.e("ShowCommentDialog", "加载中");
+//            FirstLevelComment firstLevelComment = new FirstLevelComment();
+//            firstLevelComment.setUserName("赵丽颖 add more" + i);
+//            firstLevelComment.setId(bottomSheetAdapter.getItemCount() + (i + 1) + "");
+//            firstLevelComment.setHeadImg("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1918451189,3095768332&fm=26&gp=0.jpg");
+//            firstLevelComment.setCreateTime(System.currentTimeMillis());
+//            firstLevelComment.setContent("add more" + i);
+//            firstLevelComment.setLikeCount(0);
+//            firstLevelComment.setIsLike(0);
+//            data.add(firstLevelComment);
+//            bottomSheetAdapter.notifyItemInserted(data.size()-1);
+//        }
+//        bottomSheetAdapter.loadMoreComplete();
     }
 
     // item滑动到原位
@@ -229,5 +263,9 @@ public class ShowCommentDialog implements BaseQuickAdapter.RequestLoadMoreListen
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface OnAddCommentListener {
+        void onAddComment();
     }
 }

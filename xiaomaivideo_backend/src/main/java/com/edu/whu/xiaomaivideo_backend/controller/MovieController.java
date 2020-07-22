@@ -44,4 +44,9 @@ public class MovieController {
     public @ResponseBody AjaxResponse getMoviesByCategoriesLike(@RequestParam int page, @RequestParam int total,@RequestParam String categories) {
         return AjaxResponse.success(movieRestService.getAllByCategoriesLike(page, total,"%"+categories+"%"));
     }
+
+    @GetMapping("/getMoviesByLocation")
+    public @ResponseBody AjaxResponse getMoviesByLocation(@RequestParam int page, @RequestParam int total,@RequestParam String location) {
+        return AjaxResponse.success(movieRestService.getAllByLocation(page, total, location));
+    }
 }

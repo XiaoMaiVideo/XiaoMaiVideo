@@ -28,6 +28,7 @@ public class Movie {
     private String url;
     private String description;
     private String categories;
+    private String location;
     private int likednum;
     private int commentnum;
     private int sharenum;
@@ -132,6 +133,14 @@ public class Movie {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override

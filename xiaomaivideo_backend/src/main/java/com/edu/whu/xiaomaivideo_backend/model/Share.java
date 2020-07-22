@@ -20,7 +20,7 @@ public class Share {
     private Long shareId;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"publisher","likers","comments"})
+    @JsonIgnoreProperties(value = {"likers","comments"})
     private Movie movie;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

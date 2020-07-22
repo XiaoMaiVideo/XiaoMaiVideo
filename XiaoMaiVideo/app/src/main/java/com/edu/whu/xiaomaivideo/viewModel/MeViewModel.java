@@ -18,7 +18,7 @@ public class MeViewModel extends ViewModel {
 
     public MeViewModel() {
         user = new MutableLiveData<>();
-        user.setValue(Constant.CurrentUser);
+        user.setValue(Constant.currentUser);
     }
 
     public LiveData<User> getUser() {

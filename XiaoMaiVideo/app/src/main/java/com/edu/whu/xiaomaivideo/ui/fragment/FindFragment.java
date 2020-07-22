@@ -27,10 +27,14 @@ import android.widget.Toast;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.FindSubFragmentAdapter;
 import com.edu.whu.xiaomaivideo.databinding.FindFragmentBinding;
+import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.viewModel.FindViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FindFragment extends Fragment {

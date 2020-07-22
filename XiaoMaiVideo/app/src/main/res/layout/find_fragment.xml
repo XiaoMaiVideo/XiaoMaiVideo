@@ -72,8 +72,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_culture"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/culture" />
@@ -81,7 +81,7 @@
                             <TextView
                                 android:id="@+id/tv_culture"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="文化"
                                 android:layout_width="wrap_content"
@@ -101,8 +101,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_child"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/child1" />
@@ -114,7 +114,7 @@
                                 android:layout_marginStart="0dp"
                                 android:gravity="center"
                                 android:text="儿童"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -130,8 +130,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_fashion"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/fashion" />
@@ -139,7 +139,7 @@
                             <TextView
                                 android:id="@+id/tv_fashion"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="时尚"
                                 android:layout_width="wrap_content"
@@ -159,8 +159,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_food"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/food" />
@@ -168,7 +168,7 @@
                             <TextView
                                 android:id="@+id/tv_food"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="美食"
                                 android:layout_width="wrap_content"
@@ -195,8 +195,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_game"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/game" />
@@ -208,7 +208,7 @@
                                 android:layout_marginStart="0dp"
                                 android:gravity="center"
                                 android:text="游戏"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -224,8 +224,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_life"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/life" />
@@ -233,7 +233,7 @@
                             <TextView
                                 android:id="@+id/tv_life"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="生活"
                                 android:layout_width="wrap_content"
@@ -253,8 +253,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_movie"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/movie" />
@@ -262,7 +262,7 @@
                             <TextView
                                 android:id="@+id/tv_movie"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="影视"
                                 android:layout_width="wrap_content"
@@ -282,8 +282,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_music"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/music" />
@@ -291,7 +291,7 @@
                             <TextView
                                 android:id="@+id/tv_music"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="音乐"
                                 android:layout_width="wrap_content"
@@ -321,8 +321,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_society"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/society" />
@@ -334,7 +334,7 @@
                                 android:layout_marginStart="0dp"
                                 android:gravity="center"
                                 android:text="社会"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -350,8 +350,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_tech"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/tech" />
@@ -359,7 +359,7 @@
                             <TextView
                                 android:id="@+id/tv_tech"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="科技"
                                 android:layout_width="wrap_content"
@@ -379,8 +379,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_sport"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 android:src="@drawable/sport" />
@@ -388,7 +388,7 @@
                             <TextView
                                 android:id="@+id/tv_sport"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="体育"
                                 android:layout_width="wrap_content"
@@ -408,16 +408,16 @@
 
                             <ImageView
                                 android:id="@+id/iv_more"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
-                                android:src="@drawable/modify_user_info" />
+                                android:src="@drawable/more" />
 
                             <TextView
                                 android:id="@+id/tv_more"
                                 android:gravity="center"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:layout_marginStart="0dp"
                                 android:text="更多"
                                 android:layout_width="wrap_content"

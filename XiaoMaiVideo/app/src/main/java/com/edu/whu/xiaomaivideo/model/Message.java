@@ -6,12 +6,14 @@
 
 package com.edu.whu.xiaomaivideo.model;
 
+import org.litepal.annotation.Column;
+import org.litepal.crud.LitePalSupport;
 import org.parceler.Parcel;
 
 import java.util.Date;
 
 @Parcel
-public class Message {
+public class Message extends LitePalSupport {
     private Long msgId;
     private Long senderId;
     private Long receiverId;

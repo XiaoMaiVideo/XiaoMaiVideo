@@ -43,15 +43,6 @@ public class MessageFragment extends Fragment {
         messageFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.message_fragment,container,false);
         messageFragmentBinding.setViewmodel(messageViewModel);
         messageFragmentBinding.setLifecycleOwner(getActivity());
-        /*
-        messageFragmentBinding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
         initAdapter();
 
         return messageFragmentBinding.getRoot();
@@ -60,12 +51,9 @@ public class MessageFragment extends Fragment {
         mAdapter=new MessageAdapter(getActivity(), new MessageAdapter.OnItemClickListener()
         {
             @Override
-            public void onClick(int pos)
-            {
-                //点击item发生的事情
+            public void onClick(int pos) {
+                // 点击item发生的事情
                 Toast.makeText(getActivity(), "click..." + pos, Toast.LENGTH_SHORT).show();
-//                Intent intent =new Intent(getActivity(), VideoDetialActivity.class);
-//                startActivity(intent);
             }
         });
         messageFragmentBinding.recyclerView3.setAdapter(mAdapter);

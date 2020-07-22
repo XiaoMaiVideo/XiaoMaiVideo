@@ -17,4 +17,6 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie,Long> 
 
     //根据categories字段查询表数据，传入Pageable分页参数
     Page<Movie> findByCategoriesLike(String categories, Pageable pageable);
+
+    Page<Movie> findByLocation(String location, Pageable pageable);
 }

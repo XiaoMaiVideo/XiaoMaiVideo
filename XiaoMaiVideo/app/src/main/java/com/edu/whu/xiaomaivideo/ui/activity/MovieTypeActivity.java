@@ -1,13 +1,33 @@
+/**
+ * Author: 方胜强
+ * Create Time: 2020/7/21
+ * Update Time: 2020/7/21
+ */
 package com.edu.whu.xiaomaivideo.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
@@ -16,10 +36,17 @@ import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.jiajie.load.LoadingDialog;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+
+
+
 
 public class MovieTypeActivity extends Activity {
 
@@ -28,6 +55,131 @@ public class MovieTypeActivity extends Activity {
 
     public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
     public JzvdStd videoView;
+
+    private int imageIds[] = {
+            R.drawable.picture1,
+            R.drawable.picture2,
+            R.drawable.picture3,
+            R.drawable.picture4,
+            R.drawable.picture5
+    };
+
+    private ArrayList<ImageView> images = new ArrayList<>();
+    private ViewPager vp;
+    private int oldPosition = 0;//记录上一次点的位置
+    private int currentItem; //当前页面
+    private ScheduledExecutorService scheduledExecutorService;
+    //图片标题
+    private String titles[] = new String[]{"小麦1", "小麦2", "小麦3", "小麦4", "小麦5"};
+    private ArrayList<View> dots = new ArrayList<View>();;
+    private TextView title;
+
+    private Button color;
+
+
+    public void Slide(){
+        for (int i = 0; i < imageIds.length; i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(imageIds[i]);
+
+            images.add(imageView);
+        }
+
+
+        //显示的点 加入集合
+        dots.add(findViewById(R.id.dot_0));
+        dots.add(findViewById(R.id.dot_1));
+        dots.add(findViewById(R.id.dot_2));
+        dots.add(findViewById(R.id.dot_3));
+        dots.add(findViewById(R.id.dot_4));
+
+        //获取图片标题的id
+        title = (TextView) findViewById(R.id.tv_test_title);
+
+        //获取ViewPager 的id
+        vp = (ViewPager) findViewById(R.id.vp);
+        vp.setAdapter(new ViewPagerAdapter());
+
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //设置页面刷新后的图片标题
+                title.setText(titles[position]);
+                dots.get(position).setBackgroundResource(R.drawable.dot_yes);
+                dots.get(oldPosition).setBackgroundResource(R.drawable.dot_no);
+                oldPosition = position;
+                currentItem = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    class ViewPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return images.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view==object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            //将试图移除试图组
+            View v =images.get(position);
+            container.removeView(v);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            //将试图添加进试图组
+            View v =images.get(position);
+            container.addView(v);
+            return v;
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        //每隔三秒换一张图片
+        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(),3,3, TimeUnit.SECONDS);//TimeUnit.SECONDS);
+
+    }
+    //实现一个碎片的接口
+    class ViewPagerTask implements Runnable{
+
+        @Override
+        public void run() {
+            currentItem = (currentItem+1)%imageIds.length;
+            //更新界面
+            handler.obtainMessage().sendToTarget();
+        }
+    }
+    //在handler进行碎片跳转
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            vp.setCurrentItem(currentItem);
+            //
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +201,7 @@ public class MovieTypeActivity extends Activity {
                 dialog.dismiss();
             }
         });
+        Slide();//实现滑动功能的函数
     }
 
     private void setRecyclerView() {

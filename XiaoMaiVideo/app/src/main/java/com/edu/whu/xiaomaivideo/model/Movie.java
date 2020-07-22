@@ -1,7 +1,7 @@
 /**
- * Author: 叶俊豪
+ * Author: 叶俊豪、李季东
  * Create Time: 2020/7/15
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/18
  */
 
 package com.edu.whu.xiaomaivideo.model;
@@ -19,10 +19,19 @@ public class Movie {
     private String publishTime;
     private String url;
     private String description;
+    private String location;
+
+    @JSONField(serialize = false)
+    private List<String> categoryList;
 
     private User publisher;
     private String categories;
     private List<User> likers;
+    private List<Comment> comments;
+
+    private int sharenum;
+    private int commentnum;
+    private int likednum;
 
     public Movie() {
 
@@ -80,6 +89,10 @@ public class Movie {
         this.publisher = publisher;
     }
 
+    public List<Comment> getComments(){ return  comments; }
+
+    public  void  setComments(List<Comment> comments){ this.comments = comments; }
+
     public String getCategories() {
         return categories;
     }
@@ -93,5 +106,45 @@ public class Movie {
             likers = new ArrayList<>();
         }
         likers.add(user);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getSharenum() {
+        return sharenum;
+    }
+
+    public void setSharenum(int sharenum) {
+        this.sharenum = sharenum;
+    }
+
+    public int getCommentnum() {
+        return commentnum;
+    }
+
+    public void setCommentnum(int commentnum) {
+        this.commentnum = commentnum;
+    }
+
+    public int getLikednum() {
+        return likednum;
+    }
+
+    public void setLikednum(int likednum) {
+        this.likednum = likednum;
+    }
+
+    public List<String> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<String> categoryList) {
+        this.categoryList = categoryList;
     }
 }

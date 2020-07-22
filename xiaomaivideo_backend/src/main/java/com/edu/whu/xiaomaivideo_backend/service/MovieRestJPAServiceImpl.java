@@ -47,7 +47,8 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
 
     @Override
     public Page<Movie> getAll(int page, int total) {
-        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime"));
+        // TODO: 按照发布时间倒序
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
         return movieRepository.findAll(pageable);
 //        //将查询结果转换为List
 //        List<Movie> movieList = moviePage.getContent();
@@ -56,9 +57,13 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
 
     @Override
     public Page<Movie> getAllByCategoriesLike(int page, int total,String categories) {
-        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime"));
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
         return movieRepository.findByCategoriesLike(categories,pageable);
     }
 
-
+    @Override
+    public Page<Movie> getAllByLocation(int page, int total, String location) {
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
+        return movieRepository.findByLocation(location, pageable);
+    }
 }

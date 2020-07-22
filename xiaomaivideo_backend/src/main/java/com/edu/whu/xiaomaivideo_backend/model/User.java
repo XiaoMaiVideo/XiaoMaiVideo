@@ -9,6 +9,8 @@ package com.edu.whu.xiaomaivideo_backend.model;
 
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,17 +23,21 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue
-    private Long userId;
-    private String username;
-
-    private String password;
-    private String gender;
-    private String nickname;
-    private String avatar;
-    private String description;
-    private String birthday;
-    private String area;
-    private String workplace;
+    private Long userId;        //ID
+    private String username;    //用户名
+    private String password;    //密码
+    private String gender;      //性别
+    private String nickname;    //昵称
+    private String avatar;      //
+    private String description; //个性签名
+    private String birthday;    //生日
+    private String area;        //地区
+    private String workplace;   //公司
+    private boolean canAcceptLikeMessage; // 是否接收点赞消息
+    private boolean canAcceptCommentMessage; // 是否接收评论消息
+    private boolean canAcceptFollowMessage; // 是否接收新粉丝消息
+    private boolean isPrivateUser; // 是否为私密账户，若是则只能看到头像与昵称，不能看到其他个人信息
+    private boolean isFollowListAccessible; // 是否允许别人看关注/粉丝列表
 
     @JsonIgnoreProperties(value = {"publisher","likers","comments"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher")
@@ -47,6 +53,7 @@ public class User {
 
     @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "follow_tabel",joinColumns = @JoinColumn(name = "followers_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id"))
     private List<User> following;
@@ -201,16 +208,50 @@ public class User {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String area) { this.area = area; }
+
+    public String getWorkplace() {return workplace; }
+
+    public void setWorkplace(String workplace) { this.workplace = workplace; }
+
+    public boolean isCanAcceptLikeMessage() {
+        return canAcceptLikeMessage;
     }
 
-    public String getWorkplace() {
-        return workplace;
+    public void setCanAcceptLikeMessage(boolean canAcceptLikeMessage) {
+        this.canAcceptLikeMessage = canAcceptLikeMessage;
     }
 
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
+    public boolean isCanAcceptCommentMessage() {
+        return canAcceptCommentMessage;
+    }
+
+    public void setCanAcceptCommentMessage(boolean canAcceptCommentMessage) {
+        this.canAcceptCommentMessage = canAcceptCommentMessage;
+    }
+
+    public boolean isCanAcceptFollowMessage() {
+        return canAcceptFollowMessage;
+    }
+
+    public void setCanAcceptFollowMessage(boolean canAcceptFollowMessage) {
+        this.canAcceptFollowMessage = canAcceptFollowMessage;
+    }
+
+    public boolean isPrivateUser() {
+        return isPrivateUser;
+    }
+
+    public void setPrivateUser(boolean privateUser) {
+        isPrivateUser = privateUser;
+    }
+
+    public boolean isFollowListAccessible() {
+        return isFollowListAccessible;
+    }
+
+    public void setFollowListAccessible(boolean followListAccessible) {
+        isFollowListAccessible = followListAccessible;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class FollowingViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<User>> getFollowers() {
-        List<User> users= Constant.CurrentUser.getFollowing();
+        List<User> users= Constant.currentUser.getFollowing();
         followering.setValue(users);
         return followering;
     }

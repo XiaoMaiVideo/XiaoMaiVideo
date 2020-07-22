@@ -6,23 +6,12 @@
 
 package com.edu.whu.xiaomaivideo.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,36 +20,32 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
-import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
-import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
-import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.util.CommonUtils;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
 import com.lxj.xpopup.XPopup;
 import com.vincent.videocompressor.VideoCompress;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.mustafagercek.library.LoadingButton;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class TakeVideoActivity extends AppCompatActivity {
@@ -72,46 +57,8 @@ public class TakeVideoActivity extends AppCompatActivity {
     String outputPath;
     ProgressBar progressBar;
     EditText editText;
+    CheckBox checkBox;
 
-    //获取当前经纬坐标位置
-    LocationManager manager;
-    //权限数组
-    String[] premissinos;
-    //没有权限
-    boolean hasNoPermisson;
-    //权限存在
-    boolean yes;
-
-    public void initPremission(){
-        //判断当前版本是否大于6
-        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M){
-            for(String per:premissinos){
-                if(checkSelfPermission(per)!=PackageManager.PERMISSION_GRANTED){
-                    hasNoPermisson=true;
-                    break;
-                }
-            }
-            if(hasNoPermisson){
-                requestPermissions(premissinos,100);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==100){
-            for(int i=0;i<grantResults.length;i++){
-                if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
-                    yes=true;
-                    break;
-                }
-            }
-            if(yes){
-                Log.e("##","没有权限!");
-            }
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,48 +72,12 @@ public class TakeVideoActivity extends AppCompatActivity {
         notCompressButton = findViewById(R.id.notCompressButton);
         progressBar = findViewById(R.id.progressBar);
         editText = findViewById(R.id.descriptionTextMultiLine);
+        checkBox = findViewById(R.id.locationSelector);
 
         compressButton.setVisibility(View.GONE);
         notCompressButton.setVisibility(View.GONE);
 
-
-        LocationListener locationListener=new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Geocoder geocoder=new Geocoder(getApplicationContext());
-
-                Log.e("精度是:", location.getLatitude() + "");
-                Log.e("维度是:", location.getLongitude() + "");
-                Log.e("海拔是:", location.getAltitude() + "");
-                Log.e("速度", location.getSpeed() + "");
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-            //要申请的权限列表
-        premissinos=new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
-        manager = (LocationManager) getSystemService(LOCATION_SERVICE);//获得定位的管理类
-        initPremission();
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         //第一个参数 位置提供器 第二个参数 位置变化的事件间隔 第三个参数 位置变化的距离间隔 事件监听LocationListener
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
 
 
         takeVideoButton.setOnClickListener(v -> {
@@ -200,6 +111,12 @@ public class TakeVideoActivity extends AppCompatActivity {
                 upload(inputPath, editText.getText().toString(), selectLabelAdapter.selectLabels);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 退出后停止监听
     }
 
     @Override
@@ -254,7 +171,7 @@ public class TakeVideoActivity extends AppCompatActivity {
         });
     }
 
-    private void upload(String path, String description, List<String> selectLabels) {
+    private void sendVideo(String path, String description, List<String> selectLabels, String location) {
         StringBuilder labelString = new StringBuilder();
         for (String label: selectLabels) {
             labelString.append(label).append(";");
@@ -271,8 +188,9 @@ public class TakeVideoActivity extends AppCompatActivity {
                 Movie movie = new Movie();
                 movie.setUrl(responseData);
                 movie.setDescription(description);
-                movie.setPublishTime(CommonUtils.convertTimeToDateString(System.currentTimeMillis()));
+                movie.setPublishTime(CommonUtil.convertTimeToDateString(System.currentTimeMillis()));
                 movie.setCategories(labelString.toString());
+                movie.setLocation(location);
                 UserRestService.addUserMovie(movie, new RestCallback() {
                     @Override
                     public void onSuccess(int resultCode) {
@@ -282,13 +200,27 @@ public class TakeVideoActivity extends AppCompatActivity {
                             } else if (notCompressButton.isInProgress()) {
                                 notCompressButton.onStopLoading();
                             }
-                            setResult(RESULT_OK);
+                            Intent intent = new Intent();
+                            intent.putExtra("movie", Parcels.wrap(Movie.class, movie));
+                            setResult(RESULT_OK, intent);
                             TakeVideoActivity.this.finish();
                         }
                     }
                 });
             }
         });
+    }
+
+    private void upload(String path, String description, List<String> selectLabels) {
+        if (checkBox.isChecked()) {
+            // 发送位置信息
+            sendVideo(path, description, selectLabels, Constant.currentLocation.getValue());
+        }
+        else {
+            // 不发送位置信息
+            sendVideo(path, description, selectLabels, "");
+        }
+
     }
 
     //选择视频

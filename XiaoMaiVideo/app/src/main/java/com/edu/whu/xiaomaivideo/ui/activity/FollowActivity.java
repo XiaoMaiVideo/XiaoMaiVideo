@@ -1,7 +1,7 @@
 /**
- * Author: 张俊杰
+ * Author: 张俊杰、李季东
  * Create Time: 2020/7/16
- * Update Time: 2020/7/17
+ * Update Time: 2020/7/21
  */
 
 package com.edu.whu.xiaomaivideo.ui.activity;
@@ -14,26 +14,35 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowersFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FollowingFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.FriendFragment;
-import com.edu.whu.xiaomaivideo.ui.fragment.HotFragment;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import com.edu.whu.xiaomaivideo.R;
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
     TabLayout tabLayout;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         setContentView(R.layout.activity_follow);
         viewPage=findViewById(R.id.viewPage);
         tabLayout=findViewById(R.id.tabLayout2);
+        if (user.getFollowers() == null) {
+            user.setFollowers(new ArrayList<>());
+        }
+        if (user.getFollowing() == null) {
+            user.setFollowing(new ArrayList<>());
+        }
         viewPage.setAdapter(new FragmentStateAdapter(this) {
             private int count = 2;
 
@@ -44,10 +53,10 @@ public class FollowActivity extends AppCompatActivity {
                 switch (position) {
                     default:
                     case 0:
-                        fragment = new FollowingFragment();
+                        fragment = new FollowingFragment(user);
                         break;
                     case 1:
-                        fragment = new FollowersFragment();
+                        fragment = new FollowersFragment(user);
                         break;
                 }
                 return fragment;
@@ -65,10 +74,10 @@ public class FollowActivity extends AppCompatActivity {
                 switch (position) {
                     default:
                     case 0:
-                        tab.setText("关注 "+ Constant.CurrentUser.getFollowing().size());
+                        tab.setText("关注 "+ user.getFollowing().size());
                         break;
                     case 1:
-                        tab.setText("粉丝 "+ Constant.CurrentUser.getFollowers().size());
+                        tab.setText("粉丝 "+ user.getFollowers().size());
                         break;
                 }
             }

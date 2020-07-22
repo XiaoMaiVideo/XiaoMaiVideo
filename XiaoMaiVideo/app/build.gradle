@@ -74,7 +74,7 @@ dependencies {
     // 视频播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.4.2'
     // 类似微博话题的标签
-    implementation 'cn.droidlover:TagEditText:1.0.0'
+    implementation 'com.github.donkingliang:LabelsView:1.4.1'
     // 弹出框的第三方库
     implementation 'com.lxj:xpopup-ext:0.0.3'
     implementation 'com.lxj:xpopup:2.0.2'
@@ -101,6 +101,9 @@ dependencies {
 
     // 屏幕适配
     // implementation 'me.jessyan:autosize:1.1.2'
+
+    // 可分组的Adapter
+    implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.3.0'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
