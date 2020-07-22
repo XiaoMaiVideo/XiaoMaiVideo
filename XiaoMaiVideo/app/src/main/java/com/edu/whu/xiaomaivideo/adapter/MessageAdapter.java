@@ -1,3 +1,9 @@
+/**
+ * Author: 张俊杰
+ * Create Time: 2020/7/20
+ * Update Time: 2020/7/22
+ */
+
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
@@ -13,11 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
+import com.edu.whu.xiaomaivideo.ui.activity.ChatActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.MessageChatActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.MessageMentionedActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.MessageCommentActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.MessageLikeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.MessageSubscribeActivity;
+import com.edu.whu.xiaomaivideo.viewModel.ChatViewModel;
 
 /**
  * Author:李季东
@@ -55,7 +63,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 {
                     mListener.onClick(i);
                     Toast.makeText(mContext, "click..." + i, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mContext, MessageMentionedActivity.class);
+                    Intent intent = new Intent(mContext, ChatActivity.class);
                     mContext.startActivity(intent);
                 }
             });

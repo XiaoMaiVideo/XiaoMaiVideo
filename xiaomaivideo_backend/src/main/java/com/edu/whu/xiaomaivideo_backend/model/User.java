@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/22
  */
 
 
@@ -45,13 +45,13 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "commenter")
     private List<Comment> comments =new ArrayList<>();
 
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToMany
     @JoinTable(name = "follow_tabel",joinColumns = @JoinColumn(name = "followers_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id"))
     private List<User> following;
 
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToMany(mappedBy = "following")
     private List<User> followers;
 

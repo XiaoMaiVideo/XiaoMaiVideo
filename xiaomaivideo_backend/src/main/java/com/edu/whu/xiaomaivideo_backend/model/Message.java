@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/22
  */
 
 package com.edu.whu.xiaomaivideo_backend.model;
@@ -20,12 +20,16 @@ public class Message {
     private Long msgId;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"publisher","likers","comments"})
+    private Movie atMovie;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @JoinColumn(name = "senderId")
     private User sender;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @JoinColumn(name = "receiverId")
     private User receiver;
 
@@ -35,6 +39,14 @@ public class Message {
     private String text;
 
     private String msgType;
+
+    public Movie getAtMovie() {
+        return atMovie;
+    }
+
+    public void setAtMovie(Movie atMovie) {
+        this.atMovie = atMovie;
+    }
 
     public String getMsgType() {
         return msgType;

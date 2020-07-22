@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/16
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/22
  */
 
 package com.edu.whu.xiaomaivideo_backend.model;
@@ -20,7 +20,7 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @JoinColumn(name = "commenterId")
     private User commenter;
 

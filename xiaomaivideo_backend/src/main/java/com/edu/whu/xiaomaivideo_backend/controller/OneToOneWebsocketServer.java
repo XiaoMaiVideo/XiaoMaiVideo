@@ -102,6 +102,22 @@ public class OneToOneWebsocketServer {
 
                 }
                 break;
+            case "at":
+                //@
+                Message message2=new Message();
+                message2.setSender(sender);
+                message2.setReceiver(receiver);
+                message2.setText(messageVO.getText());
+                message2.setTime(new Date());
+                message2.setAtMovie(movieRestService.getMovieById(messageVO.getMovieId()));
+                message2.setMsgType(messageVO.getMsgType());
+                try {
+                    messageRestService.saveMessage(message2);
+                    log.info("成功保存@信息{}",message2.getText());
+                } catch (Exception e){
+
+                }
+                break;
             case "like":
                 // 点赞使用websocket
                 List<Movie> movies = sender.getLikeMovies();

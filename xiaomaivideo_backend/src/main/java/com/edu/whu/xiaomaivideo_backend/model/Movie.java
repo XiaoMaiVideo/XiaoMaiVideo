@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/22
  */
 
 
@@ -32,13 +32,13 @@ public class Movie {
     private int commentnum;
     private int sharenum;
 
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToOne
     @JoinColumn(name = "userId")
     private User publisher;
 
     //当序列化likers时，忽略掉{"likeMovies","movies"}两个属性
-    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs"})
+    @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToMany(cascade = CascadeType.REFRESH,mappedBy = "likeMovies")
     private List<User> likers=new ArrayList<>();
 
