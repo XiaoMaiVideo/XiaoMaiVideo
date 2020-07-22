@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/8
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/22
  */
 
 
@@ -12,6 +12,10 @@ package com.edu.whu.xiaomaivideo_backend.service;
 import com.edu.whu.xiaomaivideo_backend.dao.UserRepository;
 import com.edu.whu.xiaomaivideo_backend.model.Movie;
 import com.edu.whu.xiaomaivideo_backend.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,6 +55,12 @@ public class UserRestJPAServiceImpl implements UserRestService {
 
     @Override
     public List<User> getAllUser() {
-        return userRepository.findAll();
+        return (List<User>) userRepository.findAll();
+    }
+
+    @Override
+    public Page<User> getAllByUsernameLike(int page, int total, String username) {
+        Pageable pageable = PageRequest.of(page, total);
+        return userRepository.findByUsernameLike(username,pageable);
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/22
  */
 
 
@@ -19,4 +19,6 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie,Long> 
     Page<Movie> findByCategoriesLike(String categories, Pageable pageable);
 
     Page<Movie> findByLocation(String location, Pageable pageable);
+
+    Page<Movie> findByDescriptionLike(String description, Pageable pageable);
 }

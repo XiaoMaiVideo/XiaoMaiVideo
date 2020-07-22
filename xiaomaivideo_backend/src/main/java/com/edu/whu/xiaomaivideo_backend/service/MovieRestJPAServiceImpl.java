@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/22
  */
 
 
@@ -59,6 +59,12 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
     public Page<Movie> getAllByCategoriesLike(int page, int total,String categories) {
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
         return movieRepository.findByCategoriesLike(categories,pageable);
+    }
+
+    @Override
+    public Page<Movie> getAllByDescriptionLike(int page, int total, String description) {
+        Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
+        return movieRepository.findByDescriptionLike(description,pageable);
     }
 
     @Override

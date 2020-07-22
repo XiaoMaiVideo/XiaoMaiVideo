@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/22
  */
 
 
@@ -199,5 +199,10 @@ public class UserController {
             users.add(user2);
         }
         return AjaxResponse.success(users);
+    }
+
+    @GetMapping("/getUsersByUsernameLike")
+    public @ResponseBody AjaxResponse getUsersByUsernameLike(@RequestParam int page, @RequestParam int total,@RequestParam String username) {
+        return AjaxResponse.success(userRestService.getAllByUsernameLike(page, total,"%"+username+"%"));
     }
 }
