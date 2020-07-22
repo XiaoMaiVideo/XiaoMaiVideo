@@ -33,6 +33,11 @@ import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +58,21 @@ public class UserLikedVideoFragment extends Fragment {
         fragmentUserLikedVideoBinding = DataBindingUtil.inflate(inflater, R.layout.user_liked_video_fragment, container, false);
         fragmentUserLikedVideoBinding.setViewmodel(userLikedVideoViewModel);
         fragmentUserLikedVideoBinding.setLifecycleOwner(getActivity());
+        final RefreshLayout refreshLayout = (RefreshLayout)fragmentUserLikedVideoBinding.refreshLayout;
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
         LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
         dialog.show();
         MovieRestService.getMovies(0, new MovieRestCallback() {
@@ -68,8 +88,8 @@ public class UserLikedVideoFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
-        movieRecyclerView = new MovieRecyclerView(fragmentUserLikedVideoBinding.userLikedVideoFragmentRecyclerView);
+        fragmentUserLikedVideoBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentUserLikedVideoBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
+        movieRecyclerView = new MovieRecyclerView(fragmentUserLikedVideoBinding.recyclerView);
     }
 }

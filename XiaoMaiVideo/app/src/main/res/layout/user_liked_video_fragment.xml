@@ -4,24 +4,29 @@
 <!-- Create Time: 2020/7/10-->
 <!-- Update Time: 2020/7/12-->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="viewmodel"
-            type="com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel" />
-    </data>
+<layout>
+<data>
 
-    <FrameLayout
+    <variable
+        name="viewmodel"
+        type="com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel" />
+</data>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.scwang.smart.refresh.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.UserLikedVideoFragment">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/user_liked_video_fragment_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
+        android:overScrollMode="never"
+        android:background="#fff" />
+    <com.scwang.smart.refresh.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </layout>

@@ -29,6 +29,11 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 
 import java.util.List;
@@ -56,6 +61,21 @@ public class FriendFragment extends Fragment {
         fragmentFriendBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_friend, container, false);
         fragmentFriendBinding.setViewmodel(friendViewModel);
         fragmentFriendBinding.setLifecycleOwner(getActivity());
+        final RefreshLayout refreshLayout = (RefreshLayout)fragmentFriendBinding.refreshLayout;
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
         LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
         dialog.show();
         MovieRestService.getMovies(0, new MovieRestCallback() {

@@ -6,6 +6,7 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -58,6 +59,17 @@ import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.BezierRadarHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -75,13 +87,48 @@ public class  HotFragment extends Fragment {
     FragmentHotBinding fragmentHotBinding;
     List<Movie> movieList;
     MovieRecyclerView movieRecyclerView;
-
+    public class App extends Application {
+        //static 代码段可以防止内存泄露
+        {
+            //设置全局的Header构建器
+            SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+                @Override
+                public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                    layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                    return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+                }
+            });
+            //设置全局的Footer构建器
+            SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+                @Override
+                public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                    //指定为经典Footer，默认是 BallPulseFooter
+                    return new ClassicsFooter(context).setDrawableSize(20);
+                }
+            });
+        }
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         hotViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(HotViewModel.class);
         fragmentHotBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_hot, container, false);
         fragmentHotBinding.setViewmodel(hotViewModel);
         fragmentHotBinding.setLifecycleOwner(getActivity());
+        final RefreshLayout refreshLayout = (RefreshLayout)fragmentHotBinding.refreshLayout;
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
         LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
         dialog.show();
         MovieRestService.getMovies(0, new MovieRestCallback() {
