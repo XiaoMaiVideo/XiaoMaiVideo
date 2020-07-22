@@ -88,7 +88,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            ((ChatAdapterViewHolder)holder).movieImg.setImageResource(R.drawable.ic_launcher_background);
 //        }
         Glide.with(mContext)
-                .load(Constant.CurrentUser.getAvatar())
+                .load(Constant.currentUser.getAvatar())
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(((ChatAdapterViewHolder) holder).avatar);
