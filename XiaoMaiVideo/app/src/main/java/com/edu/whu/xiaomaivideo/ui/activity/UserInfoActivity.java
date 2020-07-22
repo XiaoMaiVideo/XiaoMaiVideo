@@ -10,6 +10,7 @@ package com.edu.whu.xiaomaivideo.ui.activity;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -232,6 +233,8 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 // TODO: 聊天功能
+                Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
+                startActivity(intent);
             }
         });
     }

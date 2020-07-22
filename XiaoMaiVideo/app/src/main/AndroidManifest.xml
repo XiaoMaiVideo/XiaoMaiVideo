@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.ChatActivity"></activity>
+        <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.MovieTypeActivity" />
         <activity android:name=".ui.activity.FollowActivity" />
         <activity android:name=".ui.activity.TakeVideoActivity" />
@@ -29,6 +29,7 @@
         <activity android:name=".ui.activity.VideoDetailActivity" />
         <activity android:name=".ui.activity.MessageChatActivity" />
         <activity android:name=".ui.activity.LCFMessageActivity" />
+        <activity android:name=".ui.activity.SearchResultActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

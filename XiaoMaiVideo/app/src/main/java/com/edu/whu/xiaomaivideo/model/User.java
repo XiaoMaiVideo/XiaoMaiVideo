@@ -19,6 +19,8 @@ public class User {
     private long userId;
     private String username;
     private String password;
+
+    @JSONField(serialize = false)
     private String enter_uesr_center;
     private String gender;
     private String nickname;

@@ -24,5 +24,5 @@ public interface UserRestService {
 
     List<User> getAllUser();
 
-    Page<User> getAllByUsernameLike(int page, int total, String username);
+    Page<User> getAllByNicknameLike(int page, int total, String nickname);
 }
