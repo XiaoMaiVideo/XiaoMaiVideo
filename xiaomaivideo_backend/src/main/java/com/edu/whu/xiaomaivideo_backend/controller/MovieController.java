@@ -65,6 +65,7 @@ public class MovieController {
         return AjaxResponse.success(movieRestService.getAllByLocation(page, total, location));
     }
 
+    //获取关注粉丝的视频
     @GetMapping("/getRelatedMoviesById")
     public @ResponseBody AjaxResponse getRelatedMoviesById(@RequestParam Long userId) {
         User user=userRestService.getUserById(userId);

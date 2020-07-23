@@ -1,7 +1,7 @@
 /**
  * Author: 叶俊豪、李季东
  * Create Time: 2020/7/15
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/23
  */
 
 package com.edu.whu.xiaomaivideo.restservice;
@@ -111,6 +111,49 @@ public class MovieRestService {
                 int responseNum = jsonObject.getInteger("code");
                 JSONObject dataObject = jsonObject.getJSONObject("data");
                 JSONArray jsonArray = dataObject.getJSONArray("content");
+                List<Movie> movies = new ArrayList<>();
+                for (int i=0;i<jsonArray.size();i++) {
+                    JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    Movie movie = JSON.toJavaObject(jsonObj, Movie.class);
+                    // 处理类别
+                    if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                        // 类别不为空
+                        String[] categoryArray = movie.getCategories().split(";");
+                        List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                        movie.setCategoryList(categoryList);
+                    }
+                    else {
+                        // 类别为空
+                        movie.setCategoryList(new ArrayList<>());
+                    }
+                    movies.add(movie);
+                }
+                movieRestCallback.onSuccess(responseNum, movies);
+            }
+        }.execute();
+    }
+
+    //获取关注粉丝的视频
+    public static void getRealtedMovies(final Long userId, final MovieRestCallback restCallback) {
+        new AsyncTask<Long, Integer, String>() {
+            MovieRestCallback movieRestCallback = restCallback;
+            @Override
+            protected String doInBackground(Long... number) {
+                // page表示第几页（从0开始），total表示一页要多少个（这个要固定），发上去以后就会按total数进行分页，取第page个页返回
+                // URL参数拼接用下面的方法
+                Uri.Builder builder = Uri.parse(Constant.BASEURL+"getRelatedMoviesById").buildUpon();
+                builder.appendQueryParameter("userId", String.valueOf(userId));
+                return HttpUtil.sendGetRequest(builder.toString());
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.e(TAG, s);
+                //{"isok":true,"code":200,"message":"success","data":[]}
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
                 List<Movie> movies = new ArrayList<>();
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
