@@ -1,12 +1,14 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/10
- * Update Time: 2020/7/14
+ * Update Time: 2020/7/23
  */
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MessageAdapter;
+import com.edu.whu.xiaomaivideo.adapter.MsgAdapter;
 import com.edu.whu.xiaomaivideo.databinding.MessageFragmentBinding;
+import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MessageViewModel;
 
 import java.util.Objects;
@@ -36,6 +40,7 @@ public class MessageFragment extends Fragment {
     private MessageViewModel messageViewModel;
     private MessageFragmentBinding messageFragmentBinding;
     MessageAdapter mAdapter;
+    MsgAdapter msgAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,5 +63,15 @@ public class MessageFragment extends Fragment {
         });
         messageFragmentBinding.recyclerView3.setAdapter(mAdapter);
         messageFragmentBinding.recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        msgAdapter=new MsgAdapter(getActivity());
+        msgAdapter.setShowMsgs(messageViewModel.getShowmsgs().getValue());
+        messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
+        messageFragmentBinding.msgRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        messageViewModel.getShowmsgs().observe(getViewLifecycleOwner(), showMsgs -> {
+            msgAdapter.setShowMsgs(showMsgs);
+            msgAdapter.notifyDataSetChanged();
+        });
     }
 }
