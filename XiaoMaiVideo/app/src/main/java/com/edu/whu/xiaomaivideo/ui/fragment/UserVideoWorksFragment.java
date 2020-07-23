@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.UserVideoWorksFragmentBinding;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.viewModel.UserVideoWorksViewModel;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +48,11 @@ public class UserVideoWorksFragment extends Fragment {
     UserVideoWorksFragmentBinding fragmentUserVideoWorksBinding;
     List<Movie> movieList;
     MovieRecyclerView movieRecyclerView;
+    User mUser;
+
+    public UserVideoWorksFragment(User user) {
+        mUser = user;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,17 +60,8 @@ public class UserVideoWorksFragment extends Fragment {
         fragmentUserVideoWorksBinding = DataBindingUtil.inflate(inflater, R.layout.user_video_works_fragment, container, false);
         fragmentUserVideoWorksBinding.setViewmodel(userVideoWorksViewModel);
         fragmentUserVideoWorksBinding.setLifecycleOwner(getActivity());
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
-        dialog.show();
-        MovieRestService.getMovies(0, new MovieRestCallback() {
-            @Override
-            public void onSuccess(int resultCode, List<Movie> movies) {
-                super.onSuccess(resultCode, movies);
-                movieList = movies;
-                setRecyclerView();
-                dialog.dismiss();
-            }
-        });
+        movieList = mUser.getMovies() == null? new ArrayList<>(): mUser.getMovies();
+        setRecyclerView();
         return fragmentUserVideoWorksBinding.getRoot();
     }
 

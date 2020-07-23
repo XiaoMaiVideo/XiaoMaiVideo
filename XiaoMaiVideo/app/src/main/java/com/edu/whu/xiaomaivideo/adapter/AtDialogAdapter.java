@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class AtDialogAdapter extends GroupedRecyclerViewAdapter {
     Context mContext;
-    public Map<Long, Boolean> checkedUsers;
+    public Map<Long, User> checkedUsers;
     public boolean isFollowingExpand = false, isFollowersExpand = false;
     public AtDialogAdapter(Context context) {
         super(context);
@@ -147,7 +147,7 @@ public class AtDialogAdapter extends GroupedRecyclerViewAdapter {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // 选中就加入，不选中就移除
                 if (b) {
-                    checkedUsers.put(currentUser.getUserId(), true);
+                    checkedUsers.put(currentUser.getUserId(), currentUser);
                 }
                 else {
                     checkedUsers.keySet().remove(currentUser.getUserId());

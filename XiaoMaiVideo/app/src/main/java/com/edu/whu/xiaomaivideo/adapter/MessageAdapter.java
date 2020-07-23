@@ -28,11 +28,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private OnItemClickListener mListener;
-    public MessageAdapter(Context context, OnItemClickListener listener)
-    {
+    public MessageAdapter(Context context) {
         this.mContext = context;
-        this.mListener = listener;
     }
     @NonNull
     @Override
@@ -124,7 +121,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount()
     {return 3; }
-    //@我的
+
     class MessageViewHolder extends RecyclerView.ViewHolder
     {
 
@@ -141,9 +138,5 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             icon= itemView.findViewById(R.id.message_item_icon);
             indicator = itemView.findViewById(R.id.message_item_indicator);
         }
-    }
-    public interface OnItemClickListener
-    {
-        void onClick(int pos);
     }
 }

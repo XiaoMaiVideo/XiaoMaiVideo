@@ -96,10 +96,8 @@ dependencies {
 
     // 圆角圆形图片控件 主要是可以带边框
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
-    // 屏幕适配
-    // implementation 'me.jessyan:autosize:1.1.2'
-
+    // 下拉刷新
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
     // 可分组的Adapter
     implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.3.0'
 

@@ -16,6 +16,7 @@ import com.edu.whu.xiaomaivideo.adapter.AtDialogAdapter;
 import com.edu.whu.xiaomaivideo.adapter.LikersDialogAdapter;
 import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
@@ -27,6 +28,9 @@ import com.lxj.xpopup.core.BottomPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Date;
+import java.util.Map;
 
 import de.mustafagercek.library.LoadingButton;
 
@@ -92,16 +96,24 @@ public class AtDialog extends BottomPopupView {
             @Override
             public void onClick(View view) {
                 submitButton.onStartLoading();
-                for (Long userId: mAdapter.checkedUsers.keySet()) {
+                for (Map.Entry<Long, User> user: mAdapter.checkedUsers.entrySet()) {
                     // 逐个发消息
                     MessageVO message = new MessageVO();
-                    // TODO: 填个movieId
                     message.setMovieId(newMovieId);
                     message.setSenderId(Constant.currentUser.getUserId());
-                    message.setReceiverId(userId);
+                    message.setReceiverId(user.getKey());
                     message.setMsgType("at");
                     message.setText("我发布了新的视频，快来看看吧~");
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
+                    Message message1 = new Message();
+                    message1.setTime(new Date());
+                    message1.setReceiver(user.getValue());
+                    message1.setSender(Constant.currentUser);
+                    message1.setAtMovie(new Movie(newMovieId));
+                    message1.setMsgType("at");
+                    message1.setText("我发布了新的视频，快来看看吧~");
+                    Constant.currentUser.addSendmsgs(message1);
+                    EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
                 }
                 submitButton.onStopLoading();
                 dismiss();

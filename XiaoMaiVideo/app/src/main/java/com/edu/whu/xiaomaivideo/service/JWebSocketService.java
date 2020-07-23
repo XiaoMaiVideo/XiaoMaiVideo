@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.Date;
 
 public class JWebSocketService extends Service {
 
@@ -131,10 +133,6 @@ public class JWebSocketService extends Service {
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你评论，快去看看吧...");
                     }
                 }
-                else if (messageVO.getMsgType().equals("msg")) {
-                    // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
-                    EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
-                }
                 else if (messageVO.getMsgType().equals("follow")) {
                     if (Constant.currentUser.isCanAcceptFollowMessage()) {
                         Log.e("JWebSocketClientService", "收到的消息：关注");
@@ -143,6 +141,18 @@ public class JWebSocketService extends Service {
                         Constant.currentFollowMessage.postValue(Constant.currentFollowMessage.getValue()+1);
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
                     }
+                }
+                else if (messageVO.getMsgType().equals("msg") || messageVO.getMsgType().equals("at")) {
+                    // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
+                    NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人给你发来一条消息，快去看看吧...");
+                    EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
+                    // 获取新消息的json串
+                    JSONObject msgObject = JSON.parseObject(message);
+                    Message receiveMessage = JSON.toJavaObject(msgObject, Message.class);
+                    receiveMessage.setReceiver(Constant.currentUser);
+                    receiveMessage.setTime(new Date(receiveMessage.getTime().getTime()+8*Constant.HOUR));
+                    Constant.currentUser.addReceivemsgs(receiveMessage);
+                    EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
                 }
             }
 

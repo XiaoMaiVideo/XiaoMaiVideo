@@ -43,6 +43,7 @@ public class Constant {
     public static final String SET_WEBSOCKET = "Set WebSocket";
     public static final String SEND_MESSAGE = "Send WebSocket Message";
     public static final String RECEIVE_MESSAGE = "Receive WebSocket Message";
+    public static final String UPDATE_MESSAGE_LIST = "Update Message List";
     public static final String RECOMMEND = "Recommend";
     public static final String LOCAL_HOT = "Local Hot";
 

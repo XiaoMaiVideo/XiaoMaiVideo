@@ -40,6 +40,7 @@ import com.edu.whu.xiaomaivideo.ui.fragment.HomeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.FindFragment;
 import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
 import com.edu.whu.xiaomaivideo.widget.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
@@ -54,6 +55,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.io.IOException;
@@ -260,6 +262,8 @@ public class MainActivity extends FragmentActivity {
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     Constant.currentUser = user;
                     startWebSocketService();
+                    // 提示更新消息列表
+                    EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
                 } else if (resultCode == Constant.USER_NOT_EXISTS) {
                     // 用户不存在
                 } else {

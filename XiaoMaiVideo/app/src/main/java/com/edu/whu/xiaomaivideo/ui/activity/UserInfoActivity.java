@@ -37,6 +37,7 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.UserInfoLabelAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityUserInfoBinding;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
@@ -54,6 +55,7 @@ import com.jiajie.load.LoadingDialog;
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -90,7 +92,6 @@ public class UserInfoActivity extends FragmentActivity {
             @Override
             public void onSuccess(int resultCode, User user) {
                 super.onSuccess(resultCode, user);
-                // TODO: 把用户的作品/动态/点赞列表分开，赋给三个tab
                 userInfoViewModel.setUser(user);
                 setVisibility();
                 setTabs();
@@ -108,6 +109,10 @@ public class UserInfoActivity extends FragmentActivity {
             activityUserInfoBinding.userDescription.setVisibility(View.GONE);
             activityUserInfoBinding.recyclerView.setVisibility(View.GONE);
         }
+        else {
+            activityUserInfoBinding.userDescription.setVisibility(View.VISIBLE);
+            activityUserInfoBinding.recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setTabs() {
@@ -123,13 +128,13 @@ public class UserInfoActivity extends FragmentActivity {
                 switch (position) {
                     default:
                     case 0:
-                        fragment = new UserVideoWorksFragment();
+                        fragment = new UserVideoWorksFragment(userInfoViewModel.getUser().getValue());
                         break;
                     case 1:
                         fragment = new VideoNewsFragment(userInfoViewModel.getUser().getValue());
                         break;
                     case 2:
-                        fragment = new UserLikedVideoFragment();
+                        fragment = new UserLikedVideoFragment(userInfoViewModel.getUser().getValue());
                         break;
                 }
                 return fragment;
@@ -143,17 +148,18 @@ public class UserInfoActivity extends FragmentActivity {
         new TabLayoutMediator(mTabLayout, mViewPager2, true,new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                User currentUser = userInfoViewModel.getUser().getValue();
                 // 这里需要根据position修改tab的样式和文字等
                 switch (position) {
                     default:
                     case 0:
-                        tab.setText("作品 0");
+                        tab.setText(currentUser.getMovies() == null? "作品 0": "作品 "+currentUser.getMovies().size());
                         break;
                     case 1:
-                        tab.setText("动态 0");
+                        tab.setText(currentUser.getShares() == null? "动态 0": "动态 "+currentUser.getShares().size());
                         break;
                     case 2:
-                        tab.setText("喜欢 0");
+                        tab.setText(currentUser.getLikeMovies() == null? "点赞 0": "点赞 "+currentUser.getLikeMovies().size());
                         break;
                 }
             }
@@ -168,10 +174,12 @@ public class UserInfoActivity extends FragmentActivity {
     }
 
     private void setUserSFNumClickListener() {
+        activityUserInfoBinding.subscribeNum.setText(userInfoViewModel.getUser().getValue().getFollowing() == null? "0": String.valueOf(userInfoViewModel.getUser().getValue().getFollowing().size()));
+        activityUserInfoBinding.followerNum.setText(userInfoViewModel.getUser().getValue().getFollowers() == null? "0": String.valueOf(userInfoViewModel.getUser().getValue().getFollowers().size()));
         activityUserInfoBinding.userSFNums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Constant.currentUser.isFollowListAccessible()) {
+                if (userInfoViewModel.getUser().getValue().isFollowListAccessible()) {
                     // 设置了允许看，就可以跳转关注和粉丝列表页面
                     Intent intent = new Intent(UserInfoActivity.this, FollowActivity.class);
                     User user = userInfoViewModel.getUser().getValue();
