@@ -74,7 +74,6 @@ public class MessageFragment extends Fragment {
         messageViewModel.getShowmsgs().observe(getViewLifecycleOwner(), new Observer<List<MessageViewModel.ShowMsg>>() {
             @Override
             public void onChanged(List<MessageViewModel.ShowMsg> showmsgs) {
-                Log.e("MessageFragment", "5678 " + showmsgs.size());
                 showMsgs.clear();
                 showMsgs.addAll(showmsgs);
                 msgAdapter.notifyDataSetChanged();
@@ -93,7 +92,6 @@ public class MessageFragment extends Fragment {
     public void updateShowMsgs(EventBusMessage message) {
         if (message.getType().equals(Constant.UPDATE_MESSAGE_LIST)) {
             // 不用获取消息内容，通知更新而已
-            Log.e("MessageFragment", "1234");
             messageViewModel.updateShowmsgs();
         }
     }

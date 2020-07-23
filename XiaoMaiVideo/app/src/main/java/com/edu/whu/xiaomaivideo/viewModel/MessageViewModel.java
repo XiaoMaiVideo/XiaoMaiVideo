@@ -38,7 +38,7 @@ public class MessageViewModel extends ViewModel {
             return;
         }
         for (Message messages1:Constant.currentUser.getSendmsgs()) {
-            for (ShowMsg showMsg:showMsgs) {
+            for (ShowMsg showMsg: showMsgs) {
                 if (showMsg.username.equals(messages1.getReceiver().getNickname())){
                     if (showMsg.getDate().compareTo(messages1.getTime()) < 0){
                         showMsg.setUserId(messages1.getReceiver().getUserId());
