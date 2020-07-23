@@ -231,8 +231,8 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 聊天功能
                 Constant.currentChattingId = userInfoViewModel.getUser().getValue().getUserId();
+                Constant.currentChattingName = userInfoViewModel.getUser().getValue().getNickname();
                 Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
                 startActivity(intent);
             }

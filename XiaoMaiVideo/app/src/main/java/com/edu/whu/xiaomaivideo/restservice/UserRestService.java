@@ -140,10 +140,11 @@ public class UserRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Log.e("UserRestService", s);
+                Log.e("UserRestService--addMovie", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                callback.onSuccess(responseNum);
+                int newMovieId = jsonObject.getInteger("data");
+                callback.onSuccess(newMovieId);
             }
         }.execute(movie);
     }
@@ -207,13 +208,11 @@ public class UserRestService {
         }.execute(userIds.toArray(new Long[userIds.size()]));
     }
 
-    // TODO: 搜索
     public static void searchUser(final String keyword, final UserRestCallback restCallback) {
         new AsyncTask<String, Integer, String>() {
             UserRestCallback userRestCallback = restCallback;
             @Override
             protected String doInBackground(String... strings) {
-                // TODO: 改URL
                 Uri.Builder builder = Uri.parse(Constant.BASEURL+"/getUsersByNicknameLike").buildUpon();
                 builder.appendQueryParameter("page", "0");
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);

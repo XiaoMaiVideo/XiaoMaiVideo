@@ -163,10 +163,10 @@ public class VideoDetailActivity extends AppCompatActivity {
             public void onCheckedChanged(View view, boolean checked) {
                 if (Constant.currentUser.getUserId() == 0) {
                     // 没登录，不允许操作
-                    BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
+                    /*BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
                             .asCustom(new SimpleBottomDialog(VideoDetailActivity.this, R.drawable.success, "没有登录，不能点赞哦"))
                             .show();
-                    popupView.delayDismiss(1500);
+                    popupView.delayDismiss(1500);*/
                     activityVideoDetailBinding.detailLikeButton.setChecked(false);
                 }
                 else {
@@ -235,10 +235,10 @@ public class VideoDetailActivity extends AppCompatActivity {
                                         if (position == 0) {
                                             if (Constant.currentUser.getUserId() == 0) {
                                                 // 没登录，不允许操作
-                                                BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
+                                                /*BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
                                                         .asCustom(new SimpleBottomDialog(VideoDetailActivity.this, R.drawable.success, "没有登录，不能分享哦"))
                                                         .show();
-                                                popupView.delayDismiss(1500);
+                                                popupView.delayDismiss(1500);*/
                                             }
                                             else {
                                                 BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)

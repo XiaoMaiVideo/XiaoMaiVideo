@@ -166,10 +166,10 @@ public class ShowCommentDialog {
                 public void onTextSend(String msg) {
                     if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许评论
-                        BasePopupView popupView = new XPopup.Builder(mContext)
+                        /*BasePopupView popupView = new XPopup.Builder(mContext)
                                 .asCustom(new SimpleBottomDialog(mContext, R.drawable.success, "没有登录，不能发评论哦"))
                                 .show();
-                        popupView.delayDismiss(1500);
+                        popupView.delayDismiss(1500);*/
                     }
                     else {
                         addComment(isReply, headImg, position, msg);

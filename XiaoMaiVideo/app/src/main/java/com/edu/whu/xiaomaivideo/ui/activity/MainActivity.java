@@ -156,14 +156,17 @@ public class MainActivity extends FragmentActivity {
     private void onCenterButtonPressed() {
         if (Constant.currentUser.getUserId() == 0) {
             // 没登录，不允许操作
-            BasePopupView popupView = new XPopup.Builder(this)
+            /*BasePopupView popupView = new XPopup.Builder(this)
                     .asCustom(new SimpleBottomDialog(this, R.drawable.success, "没有登录，不能发视频哦"))
                     .show();
-            popupView.delayDismiss(1500);
+            popupView.delayDismiss(1500);*/
             return;
         }
         Intent intent = new Intent(this, TakeVideoActivity.class);
         startActivityForResult(intent, Constant.TAKE_VIDEO);
+        /*BasePopupView popupView = new XPopup.Builder(this)
+                .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功"))
+                .show();*/
     }
 
     private void checkPermission() {
@@ -212,9 +215,9 @@ public class MainActivity extends FragmentActivity {
                 Movie newMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
                 Log.e("MainActivity", newMovie.getUrl()+"_");
                 BasePopupView popupView = new XPopup.Builder(this)
-                        .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功"))
+                        .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功", newMovie.getMovieId()))
                         .show();
-                popupView.delayDismiss(1500);
+                // popupView.delayDismiss(1500);
             }
         }
     }

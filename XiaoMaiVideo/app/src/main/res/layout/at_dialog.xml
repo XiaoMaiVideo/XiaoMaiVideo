@@ -6,20 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="20dp"
     android:background="@drawable/select_elevation">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/likersRecyclerView"
+    <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/likers_dialog_title" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_dialog_title">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/atRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
 
     <RelativeLayout
-        android:id="@+id/likers_dialog_title"
+        android:id="@+id/setting_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,11 +52,26 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:text="点赞"
+            android:text="选择分享的用户"
             android:textColor="@color/black_21"
             android:textSize="@dimen/text_size_13"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
+    <de.mustafagercek.library.LoadingButton
+        android:id="@+id/submitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/text_size_14"
+        app:buttonText="提交"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sticky_layout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

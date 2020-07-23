@@ -69,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
                     messages = new ArrayList<>();
                 }
                 messageList = messages;
+                activityChatBinding.chatUserName.setText(Constant.currentChattingName);
                 chatAdapter = new ChatAdapter(ChatActivity.this, messageList);
                 setRecyclerView();
                 setSubmitListener();
@@ -118,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         Constant.currentChattingId = (long) -1;
+        Constant.currentChattingName = "";
     }
 
     @Subscribe
