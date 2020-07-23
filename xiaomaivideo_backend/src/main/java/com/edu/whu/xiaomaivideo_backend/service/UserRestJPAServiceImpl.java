@@ -59,8 +59,8 @@ public class UserRestJPAServiceImpl implements UserRestService {
     }
 
     @Override
-    public Page<User> getAllByUsernameLike(int page, int total, String username) {
+    public Page<User> getAllByNicknameLike(int page, int total, String nickname) {
         Pageable pageable = PageRequest.of(page, total);
-        return userRepository.findByUsernameLike(username,pageable);
+        return userRepository.findByNicknameLike(nickname, pageable);
     }
 }

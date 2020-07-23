@@ -6,6 +6,8 @@
 
 package com.edu.whu.xiaomaivideo.util;
 
+import com.alibaba.fastjson.JSON;
+
 // 只用于EventBus在Service和Activity/Fragment之间传输Websocket信息
 public class EventBusMessage {
     private String type; // 接收消息（Service传给Activity/Fragment），还是发送消息（反过来）

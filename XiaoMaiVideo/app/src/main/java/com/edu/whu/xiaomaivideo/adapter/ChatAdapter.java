@@ -25,7 +25,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
+import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.TimeUtil;
 
 import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
@@ -36,23 +38,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<Message> msgs;
 
-    public ChatAdapter(Context context)
-    {
-        this.mContext=context;
-        msgs=new ArrayList<>();
-    }
-
-    public void setMsgs(List<Message> msgs) {
+    public ChatAdapter(Context context, List<Message> msgs) {
+        this.mContext = context;
         this.msgs = msgs;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType%2==0) {
+        if (viewType == 0) {
             Log.e("viewType", String.valueOf(viewType));
             return new ChatAdapterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.my_msg, parent, false));
-
         } else {
             return new ChatAdapterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.others_msg, parent, false));
         }
@@ -60,54 +56,53 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ChatAdapterViewHolder)holder).movieImg.setImageResource(R.drawable.ic_launcher_background);
-        //((ChatAdapterViewHolder)holder).msgText.setText(msgs.get(position).getText());
-        ((ChatAdapterViewHolder)holder).msgText.setText("sssssssssssssssssssssssssss");
-        //((ChatAdapterViewHolder)holder).dateText.setText(msgs.get(position).getTime().toString());
-        ((ChatAdapterViewHolder)holder).dateText.setText("07-10 16:37");
-//        //自己发的
-//        if (msgs.get(position).getSenderId()==Constant.CurrentUser.getUserId()){
-//            Glide.with(mContext)
-//                    .load(Constant.CurrentUser.getAvatar())
-//                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(((ChatAdapterViewHolder) holder).avatar);
-//
-//        }else {
-//            //别人发的
-//            Glide.with(mContext)
-//                    .load(Constant.CurrentUser.getAvatar())
-//                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(((ChatAdapterViewHolder) holder).avatar);
-//        }
+        ((ChatAdapterViewHolder)holder).msgText.setText(msgs.get(position).getText());
+        ((ChatAdapterViewHolder)holder).dateText.setText(CommonUtil.convertTimeToDateString(msgs.get(position).getTime().getTime()));
+        //自己发的
+        if (msgs.get(position).getSender().getUserId() == Constant.currentUser.getUserId()) {
+            Glide.with(mContext)
+                    .load(Constant.currentUser.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(((ChatAdapterViewHolder) holder).avatar);
 
-//        if (msgs.get(position).getMsgType().equals("msg")){
-//            ((ChatAdapterViewHolder)holder).movieCard.setVisibility(View.GONE);
-//        }else if (msgs.get(position).getMsgType().equals("at")){
-//            ((ChatAdapterViewHolder)holder).movieImg.setImageResource(R.drawable.ic_launcher_background);
-//        }
-        Glide.with(mContext)
-                .load(Constant.currentUser.getAvatar())
-                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(((ChatAdapterViewHolder) holder).avatar);
+        } else {
+            //别人发的
+            Glide.with(mContext)
+                    .load(msgs.get(position).getSender().getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(((ChatAdapterViewHolder) holder).avatar);
+        }
+
+        if (msgs.get(position).getMsgType().equals("msg")) {
+            ((ChatAdapterViewHolder)holder).movieCard.setVisibility(View.GONE);
+        } else if (msgs.get(position).getMsgType().equals("at")) {
+            // 放个图标好了，缩略图太费资源了
+            ((ChatAdapterViewHolder)holder).movieImg.setImageResource(R.drawable.ic_launcher_background);
+            // 描述
+            if (msgs.get(position).getAtMovie().getDescription() == null || msgs.get(position).getAtMovie().getDescription().equals("")) {
+                ((ChatAdapterViewHolder) holder).movieDescription.setText(msgs.get(position).getSender().getNickname()+" 发布的视频");
+            }
+            else {
+                ((ChatAdapterViewHolder) holder).movieDescription.setText(msgs.get(position).getAtMovie().getDescription());
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        //return msgs.size();
-        return 10;
+        return msgs.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position;
+        // 自己发的是0，别人发的是1
+        return msgs.get(position).getSender().getUserId() == Constant.currentUser.getUserId()? 0: 1;
     }
 
     class ChatAdapterViewHolder extends RecyclerView.ViewHolder
     {
-
         private TextView msgText;
         private CardView movieCard;
         private ImageView avatar;

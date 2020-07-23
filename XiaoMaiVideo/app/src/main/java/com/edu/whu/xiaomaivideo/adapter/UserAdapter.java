@@ -27,43 +27,38 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 
 import java.util.List;
 
-public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private boolean isFollow;
-    private FollowersAndFollowingAdapter.OnItemClickListener mListener;
     private List<User> users;
 
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
-    public FollowersAndFollowingAdapter(Context context, FollowersAndFollowingAdapter.OnItemClickListener listener, boolean isFollow)
+    public UserAdapter(Context context, boolean isFollow)
     {
         this.mContext = context;
-        this.mListener = listener;
         this.isFollow=isFollow;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new FollowersAndFollowingViewHolder(LayoutInflater.from(mContext).inflate(R.layout.follow_following_item, parent,false));
+        return new UserViewHolder(LayoutInflater.from(mContext).inflate(R.layout.follow_following_item, parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ImageView imageView= ((FollowersAndFollowingViewHolder)holder).avatar;
-        Glide.with(mContext).load(Constant.currentUser.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
-        //((FollowersAndFollowingViewHolder)holder).username.setText(users.get(position).getUsername());
-        for (User u:users)
-        {
-            ((FollowersAndFollowingViewHolder)holder).username.setText(u.getNickname());
-            ((FollowersAndFollowingViewHolder)holder).description.setText(u.getDescription());
-            ((FollowersAndFollowingViewHolder)holder).avatar.setImageURI(Uri.parse(u.getAvatar()));
+        UserViewHolder viewHolder = ((UserViewHolder)holder);
+        Glide.with(mContext).load(users.get(position).getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(viewHolder.avatar);
+        viewHolder.username.setText(users.get(position).getNickname());
+        if (users.get(position).getDescription() != null && !users.get(position).getDescription().equals("")) {
+            viewHolder.description.setText(users.get(position).getDescription());
         }
-        if (isFollow){
-            ((FollowersAndFollowingViewHolder)holder).button.setText("回关");
-            ((FollowersAndFollowingViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
+        if (isFollow) {
+            ((UserViewHolder)holder).button.setText("回关");
+            ((UserViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    MessageVO message = new MessageVO();
@@ -74,9 +69,9 @@ public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerV
 //                    EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                 }
             });
-        }else {
-            ((FollowersAndFollowingViewHolder)holder).button.setText("取关");
-            ((FollowersAndFollowingViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
+        } else {
+            ((UserViewHolder)holder).button.setText("取关");
+            ((UserViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    MessageVO message = new MessageVO();
@@ -96,24 +91,27 @@ public class FollowersAndFollowingAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemCount() {
         return users.size();
-       // return 20;
     }
 
-    class FollowersAndFollowingViewHolder extends RecyclerView.ViewHolder
-    {
-
+    class UserViewHolder extends RecyclerView.ViewHolder {
         private ImageView avatar;
         private TextView username;
         private TextView description;
         private Button button;
 
-        public FollowersAndFollowingViewHolder(@NonNull View itemView)
+        public UserViewHolder(@NonNull View itemView)
         {
             super(itemView);
             avatar = itemView.findViewById(R.id.imageView5);
             username= itemView.findViewById(R.id.textView10);
             description= itemView.findViewById(R.id.textView11);
             button=itemView.findViewById(R.id.button4);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 跳转到用户个人主页
+                }
+            });
         }
     }
 

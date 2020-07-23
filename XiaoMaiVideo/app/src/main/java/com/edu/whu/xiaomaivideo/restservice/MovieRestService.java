@@ -220,4 +220,48 @@ public class MovieRestService {
             }
         }.execute();
     }
+
+    public static void searchMovie(final String keyword, final MovieRestCallback restCallback) {
+        new AsyncTask<String, Integer, String>() {
+            MovieRestCallback movieRestCallback = restCallback;
+            @Override
+            protected String doInBackground(String... strings) {
+                // TODO: 改URL
+                Uri.Builder builder = Uri.parse(Constant.BASEURL+"/getMoviesByDescriptionLike").buildUpon();
+                builder.appendQueryParameter("page", "0");
+                builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
+                builder.appendQueryParameter("description", strings[0]);
+                return HttpUtil.sendGetRequest(builder.toString());
+                // return "";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.e(TAG, s);
+                JSONObject jsonObject = JSON.parseObject(s);
+                int responseNum = jsonObject.getInteger("code");
+                JSONObject dataObject = jsonObject.getJSONObject("data");
+                JSONArray jsonArray = dataObject.getJSONArray("content");
+                List<Movie> movies = new ArrayList<>();
+                for (int i=0;i<jsonArray.size();i++) {
+                    JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    Movie movie = JSON.toJavaObject(jsonObj, Movie.class);
+                    // 处理类别
+                    if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                        // 类别不为空
+                        String[] categoryArray = movie.getCategories().split(";");
+                        List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                        movie.setCategoryList(categoryList);
+                    }
+                    else {
+                        // 类别为空
+                        movie.setCategoryList(new ArrayList<>());
+                    }
+                    movies.add(movie);
+                }
+                movieRestCallback.onSuccess(responseNum, movies);
+            }
+        }.execute(keyword);
+    }
 }

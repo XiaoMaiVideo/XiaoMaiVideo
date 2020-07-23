@@ -133,7 +133,7 @@ public class JWebSocketService extends Service {
                 }
                 else if (messageVO.getMsgType().equals("msg")) {
                     // 如果处于聊天状态，就调用下面的代码提醒聊天页面（好像还没做，先不管它）更新消息
-                    // EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
+                    EventBus.getDefault().post(new EventBusMessage(Constant.RECEIVE_MESSAGE, message));
                 }
                 else if (messageVO.getMsgType().equals("follow")) {
                     if (Constant.currentUser.isCanAcceptFollowMessage()) {
@@ -144,7 +144,6 @@ public class JWebSocketService extends Service {
                         NotificationUtil.pushNotification(getApplicationContext(), "新消息", "有人关注了你，快去看看吧...");
                     }
                 }
-
             }
 
             @Override

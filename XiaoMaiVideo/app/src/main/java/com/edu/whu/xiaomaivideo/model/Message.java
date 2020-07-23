@@ -13,13 +13,14 @@ import org.parceler.Parcel;
 import java.util.Date;
 
 @Parcel
-public class Message extends LitePalSupport {
+public class Message {
     private Long msgId;
-    private Long senderId;
-    private Long receiverId;
+    private User sender;
+    private User receiver;
     private Date time;
     private String text;
     private String msgType;
+    private Movie atMovie;
 
     public Long getMsgId() {
         return msgId;
@@ -27,22 +28,6 @@ public class Message extends LitePalSupport {
 
     public void setMsgId(Long msgId) {
         this.msgId = msgId;
-    }
-
-    public Long getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
-    }
-
-    public Long getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(Long receiverId) {
-        this.receiverId = receiverId;
     }
 
     public Date getTime() {
@@ -67,5 +52,29 @@ public class Message extends LitePalSupport {
 
     public void setMsgType(String msgType) {
         this.msgType = msgType;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public Movie getAtMovie() {
+        return atMovie;
+    }
+
+    public void setAtMovie(Movie atMovie) {
+        this.atMovie = atMovie;
     }
 }
