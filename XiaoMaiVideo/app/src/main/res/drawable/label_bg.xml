@@ -2,7 +2,7 @@
     <!-- 标签选中时的背景 -->
     <item android:state_selected="false">
         <shape>
-            <stroke android:width="2dp" android:color="#fb435b" />
+            <stroke android:width="2dp" android:color="@color/skyblue" />
             <corners android:radius="8dp" />
             <solid android:color="@android:color/white" />
         </shape>
@@ -10,7 +10,7 @@
     <!-- 标签的正常背景 -->
     <item>
         <shape>
-            <stroke android:width="2dp" android:color="#fb435b" />
+            <stroke android:width="2dp" android:color="@color/skyblue" />
             <corners android:radius="8dp" />
             <solid android:color="@android:color/white" />
         </shape>

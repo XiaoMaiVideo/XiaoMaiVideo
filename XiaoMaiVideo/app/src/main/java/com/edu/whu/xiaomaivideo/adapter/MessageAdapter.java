@@ -42,7 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (i==0) {
             ((MessageViewHolder)viewHolder).textView.setText("赞");
-            ((MessageViewHolder)viewHolder).image.setImageResource(R.drawable.like);
+            ((MessageViewHolder)viewHolder).image.setImageResource(R.drawable.commend);
             ((MessageViewHolder)viewHolder).icon.setImageResource(R.drawable.ic_action_go);
             Constant.currentLikeMessage.observe((LifecycleOwner) mContext, new Observer<Integer>() {
                 @Override
@@ -67,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
         } else if (i==1) {
             ((MessageViewHolder) viewHolder).textView.setText("评论");
-            ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.message);
+            ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.comment);
             ((MessageViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
             Constant.currentCommentMessage.observe((LifecycleOwner) mContext, new Observer<Integer>() {
                 @Override
@@ -92,7 +92,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
         } else if (i==2){
             ((MessageViewHolder) viewHolder).textView.setText("新粉丝");
-            ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.like);
+            ((MessageViewHolder) viewHolder).image.setImageResource(R.drawable.fans);
             ((MessageViewHolder) viewHolder).icon.setImageResource(R.drawable.ic_action_go);
             Constant.currentFollowMessage.observe((LifecycleOwner) mContext, new Observer<Integer>() {
                 @Override

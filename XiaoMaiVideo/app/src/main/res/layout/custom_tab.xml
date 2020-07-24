@@ -9,6 +9,6 @@
   android:layout_height="match_parent"
   android:background="?attr/selectableItemBackground"
   android:gravity="center"
-  android:textColor="@color/colorPrimary"
+  android:textColor="@color/warmyellow"
   android:textSize="14sp">
 </TextView>

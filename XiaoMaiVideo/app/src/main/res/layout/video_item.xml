@@ -110,7 +110,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             app:labelBackground="@drawable/label_bg"
-            app:labelTextColor="@color/red"
+            app:labelTextColor="@color/lightskyblue"
             app:labelTextPaddingBottom="4dp"
             app:labelTextPaddingLeft="8dp"
             app:labelTextPaddingRight="8dp"
