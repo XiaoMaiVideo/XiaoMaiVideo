@@ -8,9 +8,9 @@
     <color name="gray_9b">#9B9B9B</color>
     <color name="black_21">#212121</color>
     <color name="transparent">#00000000</color>
-    <!-- Author：方胜强-->
+    <!-- Author：方胜强、李季东-->
     <!-- Create Time: 2020/7/17-->
-    <!-- Update Time: 2020/7/17-->
+    <!-- Update Time: 2020/7/24-->
     <color name="black">#000000</color><!--黑色 -->
     <color name="white">#FFFFFF</color><!--白色-->
     <color name="snow">#fffafa</color><!--雪白色 -->
@@ -149,4 +149,15 @@
     <color name="palevioletred">#db7093</color><!--苍紫罗兰色 -->
     <color name="darkviolet">#9400d3</color><!--暗紫罗兰色 -->
     <color name="mediumorchid">#ba55d3</color><!--中粉紫色 -->
+
+    <!--刷新所需颜色 0724 李季东-->
+    <color name="colorPrimaryOverlay">#cc0094ff</color>
+
+    <color name="colorTextTitle">#333333</color>
+    <color name="colorTextContent">#444444</color>
+    <color name="colorTextAssistant">#888888</color>
+
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackgroundDark">#f2f2f2</color>
+    <color name="colorDivision">#33aaaaaa</color>
 </resources>
