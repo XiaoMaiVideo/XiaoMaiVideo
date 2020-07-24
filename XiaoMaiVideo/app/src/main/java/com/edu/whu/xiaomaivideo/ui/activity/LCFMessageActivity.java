@@ -32,6 +32,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import qiu.niorgai.StatusBarCompat;
+
 /**
  * Author: 李季东、叶俊豪
  * Create Time: 2020/7/15
@@ -53,6 +56,8 @@ public class LCFMessageActivity extends AppCompatActivity {
         activityLcfMessageBinding = DataBindingUtil.setContentView(this,R.layout.activity_lcf_message);
         activityLcfMessageBinding.setViewmodel(mentionedModel);
         activityLcfMessageBinding.setLifecycleOwner(this);
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         mType = getIntent().getStringExtra("type");
         setTitle();

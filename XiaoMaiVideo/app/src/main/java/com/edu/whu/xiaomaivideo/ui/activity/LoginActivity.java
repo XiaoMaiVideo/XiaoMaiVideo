@@ -29,6 +29,8 @@ import java.util.Objects;
 
 import com.edu.whu.xiaomaivideo.util.Constant;
 
+import qiu.niorgai.StatusBarCompat;
+
 
 public class LoginActivity extends AppCompatActivity {
     private String username;
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         activityLoginBinding.setViewmodel(loginViewModel);
         activityLoginBinding.setLifecycleOwner(this);
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         activityLoginBinding.editRePassword.addTextChangedListener(new TextWatcher() {
             @Override

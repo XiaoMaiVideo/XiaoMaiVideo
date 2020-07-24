@@ -55,6 +55,8 @@
         android:layout_marginTop="10dp"
         android:textSize="@dimen/text_size_14"
         app:buttonText="保存设置"
+        app:buttonColor="@color/warmyellow"
+        app:textColor="@color/white"
         app:iconGravity="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -47,6 +47,7 @@ import de.mustafagercek.library.LoadingButton;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import qiu.niorgai.StatusBarCompat;
 
 public class TakeVideoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -76,6 +77,8 @@ public class TakeVideoActivity extends AppCompatActivity {
 
         compressButton.setVisibility(View.GONE);
         notCompressButton.setVisibility(View.GONE);
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         takeVideoButton.setOnClickListener(v -> {
             new XPopup.Builder(TakeVideoActivity.this)

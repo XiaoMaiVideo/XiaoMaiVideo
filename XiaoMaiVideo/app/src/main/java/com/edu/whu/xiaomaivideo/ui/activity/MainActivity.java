@@ -99,7 +99,7 @@ public class MainActivity extends FragmentActivity {
         IntentFilter filter = new IntentFilter(Constant.SET_WEBSOCKET);
         registerReceiver(setWebSocketMessageReceiver, filter);
         // 设置状态栏
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.white));
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         initView();
         checkPermission();

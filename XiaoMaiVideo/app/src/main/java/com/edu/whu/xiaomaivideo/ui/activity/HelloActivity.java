@@ -12,6 +12,8 @@ import com.edu.whu.xiaomaivideo.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import qiu.niorgai.StatusBarCompat;
+
 public class HelloActivity extends Activity {
 
 
@@ -30,5 +32,6 @@ public class HelloActivity extends Activity {
         };
         Timer timer = new Timer(true);
         timer.schedule(hello,2000);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
     }
 }

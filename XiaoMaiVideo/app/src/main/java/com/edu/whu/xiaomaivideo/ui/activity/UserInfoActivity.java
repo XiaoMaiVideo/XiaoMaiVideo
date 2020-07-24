@@ -58,6 +58,8 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import qiu.niorgai.StatusBarCompat;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 public class UserInfoActivity extends FragmentActivity {
@@ -85,6 +87,8 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_info);
         activityUserInfoBinding.setViewmodel(userInfoViewModel);
         activityUserInfoBinding.setLifecycleOwner(this);
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
         dialog.show();

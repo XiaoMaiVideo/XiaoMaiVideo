@@ -44,8 +44,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-
-
+import qiu.niorgai.StatusBarCompat;
 
 
 public class MovieTypeActivity extends Activity {
@@ -202,6 +201,7 @@ public class MovieTypeActivity extends Activity {
             }
         });
         Slide();//实现滑动功能的函数
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
     }
 
     private void setRecyclerView() {

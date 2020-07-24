@@ -73,6 +73,7 @@
             android:insetLeft="0dp"
             android:insetRight="0dp"
             android:text="位置信息"
+            android:backgroundTint="@color/warmyellow"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
             android:textSize="12sp"
             android:paddingStart="10dp"

@@ -57,6 +57,7 @@ import de.mustafagercek.library.LoadingButton;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import qiu.niorgai.StatusBarCompat;
 
 public class EditUserInfoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -81,6 +82,8 @@ public class EditUserInfoActivity extends AppCompatActivity {
         setInfoButtonListener();
         setProfileButtonListener();
         setPasswordButtonListener();
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         editUserInfoViewModel = new ViewModelProvider(Objects.requireNonNull(this)).get(EditUserInfoViewModel.class);
 

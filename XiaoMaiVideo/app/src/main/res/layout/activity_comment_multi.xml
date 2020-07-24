@@ -17,6 +17,7 @@
             android:onClick="show"
             android:layout_margin="10dp"
             android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/warmyellow"
             />
 
 </RelativeLayout>

@@ -57,6 +57,7 @@ import java.util.Objects;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * Author: 李季东 张俊杰 叶俊豪
@@ -97,6 +98,8 @@ public class VideoDetailActivity extends AppCompatActivity {
         activityVideoDetailBinding.setViewmodel(videoDetailModel);
         activityVideoDetailBinding.setLifecycleOwner(this);
         // Bundle bundle = getIntent().getExtras();
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
         // 当前页面显示的Movie对象，可以用它来做数据绑定之类的
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));

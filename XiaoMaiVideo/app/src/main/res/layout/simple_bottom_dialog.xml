@@ -32,10 +32,12 @@
 
     <de.mustafagercek.library.LoadingButton
         android:id="@+id/atButton"
-        android:layout_width="wrap_content"
+        android:layout_width="106dp"
         android:layout_height="wrap_content"
-        app:buttonText="分享给其他人"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        app:buttonColor="@color/warmyellow"
+        app:textColor="@color/white"
+        app:buttonText="分享给其他人" />
 
 </LinearLayout>

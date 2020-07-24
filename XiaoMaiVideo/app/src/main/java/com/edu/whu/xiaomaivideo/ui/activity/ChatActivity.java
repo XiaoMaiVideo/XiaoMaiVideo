@@ -44,6 +44,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import qiu.niorgai.StatusBarCompat;
+
 public class ChatActivity extends AppCompatActivity {
     ChatViewModel chatViewModel;
     ActivityChatBinding activityChatBinding;
@@ -75,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
                 setSubmitListener();
             }
         });
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
     }
 
     public void setRecyclerView() {

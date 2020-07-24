@@ -112,6 +112,7 @@
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
                 android:paddingStart="10dp"
+                android:backgroundTint="@color/warmyellow"
                 android:text="@{viewmodel.movie.location}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
                 android:textSize="12sp"

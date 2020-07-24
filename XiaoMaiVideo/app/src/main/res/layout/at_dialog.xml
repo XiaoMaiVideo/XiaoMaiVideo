@@ -66,6 +66,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:textSize="@dimen/text_size_14"
+        android:backgroundTint="@color/warmyellow"
         app:buttonText="提交"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"

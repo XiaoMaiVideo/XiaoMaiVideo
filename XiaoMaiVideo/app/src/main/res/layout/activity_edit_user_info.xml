@@ -65,8 +65,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="36dp"
-                    app:buttonColor="@color/aliceblue"
+                    app:buttonColor="@color/warmyellow"
                     app:buttonText="更换头像"
+                    app:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,8 +77,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="36dp"
                     android:layout_marginBottom="20dp"
-                    app:buttonColor="@color/aliceblue"
+                    app:buttonColor="@color/warmyellow"
                     app:buttonText="修改密码"
+                    app:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -93,6 +95,7 @@
         android:layout_margin="10dp"
         app:buttonColor="@color/lightsalmon"
         app:buttonText="修改信息"
+        app:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <androidx.recyclerview.widget.RecyclerView

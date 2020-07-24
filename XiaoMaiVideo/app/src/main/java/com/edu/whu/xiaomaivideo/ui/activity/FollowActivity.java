@@ -25,6 +25,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import qiu.niorgai.StatusBarCompat;
+
 public class FollowActivity extends AppCompatActivity {
     ViewPager2 viewPage;
     TabLayout tabLayout;
@@ -37,6 +39,7 @@ public class FollowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_follow);
         viewPage=findViewById(R.id.viewPage);
         tabLayout=findViewById(R.id.tabLayout2);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
         if (user.getFollowers() == null) {
             user.setFollowers(new ArrayList<>());
         }

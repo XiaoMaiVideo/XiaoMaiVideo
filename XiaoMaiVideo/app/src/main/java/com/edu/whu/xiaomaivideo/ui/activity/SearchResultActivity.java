@@ -24,6 +24,7 @@ import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import qiu.niorgai.StatusBarCompat;
 
 public class SearchResultActivity extends Activity {
 
@@ -76,6 +77,7 @@ public class SearchResultActivity extends Activity {
         mSearchType = findViewById(R.id.searchType);
         init();
         initSearch();
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
     }
 
     private void init() {
