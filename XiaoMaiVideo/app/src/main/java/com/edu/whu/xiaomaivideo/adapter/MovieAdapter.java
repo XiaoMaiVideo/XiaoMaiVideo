@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,8 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
@@ -231,11 +234,28 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             likeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 弹出点赞用户弹窗
-                    Log.e("MovieAdapter", "这里！");
-                    new XPopup.Builder(context)
-                            .asCustom(new LikersDialog(context, mMovies.get(getAdapterPosition())))
-                            .show();
+                    if (mMovies.get(getAdapterPosition()).getLikers() == null) {
+                        BasePopupView popupView = new XPopup.Builder(context).asLoading().setTitle("加载中...").show();
+                        MovieRestService.getMovieByID(mMovies.get(getAdapterPosition()).getMovieId(), new MovieRestCallback() {
+                            @Override
+                            public void onSuccess(int resultCode, Movie movie) {
+                                super.onSuccess(resultCode, movie);
+                                popupView.dismissWith(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new XPopup.Builder(context)
+                                                .asCustom(new LikersDialog(context, movie))
+                                                .show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        new XPopup.Builder(context)
+                                .asCustom(new LikersDialog(context, mMovies.get(getAdapterPosition())))
+                                .show();
+                    }
                 }
             });
 
@@ -244,13 +264,36 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 @Override
                 public void onClick(View view) {
                     Movie currentMovie = mMovies.get(getAdapterPosition());
-                    new ShowCommentDialog(context, mMovies.get(getAdapterPosition()), new ShowCommentDialog.OnAddCommentListener() {
-                        @Override
-                        public void onAddComment() {
-                            currentMovie.setCommentnum(currentMovie.getCommentnum()+1);
-                            commentNum.setText(currentMovie.getCommentnum()+"");
-                        }
-                    }).show();
+                    if (currentMovie.getComments() == null) {
+                        BasePopupView popupView = new XPopup.Builder(context).asLoading().setTitle("加载中...").show();
+                        MovieRestService.getMovieByID(currentMovie.getMovieId(), new MovieRestCallback() {
+                            @Override
+                            public void onSuccess(int resultCode, Movie mMovie) {
+                                super.onSuccess(resultCode, mMovie);
+                                popupView.dismissWith(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new ShowCommentDialog(context, mMovie, new ShowCommentDialog.OnAddCommentListener() {
+                                            @Override
+                                            public void onAddComment() {
+                                                currentMovie.setCommentnum(currentMovie.getCommentnum() + 1);
+                                                commentNum.setText(currentMovie.getCommentnum() + "");
+                                            }
+                                        }).show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        new ShowCommentDialog(context, mMovies.get(getAdapterPosition()), new ShowCommentDialog.OnAddCommentListener() {
+                            @Override
+                            public void onAddComment() {
+                                currentMovie.setCommentnum(currentMovie.getCommentnum() + 1);
+                                commentNum.setText(currentMovie.getCommentnum() + "");
+                            }
+                        }).show();
+                    }
                 }
             });
 
@@ -269,10 +312,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                             if (position == 0) {
                                                 if (Constant.currentUser.getUserId() == 0) {
                                                     // 没登录，不允许操作
-                                                    /*BasePopupView popupView = new XPopup.Builder(context)
-                                                            .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能分享哦"))
-                                                            .show();
-                                                    popupView.delayDismiss(1500);*/
+                                                    Toast.makeText(context, "你尚未登录，不允许分享哦...", Toast.LENGTH_LONG).show();
                                                 }
                                                 else {
                                                     BasePopupView popupView = new XPopup.Builder(context)
@@ -289,7 +329,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                             else {
                                                 String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
                                                 String fileName = System.currentTimeMillis() + ".mp4";
-                                                ProgressDialog progressDialog = new ProgressDialog(context);
+                                                ProgressDialog progressDialog = new ProgressDialog(context, "加载中");
                                                 new XPopup.Builder(context)
                                                         .asCustom(progressDialog)
                                                         .show();

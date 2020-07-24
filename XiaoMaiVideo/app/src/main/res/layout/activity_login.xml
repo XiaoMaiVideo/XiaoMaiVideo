@@ -21,14 +21,15 @@
         android:background="@drawable/wheatbackground">
 
         <TextView
-            android:layout_marginTop="80dp"
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="40dp"
             android:text="小麦"
             android:textColor="@color/black"
-            android:textSize="65sp"
 
+            android:textSize="65sp"
             app:layout_constraintBottom_toTopOf="@id/accountTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,23 +126,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--style="@style/Widget.MaterialComponents.Button.UnelevatedButton"-->
         <de.mustafagercek.library.LoadingButton
             android:id="@+id/loginBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:buttonColor="?attr/colorPrimary"
-            app:textColor="@color/deepskyblue"
-            app:buttonText="登录"
-
             android:textSize="30sp"
+            app:buttonColor="@color/deepskyblue"
+            app:buttonText="登录"
             app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textView2"
             app:layout_constraintEnd_toEndOf="@id/passwordTextInputLayout"
             app:layout_constraintStart_toStartOf="@id/passwordTextInputLayout"
-            app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout" />
+            app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
+            app:textColor="@color/white" />
 
 
         <TextView

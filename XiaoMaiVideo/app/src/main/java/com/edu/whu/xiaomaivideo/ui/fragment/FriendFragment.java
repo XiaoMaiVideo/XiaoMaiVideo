@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
+import com.googlecode.mp4parser.authoring.tracks.Avc1ToAvc3TrackImpl;
 import com.jiajie.load.LoadingDialog;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -65,7 +67,7 @@ public class FriendFragment extends Fragment {
         fragmentFriendBinding.setLifecycleOwner(getActivity());
         LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
         dialog.show();
-        if (Constant.currentUser.getUserId()!=0){
+        if (Constant.currentUser.getUserId() != 0) {
             //已登录
             MovieRestService.getRealtedMovies(Constant.currentUser.getUserId(), new MovieRestCallback() {
                 @Override
@@ -76,26 +78,11 @@ public class FriendFragment extends Fragment {
                     dialog.dismiss();
                 }
             });
-        } else  {
-            //未登录
+        } else {
             movieList = new ArrayList<Movie>();
+            Toast.makeText(getActivity(), "你尚未登录，不能查看好友视频哦！", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
         }
-
-        //刷新
-        friendViewModel.refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
-        friendViewModel.refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
-        friendViewModel.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-            }
-        });
-        friendViewModel.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
-            }
-        });
         return fragmentFriendBinding.getRoot();
     }
 
@@ -103,5 +90,20 @@ public class FriendFragment extends Fragment {
         fragmentFriendBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentFriendBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
         movieRecyclerView = new MovieRecyclerView(fragmentFriendBinding.recyclerView);
+        //刷新
+        fragmentFriendBinding.refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        fragmentFriendBinding.refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        fragmentFriendBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        fragmentFriendBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
     }
 }

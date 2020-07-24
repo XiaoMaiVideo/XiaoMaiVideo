@@ -42,11 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:text="评论"
             android:textColor="@color/black_21"
-            android:textSize="@dimen/text_size_13"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

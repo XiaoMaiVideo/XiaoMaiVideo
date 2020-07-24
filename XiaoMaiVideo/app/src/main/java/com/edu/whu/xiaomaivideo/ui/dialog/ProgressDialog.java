@@ -3,6 +3,7 @@ package com.edu.whu.xiaomaivideo.ui.dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -14,8 +15,11 @@ import de.mustafagercek.library.LoadingButton;
 
 public class ProgressDialog extends CenterPopupView {
     ProgressBar mProgressBar;
-    public ProgressDialog(@NonNull Context context) {
+    TextView mTextView;
+    String mTitle;
+    public ProgressDialog(@NonNull Context context, String title) {
         super(context);
+        mTitle = title;
     }
 
     // 返回自定义弹窗的布局
@@ -28,6 +32,8 @@ public class ProgressDialog extends CenterPopupView {
     protected void onCreate() {
         super.onCreate();
         mProgressBar = findViewById(R.id.dialogProgressBar);
+        mTextView = findViewById(R.id.progressDialogTitle);
+        mTextView.setText(mTitle);
     }
 
     public void setProgress(int progress) {

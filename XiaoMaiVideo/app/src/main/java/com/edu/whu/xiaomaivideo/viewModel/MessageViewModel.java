@@ -97,7 +97,7 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void refreshUser(){
-        if (Constant.currentUser.getUserId()==0){
+        if (Constant.currentUser.getUserId() == 0) {
             updateShowmsgs();
             return;
         }

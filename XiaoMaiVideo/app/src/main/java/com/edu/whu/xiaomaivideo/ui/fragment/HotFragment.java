@@ -65,6 +65,7 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
 import java.io.File;
@@ -102,22 +103,6 @@ public class  HotFragment extends Fragment {
             }
         });
 
-
-        //刷新
-        fragmentHotBinding.refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
-        fragmentHotBinding.refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
-        fragmentHotBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-            }
-        });
-        fragmentHotBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
-            }
-        });
         return fragmentHotBinding.getRoot();
     }
 
@@ -125,5 +110,20 @@ public class  HotFragment extends Fragment {
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
         movieRecyclerView = new MovieRecyclerView(fragmentHotBinding.recyclerView);
+        //刷新
+        fragmentHotBinding.refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        fragmentHotBinding.refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        fragmentHotBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NotNull RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        fragmentHotBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NotNull RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
     }
 }

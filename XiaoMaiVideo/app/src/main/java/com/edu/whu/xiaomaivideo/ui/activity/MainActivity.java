@@ -7,6 +7,7 @@
 package com.edu.whu.xiaomaivideo.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +19,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -33,6 +38,8 @@ import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.service.JWebSocketService;
 import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoDialog;
+import com.edu.whu.xiaomaivideo.ui.dialog.TakeVideoSelectionDialog;
 import com.edu.whu.xiaomaivideo.ui.fragment.BlankFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MeFragment;
 import com.edu.whu.xiaomaivideo.ui.fragment.MessageFragment;
@@ -42,6 +49,7 @@ import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;
+import com.edu.whu.xiaomaivideo.util.UriToPathUtil;
 import com.edu.whu.xiaomaivideo.widget.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.lxj.xpopup.XPopup;
@@ -58,6 +66,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +86,7 @@ public class MainActivity extends FragmentActivity {
     Intent webSocketService;
     SetWebSocketMessageReceiver setWebSocketMessageReceiver;
     FindFragment findFragment;
+    String inputPath, outputPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,11 +174,52 @@ public class MainActivity extends FragmentActivity {
             popupView.delayDismiss(1500);*/
             return;
         }
-        Intent intent = new Intent(this, TakeVideoActivity.class);
-        startActivityForResult(intent, Constant.TAKE_VIDEO);
+        // Intent intent = new Intent(this, TakeVideoActivity.class);
+        // startActivityForResult(intent, Constant.TAKE_VIDEO);
         /*BasePopupView popupView = new XPopup.Builder(this)
-                .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功"))
+                .atView(mTabLayout)
+                .isCenterHorizontal(true)
+                .asCustom(new TakeVideoSelectionDialog(this, new TakeVideoSelectionDialog.OnItemClickListener() {
+                    @Override
+                    public void onLeftItemClick(TakeVideoSelectionDialog dialog) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+                        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                        startActivityForResult(intent, 1);
+                    }
+
+                    @Override
+                    public void onRightItemClick(TakeVideoSelectionDialog dialog) {
+                        dialog.dismiss();
+                        selectVideo();
+                    }
+                }))
                 .show();*/
+        BasePopupView popupView = new XPopup.Builder(this)
+                .asCustom(new TakeVideoDialog(this, "", ""))
+                .show();
+    }
+
+    private void selectVideo() {
+        if (android.os.Build.BRAND.equals("Huawei")) {
+            Intent intentPic = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intentPic, 1);
+        }
+        if (android.os.Build.BRAND.equals("Xiaomi")) {//是否是小米设备,是的话用到弹窗选取入口的方法去选取视频
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*");
+            startActivityForResult(Intent.createChooser(intent, "选择要导入的视频"), 1);
+        }
+        //直接跳到系统相册去选取视频
+        else {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("video/*");
+            startActivityForResult(Intent.createChooser(intent, "选择要导入的视频"), 1);
+        }
     }
 
     private void checkPermission() {
@@ -211,7 +262,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == Constant.TAKE_VIDEO) {
+        /*if (requestCode == Constant.TAKE_VIDEO) {
             if (resultCode == RESULT_OK) {
                 // 可能需要对刚刚发的视频做一定的操作
                 Movie newMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
@@ -220,6 +271,25 @@ public class MainActivity extends FragmentActivity {
                         .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功", newMovie.getMovieId()))
                         .show();
                 // popupView.delayDismiss(1500);
+            }
+        }*/
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    Uri uri = intent.getData();
+                    inputPath = UriToPathUtil.getRealFilePath(this, uri);
+                    File path = new File(Environment.getExternalStorageDirectory().toString() + "/xiaomai/video");
+                    if (!path.exists()) {
+                        path.mkdirs();
+                    }
+                    outputPath = path.getPath() + "/" + System.currentTimeMillis() + ".mp4";
+                    Log.e("TakeVideoActivity", outputPath + "_");
+                    BasePopupView popupView = new XPopup.Builder(this)
+                            .asCustom(new TakeVideoDialog(this, inputPath, outputPath))
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

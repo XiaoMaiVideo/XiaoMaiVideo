@@ -25,7 +25,7 @@ public class Constant {
 
     public static User currentUser = User.Visitor(); // 尚未登录
 
-    public static void setCurrentUser(User user){
+    public static void setCurrentUser(User user) {
         currentUser=user;
         EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_USER, ""));
     }

@@ -12,18 +12,14 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
@@ -34,7 +30,6 @@ import com.downloader.Error;
 import com.downloader.OnDownloadListener;
 import com.downloader.PRDownloader;
 import com.edu.whu.xiaomaivideo.R;
-import com.edu.whu.xiaomaivideo.adapter.CommentAdapter;
 import com.edu.whu.xiaomaivideo.databinding.ActivityVideoDetailBinding;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.User;
@@ -43,7 +38,6 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShareDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
-import com.edu.whu.xiaomaivideo.ui.dialog.SimpleBottomDialog;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.util.InsertVideoUtil;
@@ -74,7 +68,6 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     VideoDetailModel videoDetailModel;
     ActivityVideoDetailBinding activityVideoDetailBinding;
-    CommentAdapter mAdapter;
 
     @BindingAdapter("app:avatarSrc")
     public static void setAvatar(ImageView imageView, String url) {
@@ -256,7 +249,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                                             // TODO: 修复BUG
                                             String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
                                             String fileName = System.currentTimeMillis() + ".mp4";
-                                            ProgressDialog progressDialog = new ProgressDialog(VideoDetailActivity.this);
+                                            ProgressDialog progressDialog = new ProgressDialog(VideoDetailActivity.this, "加载中");
                                             new XPopup.Builder(VideoDetailActivity.this)
                                                     .asCustom(progressDialog)
                                                     .show();

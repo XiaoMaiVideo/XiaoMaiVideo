@@ -7,16 +7,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:background="@color/_xpopup_white_color"
+    android:background="@drawable/select_elevation"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
 
     <TextView
+        android:id="@+id/progressDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="加载中"
+        android:textColor="@color/black_21"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:layout_marginBottom="10dp"/>

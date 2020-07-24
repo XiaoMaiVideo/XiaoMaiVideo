@@ -24,6 +24,8 @@ import com.edu.whu.xiaomaivideo.adapter.CommentDialogSingleAdapter;
 import com.edu.whu.xiaomaivideo.model.Comment;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.widget.CommentRecyclerView;
@@ -66,17 +68,16 @@ public class ShowCommentDialog {
     }
     //界面初始化
     private void initData() {
-        for (Comment c : movie.getComments())
-        {
+        for (Comment c : movie.getComments()) {
             Log.e("Comment",c.getMsg());
-            data.add(0,c);
+            data.add(0, c);
         }
     }
 
     public void show() {
         slideOffset = 0;
-        // showSheetDialog();
-        bottomSheetDialog.show();
+        showSheetDialog();
+        // bottomSheetDialog.show();
     }
 
     private void showSheetDialog() {

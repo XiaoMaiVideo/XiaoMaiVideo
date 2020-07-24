@@ -10,6 +10,10 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.LikersDialogAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.core.BottomPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
 
@@ -24,6 +28,7 @@ public class LikersDialog extends BottomPopupView {
         super(context);
         mContext = context;
         mMovie = movie;
+
     }
 
     @Override
@@ -34,6 +39,10 @@ public class LikersDialog extends BottomPopupView {
     @Override
     protected void onCreate() {
         super.onCreate();
+        setRecyclerView();
+    }
+
+    private void setRecyclerView() {
         mAdapter = new LikersDialogAdapter(mContext, mMovie.getLikers());
         mRecyclerView = findViewById(R.id.likersRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));

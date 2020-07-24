@@ -45,7 +45,6 @@ public class LikersDialogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 .into((ImageView) holder.get(R.id.likerAvatar));
         ((TextView) holder.get(R.id.likerName)).setText(mLikers.get(position).getNickname());
         ((TextView) holder.get(R.id.likerDescription)).setText(mLikers.get(position).getDescription());
-        // TODO: 按钮设置
     }
 
     @Override

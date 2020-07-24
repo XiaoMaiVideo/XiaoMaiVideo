@@ -56,36 +56,6 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (users.get(position).getDescription() != null && !users.get(position).getDescription().equals("")) {
             viewHolder.description.setText(users.get(position).getDescription());
         }
-        if (isFollow) {
-            ((UserViewHolder)holder).button.setText("回关");
-            ((UserViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    MessageVO message = new MessageVO();
-//                    message.setMsgType("follow");
-//                    message.setSenderId(Constant.CurrentUser.getUserId());
-//                    message.setReceiverId(users.get(position).getUserId());
-//                    message.setText("用户"+Constant.CurrentUser.getUsername()+"关注了你");
-//                    EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-                }
-            });
-        } else {
-            ((UserViewHolder)holder).button.setText("取关");
-            ((UserViewHolder)holder).button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    MessageVO message = new MessageVO();
-//                    message.setMsgType("unfollow");
-//                    message.setSenderId(Constant.CurrentUser.getUserId());
-//                    message.setReceiverId(users.get(position).getUserId());
-//                    message.setText("用户"+Constant.CurrentUser.getUsername()+"取消关注了你");
-//                    EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
-//                    List<User> following=Constant.CurrentUser.getFollowing();
-//                    following.remove(position);
-//                    Constant.CurrentUser.setFollowing(following);
-                }
-            });
-        }
     }
 
     @Override
@@ -105,7 +75,6 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             avatar = itemView.findViewById(R.id.imageView5);
             username= itemView.findViewById(R.id.textView10);
             description= itemView.findViewById(R.id.textView11);
-            button=itemView.findViewById(R.id.button4);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -83,6 +83,14 @@ public class MessageFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        showMsgs.clear();
+        showMsgs.addAll(messageViewModel.getShowmsgs().getValue());
+        msgAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
@@ -92,7 +100,7 @@ public class MessageFragment extends Fragment {
     public void updateShowMsgs(EventBusMessage message) {
         if (message.getType().equals(Constant.UPDATE_MESSAGE_LIST)) {
             messageViewModel.refreshUser();
-        }else if (message.getType().equals(Constant.UPDATE_USER)) {
+        } else if (message.getType().equals(Constant.UPDATE_USER)) {
             messageViewModel.updateShowmsgs();
         }
     }

@@ -77,9 +77,6 @@ public class TakeVideoActivity extends AppCompatActivity {
         compressButton.setVisibility(View.GONE);
         notCompressButton.setVisibility(View.GONE);
 
-        //第一个参数 位置提供器 第二个参数 位置变化的事件间隔 第三个参数 位置变化的距离间隔 事件监听LocationListener
-
-
         takeVideoButton.setOnClickListener(v -> {
             new XPopup.Builder(TakeVideoActivity.this)
                     .asBottomList("拍摄视频还是选择视频？", new String[]{"拍摄视频", "选择视频"},
