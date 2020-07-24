@@ -11,9 +11,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.edu.whu.xiaomaivideo.model.User;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Observable;
 
 public class Constant {
     // 云服务器URL
@@ -23,6 +24,12 @@ public class Constant {
     public static final String RESPONSE_ERROR = "Response Error!";
 
     public static User currentUser = User.Visitor(); // 尚未登录
+
+    public static void setCurrentUser(User user){
+        currentUser=user;
+        EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_USER, ""));
+    }
+
     public static Long currentChattingId = (long) -1; // 当前正在聊天的用户ID，-1表示不在聊天
     public static String currentChattingName = ""; // 当前正在聊天的用户昵称，""表示不在聊天
 
@@ -44,6 +51,7 @@ public class Constant {
     public static final String SEND_MESSAGE = "Send WebSocket Message";
     public static final String RECEIVE_MESSAGE = "Receive WebSocket Message";
     public static final String UPDATE_MESSAGE_LIST = "Update Message List";
+    public static final String UPDATE_USER = "Update User";
     public static final String RECOMMEND = "Recommend";
     public static final String LOCAL_HOT = "Local Hot";
 

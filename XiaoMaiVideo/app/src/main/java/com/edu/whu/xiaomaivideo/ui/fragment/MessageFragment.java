@@ -77,7 +77,7 @@ public class MessageFragment extends Fragment {
                 showMsgs.clear();
                 showMsgs.addAll(showmsgs);
                 msgAdapter.notifyDataSetChanged();
-                messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
+                //messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
             }
         });
     }
@@ -91,7 +91,8 @@ public class MessageFragment extends Fragment {
     @Subscribe
     public void updateShowMsgs(EventBusMessage message) {
         if (message.getType().equals(Constant.UPDATE_MESSAGE_LIST)) {
-            // 不用获取消息内容，通知更新而已
+            messageViewModel.refreshUser();
+        }else if (message.getType().equals(Constant.UPDATE_USER)) {
             messageViewModel.updateShowmsgs();
         }
     }

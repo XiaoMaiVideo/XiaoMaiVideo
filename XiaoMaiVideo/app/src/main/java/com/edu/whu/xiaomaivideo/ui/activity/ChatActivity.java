@@ -104,7 +104,16 @@ public class ChatActivity extends AppCompatActivity {
                 Message message1 = new Message();
                 message1.setText(msg);
                 message1.setSender(Constant.currentUser);
-                message1.setReceiver(null);
+
+
+//                UserRestService.getUserByID(Constant.currentChattingId, new UserRestCallback() {
+//                    @Override
+//                    public void onSuccess(int resultCode, User user) {
+//                        super.onSuccess(resultCode, user);
+//                        message1.setReceiver(user);
+//                    }
+//                });
+
                 message1.setMsgType("msg");
                 message1.setTime(new Date());
                 Constant.currentUser.addSendmsgs(message1);

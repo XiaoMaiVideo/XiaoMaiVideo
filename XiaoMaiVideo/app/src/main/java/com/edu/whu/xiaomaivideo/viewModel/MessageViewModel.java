@@ -12,6 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.edu.whu.xiaomaivideo.model.Message;
+import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
+import com.edu.whu.xiaomaivideo.restservice.UserRestService;
+import com.edu.whu.xiaomaivideo.ui.activity.LoginActivity;
 import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 
@@ -90,6 +94,16 @@ public class MessageViewModel extends ViewModel {
 
     public void setShowmsgs(MutableLiveData<List<ShowMsg>> showmsgs) {
         this.showmsgs = showmsgs;
+    }
+
+    public void refreshUser(){
+        UserRestService.getUserByID(Constant.currentUser.getUserId(), new UserRestCallback() {
+            @Override
+            public void onSuccess(int resultCode, User user) {
+                super.onSuccess(resultCode, user);
+                Constant.setCurrentUser(user);
+            }
+        });
     }
 
     public class ShowMsg {
