@@ -92,15 +92,14 @@ public class  HotFragment extends Fragment {
         fragmentHotBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_hot, container, false);
         fragmentHotBinding.setViewmodel(hotViewModel);
         fragmentHotBinding.setLifecycleOwner(getActivity());
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
-        dialog.show();
+        BasePopupView popupView = new XPopup.Builder(getActivity()).asLoading().setTitle("加载中...").show();
         MovieRestService.getMovies(currentMaxPageNum, new MovieRestCallback() {
             @Override
             public void onSuccess(int resultCode, List<Movie> movies) {
                 super.onSuccess(resultCode, movies);
                 movieList = movies;
                 setRecyclerView();
-                dialog.dismiss();
+                popupView.dismiss();
                 currentMaxPageNum++;
             }
         });

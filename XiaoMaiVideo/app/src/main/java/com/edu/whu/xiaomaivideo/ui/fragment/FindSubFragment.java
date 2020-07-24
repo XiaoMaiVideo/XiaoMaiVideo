@@ -24,6 +24,8 @@ import com.edu.whu.xiaomaivideo.util.CheckPermissionUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -39,8 +41,6 @@ public class FindSubFragment extends Fragment {
     public RecyclerView mRecyclerView;
     private MovieRecyclerView movieRecyclerView;
     private View rootView;
-    public int firstVisibleItem = 0, lastVisibleItem = 0, VisibleCount = 0;
-    public JzvdStd videoView;
 
     public FindSubFragment() {
         // Required empty public constructor
@@ -67,8 +67,7 @@ public class FindSubFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_find_sub, container, false);
         mRecyclerView = rootView.findViewById(R.id.findRecyclerView);
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
-        dialog.show();
+        BasePopupView popupView = new XPopup.Builder(getActivity()).asLoading().setTitle("加载中...").show();
         if (mType.equals(Constant.RECOMMEND)) {
             // 推荐算法得到的影片
             MovieRestService.getMovies(0, new MovieRestCallback() {
@@ -77,7 +76,7 @@ public class FindSubFragment extends Fragment {
                     super.onSuccess(resultCode, movies);
                     movieList = movies;
                     setRecyclerView();
-                    dialog.dismiss();
+                    popupView.dismiss();
                 }
             });
         }
@@ -100,7 +99,7 @@ public class FindSubFragment extends Fragment {
                                         super.onSuccess(resultCode, movies);
                                         movieList = movies;
                                         setRecyclerView();
-                                        dialog.dismiss();
+                                        popupView.dismiss();
                                     }
                                 });
                             }
@@ -115,7 +114,7 @@ public class FindSubFragment extends Fragment {
                             super.onSuccess(resultCode, movies);
                             movieList = movies;
                             setRecyclerView();
-                            dialog.dismiss();
+                            popupView.dismiss();
                         }
                     });
                 }
@@ -130,4 +129,6 @@ public class FindSubFragment extends Fragment {
         // 有操作就对movieRecyclerView做
         movieRecyclerView = new MovieRecyclerView(mRecyclerView);
     }
+
+
 }

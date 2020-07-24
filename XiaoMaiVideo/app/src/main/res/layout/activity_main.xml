@@ -29,7 +29,7 @@
             android:layout_height="60dp"
             app:tabGravity="fill"
             app:tabMaxWidth="0dp"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/transparent"
             app:tabSelectedTextColor="@color/colorPrimaryDark"
             app:tabTextColor="@color/colorPrimary"
             app:tabIndicatorFullWidth="false"
@@ -44,6 +44,7 @@
                 android:layout="@layout/mytabitem_1" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout="@layout/mytabitem_2"
@@ -56,11 +57,13 @@
                 android:layout="@layout/mytabitem_centerbutton" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout="@layout/mytabitem_3" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout="@layout/mytabitem_4" />

@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.Share;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
@@ -23,6 +24,8 @@ import com.edu.whu.xiaomaivideo.util.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class UserRestService {
@@ -105,6 +108,12 @@ public class UserRestService {
                             movie.setCategoryList(new ArrayList<>());
                         }
                     }
+                    Collections.sort(user.getMovies(), new Comparator<Movie>() {
+                        @Override
+                        public int compare(Movie m1, Movie m2) {
+                            return m2.getPublishTime().compareTo(m1.getPublishTime());
+                        }
+                    });
                 }
                 if (user.getLikeMovies() != null) {
                     for (Movie movie: user.getLikeMovies()) {
@@ -120,8 +129,21 @@ public class UserRestService {
                             movie.setCategoryList(new ArrayList<>());
                         }
                     }
+                    Collections.sort(user.getLikeMovies(), new Comparator<Movie>() {
+                        @Override
+                        public int compare(Movie m1, Movie m2) {
+                            return m2.getPublishTime().compareTo(m1.getPublishTime());
+                        }
+                    });
                 }
-                // 处理类别
+                if (user.getShares() != null) {
+                    Collections.sort(user.getShares(), new Comparator<Share>() {
+                        @Override
+                        public int compare(Share s1, Share s2) {
+                            return s2.getMovie().getMovieId().compareTo(s1.getMovie().getMovieId());
+                        }
+                    });
+                }
                 callback.onSuccess(responseNum, user);
             }
         }.execute(userId);

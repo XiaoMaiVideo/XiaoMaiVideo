@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -167,10 +168,7 @@ public class ShowCommentDialog {
                 public void onTextSend(String msg) {
                     if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许评论
-                        /*BasePopupView popupView = new XPopup.Builder(mContext)
-                                .asCustom(new SimpleBottomDialog(mContext, R.drawable.success, "没有登录，不能发评论哦"))
-                                .show();
-                        popupView.delayDismiss(1500);*/
+                        Toast.makeText(mContext, "你尚未登录，不允许发评论哦...", Toast.LENGTH_LONG).show();
                     }
                     else {
                         addComment(isReply, headImg, position, msg);

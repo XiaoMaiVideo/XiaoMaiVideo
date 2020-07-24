@@ -26,6 +26,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -91,6 +93,74 @@ public class MainActivity extends FragmentActivity {
     SetWebSocketMessageReceiver setWebSocketMessageReceiver;
     FindFragment findFragment;
     String inputPath, outputPath;
+    TabLayout.OnTabSelectedListener mListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (tab.getPosition() == 2) {
+                // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
+                onCenterButtonPressed();
+            } else {
+                // 切换到对应的tab
+                mViewPager.setCurrentItem(tab.getPosition());
+                switch (tab.getPosition()) {
+                    case 0: {
+                        ((ImageView) mTabLayout.getTabAt(0).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.home1);
+                        ((TextView) mTabLayout.getTabAt(0).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.warmyellow));
+                        break;
+                    }
+                    case 1: {
+                        ((ImageView) mTabLayout.getTabAt(1).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.message1);
+                        ((TextView) mTabLayout.getTabAt(1).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.warmyellow));
+                        break;
+                    }
+                    case 3: {
+                        ((ImageView) mTabLayout.getTabAt(3).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.discover1);
+                        ((TextView) mTabLayout.getTabAt(3).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.warmyellow));
+                        break;
+                    }
+                    case 4: {
+                        ((ImageView) mTabLayout.getTabAt(4).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.me1);
+                        ((TextView) mTabLayout.getTabAt(4).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.warmyellow));
+                        break;
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            switch (tab.getPosition()) {
+                case 0: {
+                    ((ImageView) mTabLayout.getTabAt(0).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.home);
+                    ((TextView) mTabLayout.getTabAt(0).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.colorTextContent));
+                    break;
+                }
+                case 1: {
+                    ((ImageView) mTabLayout.getTabAt(1).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.message);
+                    ((TextView) mTabLayout.getTabAt(1).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.colorTextContent));
+                    break;
+                }
+                case 3: {
+                    ((ImageView) mTabLayout.getTabAt(3).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.discover);
+                    ((TextView) mTabLayout.getTabAt(3).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.colorTextContent));
+                    break;
+                }
+                case 4: {
+                    ((ImageView) mTabLayout.getTabAt(4).getCustomView().findViewById(R.id.icon1)).setImageResource(R.drawable.me);
+                    ((TextView) mTabLayout.getTabAt(4).getCustomView().findViewById(R.id.text1)).setTextColor(getResources().getColor(R.color.colorTextContent));
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            if (tab.getPosition() == 2) {
+                // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
+                onCenterButtonPressed();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +175,7 @@ public class MainActivity extends FragmentActivity {
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
         mViewPager = findViewById(R.id.viewPager);
         mTabLayout = findViewById(R.id.tab_layout);
+        mTabLayout.addOnTabSelectedListener(mListener);
         mFragments = new ArrayList<>(5);
         checkPermission();
         getAddress();
@@ -148,40 +219,12 @@ public class MainActivity extends FragmentActivity {
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mTabLayout.selectTab(mTabLayout.getTabAt(0));
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 2) {
-                    // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
-                    onCenterButtonPressed();
-                } else {
-                    // 切换到对应的tab
-                    mViewPager.setCurrentItem(tab.getPosition());
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 2) {
-                    // 表示点击了中间的那个按钮，在这里处理中间按钮的点击触发事件
-                    onCenterButtonPressed();
-                }
-            }
-        });
     }
 
     private void onCenterButtonPressed() {
         if (Constant.currentUser.getUserId() == 0) {
             // 没登录，不允许操作
-            /*BasePopupView popupView = new XPopup.Builder(this)
-                    .asCustom(new SimpleBottomDialog(this, R.drawable.success, "没有登录，不能发视频哦"))
-                    .show();
-            popupView.delayDismiss(1500);*/
+            Toast.makeText(this, "你尚未登录，不允许发视频哦...", Toast.LENGTH_LONG).show();
             return;
         }
         BasePopupView popupView = new XPopup.Builder(this)
@@ -267,17 +310,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        /*if (requestCode == Constant.TAKE_VIDEO) {
-            if (resultCode == RESULT_OK) {
-                // 可能需要对刚刚发的视频做一定的操作
-                Movie newMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
-                Log.e("MainActivity", newMovie.getUrl()+"_");
-                BasePopupView popupView = new XPopup.Builder(this)
-                        .asCustom(new SimpleBottomDialog(this, R.drawable.success, "发布成功", newMovie.getMovieId()))
-                        .show();
-                // popupView.delayDismiss(1500);
-            }
-        }*/
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 try {

@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
@@ -164,10 +165,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             public void onCheckedChanged(View view, boolean checked) {
                 if (Constant.currentUser.getUserId() == 0) {
                     // 没登录，不允许操作
-                    /*BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
-                            .asCustom(new SimpleBottomDialog(VideoDetailActivity.this, R.drawable.success, "没有登录，不能点赞哦"))
-                            .show();
-                    popupView.delayDismiss(1500);*/
+                    Toast.makeText(VideoDetailActivity.this, "你尚未登录，不允许点赞哦...", Toast.LENGTH_LONG).show();
                     activityVideoDetailBinding.detailLikeButton.setChecked(false);
                 }
                 else {
@@ -238,10 +236,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                                         if (position == 0) {
                                             if (Constant.currentUser.getUserId() == 0) {
                                                 // 没登录，不允许操作
-                                                /*BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)
-                                                        .asCustom(new SimpleBottomDialog(VideoDetailActivity.this, R.drawable.success, "没有登录，不能分享哦"))
-                                                        .show();
-                                                popupView.delayDismiss(1500);*/
+                                                Toast.makeText(VideoDetailActivity.this, "你尚未登录，不允许分享哦...", Toast.LENGTH_LONG).show();
                                             }
                                             else {
                                                 BasePopupView popupView = new XPopup.Builder(VideoDetailActivity.this)

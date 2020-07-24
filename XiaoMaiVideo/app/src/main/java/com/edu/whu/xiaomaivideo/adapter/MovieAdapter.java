@@ -196,10 +196,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 public void onCheckedChanged(View view, boolean checked) {
                     if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许操作
-                        /*BasePopupView popupView = new XPopup.Builder(context)
-                                .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能点赞哦"))
-                                .show();
-                        popupView.delayDismiss(1500);*/
+                        Toast.makeText(context, "你尚未登录，不允许点赞哦...", Toast.LENGTH_LONG).show();
                         likeButton.setChecked(false);
                     }
                     else {
