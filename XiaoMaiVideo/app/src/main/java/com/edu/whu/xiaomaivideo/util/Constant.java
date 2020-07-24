@@ -24,6 +24,7 @@ public class Constant {
 
     public static User currentUser = User.Visitor(); // 尚未登录
     public static Long currentChattingId = (long) -1; // 当前正在聊天的用户ID，-1表示不在聊天
+    public static String currentChattingName = ""; // 当前正在聊天的用户昵称，""表示不在聊天
 
     public static final int RESULT_SUCCESS = 200;
     public static final int RESULT_FAILURE = 400;
@@ -42,6 +43,7 @@ public class Constant {
     public static final String SET_WEBSOCKET = "Set WebSocket";
     public static final String SEND_MESSAGE = "Send WebSocket Message";
     public static final String RECEIVE_MESSAGE = "Receive WebSocket Message";
+    public static final String UPDATE_MESSAGE_LIST = "Update Message List";
     public static final String RECOMMEND = "Recommend";
     public static final String LOCAL_HOT = "Local Hot";
 

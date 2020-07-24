@@ -19,6 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.HelloActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.MovieTypeActivity" />
         <activity android:name=".ui.activity.FollowActivity" />
@@ -35,11 +41,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <service

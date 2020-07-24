@@ -41,11 +41,13 @@ import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.dialog.SettingDialog;
 import com.edu.whu.xiaomaivideo.util.CleanMessageUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
+import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.viewModel.MeViewModel;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -246,6 +248,8 @@ public class MeFragment extends Fragment {
         intent.putExtra("status", "stop");
         getActivity().sendBroadcast(intent);
 
+        // 提示更新消息列表
+        EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
     }
 
     // 刚刚登录的操作
@@ -260,6 +264,9 @@ public class MeFragment extends Fragment {
         intent.putExtra("status", "start");
         getActivity().sendBroadcast(intent);
         Constant.currentUser.setEnter_uesr_center("进入个人中心>>");
+
+        // 提示更新消息列表
+        EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
 
         meViewModel.setUser(Constant.currentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));

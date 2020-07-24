@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.databinding.UserLikedVideoFragmentBinding;
+import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.viewModel.UserLikedVideoViewModel;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +48,11 @@ public class UserLikedVideoFragment extends Fragment {
     UserLikedVideoFragmentBinding fragmentUserLikedVideoBinding;
     List<Movie> movieList;
     MovieRecyclerView movieRecyclerView;
+    User mUser;
+
+    public UserLikedVideoFragment(User user) {
+        mUser = user;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,17 +60,8 @@ public class UserLikedVideoFragment extends Fragment {
         fragmentUserLikedVideoBinding = DataBindingUtil.inflate(inflater, R.layout.user_liked_video_fragment, container, false);
         fragmentUserLikedVideoBinding.setViewmodel(userLikedVideoViewModel);
         fragmentUserLikedVideoBinding.setLifecycleOwner(getActivity());
-        LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
-        dialog.show();
-        MovieRestService.getMovies(0, new MovieRestCallback() {
-            @Override
-            public void onSuccess(int resultCode, List<Movie> movies) {
-                super.onSuccess(resultCode, movies);
-                movieList = movies;
-                setRecyclerView();
-                dialog.dismiss();
-            }
-        });
+        movieList = mUser.getLikeMovies() == null? new ArrayList<>(): mUser.getLikeMovies();
+        setRecyclerView();
         return fragmentUserLikedVideoBinding.getRoot();
     }
 

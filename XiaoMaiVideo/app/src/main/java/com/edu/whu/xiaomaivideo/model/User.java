@@ -285,4 +285,18 @@ public class User {
     public void setFollowListAccessible(boolean followListAccessible) {
         isFollowListAccessible = followListAccessible;
     }
+
+    public void addSendmsgs(Message message) {
+        if (sendmsgs == null) {
+            sendmsgs = new ArrayList<>();
+        }
+        sendmsgs.add(message);
+    }
+
+    public void addReceivemsgs(Message message) {
+        if (receivemsgs == null) {
+            receivemsgs = new ArrayList<>();
+        }
+        receivemsgs.add(message);
+    }
 }

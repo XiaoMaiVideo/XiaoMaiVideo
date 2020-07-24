@@ -87,6 +87,40 @@ public class UserRestService {
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 User user = jsonObject.getObject("data", User.class);
+                // 对user进行处理
+                // Movie的Publisher要设成自己
+                if (user.getMovies() != null) {
+                    for (Movie movie: user.getMovies()) {
+                        movie.setPublisher(user);
+                        // 处理类别
+                        if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                            // 类别不为空
+                            String[] categoryArray = movie.getCategories().split(";");
+                            List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                            movie.setCategoryList(categoryList);
+                        }
+                        else {
+                            // 类别为空
+                            movie.setCategoryList(new ArrayList<>());
+                        }
+                    }
+                }
+                if (user.getLikeMovies() != null) {
+                    for (Movie movie: user.getLikeMovies()) {
+                        // 处理类别
+                        if (movie.getCategories() != null && !movie.getCategories().equals("")) {
+                            // 类别不为空
+                            String[] categoryArray = movie.getCategories().split(";");
+                            List<String> categoryList = new ArrayList<>(Arrays.asList(categoryArray));
+                            movie.setCategoryList(categoryList);
+                        }
+                        else {
+                            // 类别为空
+                            movie.setCategoryList(new ArrayList<>());
+                        }
+                    }
+                }
+                // 处理类别
                 callback.onSuccess(responseNum, user);
             }
         }.execute(userId);
@@ -140,10 +174,11 @@ public class UserRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Log.e("UserRestService", s);
+                Log.e("UserRestService--addMovie", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                callback.onSuccess(responseNum);
+                int newMovieId = jsonObject.getInteger("data");
+                callback.onSuccess(newMovieId);
             }
         }.execute(movie);
     }
@@ -207,13 +242,11 @@ public class UserRestService {
         }.execute(userIds.toArray(new Long[userIds.size()]));
     }
 
-    // TODO: 搜索
     public static void searchUser(final String keyword, final UserRestCallback restCallback) {
         new AsyncTask<String, Integer, String>() {
             UserRestCallback userRestCallback = restCallback;
             @Override
             protected String doInBackground(String... strings) {
-                // TODO: 改URL
                 Uri.Builder builder = Uri.parse(Constant.BASEURL+"/getUsersByNicknameLike").buildUpon();
                 builder.appendQueryParameter("page", "0");
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);

@@ -37,6 +37,7 @@ import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.ui.activity.MovieTypeActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
+import com.edu.whu.xiaomaivideo.ui.dialog.LikersDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShareDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
@@ -192,10 +193,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 public void onCheckedChanged(View view, boolean checked) {
                     if (Constant.currentUser.getUserId() == 0) {
                         // 没登录，不允许操作
-                        BasePopupView popupView = new XPopup.Builder(context)
+                        /*BasePopupView popupView = new XPopup.Builder(context)
                                 .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能点赞哦"))
                                 .show();
-                        popupView.delayDismiss(1500);
+                        popupView.delayDismiss(1500);*/
                         likeButton.setChecked(false);
                     }
                     else {
@@ -231,6 +232,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 @Override
                 public void onClick(View view) {
                     // TODO: 弹出点赞用户弹窗
+                    Log.e("MovieAdapter", "这里！");
+                    new XPopup.Builder(context)
+                            .asCustom(new LikersDialog(context, mMovies.get(getAdapterPosition())))
+                            .show();
                 }
             });
 
@@ -262,13 +267,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                         @Override
                                         public void onSelect(int position, String text) {
                                             if (position == 0) {
-                                                // TODO: 应用内分享
                                                 if (Constant.currentUser.getUserId() == 0) {
                                                     // 没登录，不允许操作
-                                                    BasePopupView popupView = new XPopup.Builder(context)
+                                                    /*BasePopupView popupView = new XPopup.Builder(context)
                                                             .asCustom(new SimpleBottomDialog(context, R.drawable.success, "没有登录，不能分享哦"))
                                                             .show();
-                                                    popupView.delayDismiss(1500);
+                                                    popupView.delayDismiss(1500);*/
                                                 }
                                                 else {
                                                     BasePopupView popupView = new XPopup.Builder(context)
@@ -283,7 +287,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                 }
                                             }
                                             else {
-                                                // TODO: 修复BUG
                                                 String filePath = Environment.getExternalStorageDirectory().toString() + "/xiaomai/downloadvideo";
                                                 String fileName = System.currentTimeMillis() + ".mp4";
                                                 ProgressDialog progressDialog = new ProgressDialog(context);
@@ -304,7 +307,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                                                                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                                                                         shareIntent.setType("video/*");
                                                                         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                                                        // TODO: 回调怎么办？分享到微信好像没回调
                                                                         context.startActivity(Intent.createChooser(shareIntent, "分享"));
                                                                     }
                                                                 });

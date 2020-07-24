@@ -69,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
                     messages = new ArrayList<>();
                 }
                 messageList = messages;
+                activityChatBinding.chatUserName.setText(Constant.currentChattingName);
                 chatAdapter = new ChatAdapter(ChatActivity.this, messageList);
                 setRecyclerView();
                 setSubmitListener();
@@ -106,6 +107,8 @@ public class ChatActivity extends AppCompatActivity {
                 message1.setReceiver(null);
                 message1.setMsgType("msg");
                 message1.setTime(new Date());
+                Constant.currentUser.addSendmsgs(message1);
+                EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
                 messageList.add(message1);
                 chatAdapter.notifyItemInserted(messageList.size()-1);
                 activityChatBinding.recyclerView.scrollToPosition(messageList.size()-1);
@@ -118,6 +121,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         Constant.currentChattingId = (long) -1;
+        Constant.currentChattingName = "";
     }
 
     @Subscribe
@@ -129,15 +133,17 @@ public class ChatActivity extends AppCompatActivity {
             receiveMessage.setReceiver(null);
             // 加上8个小时
             receiveMessage.setTime(new Date(receiveMessage.getTime().getTime()+8*Constant.HOUR));
-            // 添加到Adapter里面去
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    messageList.add(receiveMessage);
-                    chatAdapter.notifyItemInserted(messageList.size() - 1);
-                    activityChatBinding.recyclerView.scrollToPosition(messageList.size()-1);
-                }
-            });
+            // 如果当前是和消息发送者聊天，就添加到Adapter里面去
+            if (receiveMessage.getSender().getUserId() == Constant.currentChattingId) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageList.add(receiveMessage);
+                        chatAdapter.notifyItemInserted(messageList.size() - 1);
+                        activityChatBinding.recyclerView.scrollToPosition(messageList.size() - 1);
+                    }
+                });
+            }
         }
     }
 }

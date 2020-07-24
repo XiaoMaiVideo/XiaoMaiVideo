@@ -194,17 +194,16 @@ public class TakeVideoActivity extends AppCompatActivity {
                 UserRestService.addUserMovie(movie, new RestCallback() {
                     @Override
                     public void onSuccess(int resultCode) {
-                        if (resultCode == Constant.RESULT_SUCCESS) {
-                            if (compressButton.isInProgress()) {
-                                compressButton.onStopLoading();
-                            } else if (notCompressButton.isInProgress()) {
-                                notCompressButton.onStopLoading();
-                            }
-                            Intent intent = new Intent();
-                            intent.putExtra("movie", Parcels.wrap(Movie.class, movie));
-                            setResult(RESULT_OK, intent);
-                            TakeVideoActivity.this.finish();
+                        if (compressButton.isInProgress()) {
+                            compressButton.onStopLoading();
+                        } else if (notCompressButton.isInProgress()) {
+                            notCompressButton.onStopLoading();
                         }
+                        movie.setMovieId((long) resultCode);
+                        Intent intent = new Intent();
+                        intent.putExtra("movie", Parcels.wrap(Movie.class, movie));
+                        setResult(RESULT_OK, intent);
+                        TakeVideoActivity.this.finish();
                     }
                 });
             }

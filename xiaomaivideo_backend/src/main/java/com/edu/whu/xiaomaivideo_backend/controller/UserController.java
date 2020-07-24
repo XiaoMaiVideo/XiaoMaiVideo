@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Controller
@@ -73,7 +70,15 @@ public class UserController {
         user1.setMovies(movies);
         try {
             userRestService.saveUser(user1);
-            return AjaxResponse.success(user1);
+            User user2 = userRestService.getUserById(user1.getUserId());
+            movies = user2.getMovies();
+            Collections.sort(movies, new Comparator<Movie>() {
+                @Override
+                public int compare(Movie m1, Movie m2) {
+                    return m2.getPublishTime().compareTo(m1.getPublishTime());
+                }
+            });
+            return AjaxResponse.success(movies.get(0).getMovieId());
         }
         catch (Exception e) {
             return AjaxResponse.failure();
