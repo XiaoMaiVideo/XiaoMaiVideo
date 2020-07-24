@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰
  * Create Time: 2020/7/15
- * Update Time: 2020/7/22
+ * Update Time: 2020/7/24
  */
 
 
@@ -46,30 +46,30 @@ public class MovieRestJPAServiceImpl implements MovieRestService {
     }
 
     @Override
-    public Page<Movie> getAll(int page, int total) {
+    public List<Movie> getAll(int page, int total) {
         // TODO: 按照发布时间倒序
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
-        return movieRepository.findAll(pageable);
+        return movieRepository.findAll(pageable).getContent();
 //        //将查询结果转换为List
 //        List<Movie> movieList = moviePage.getContent();
 //        return movieList;
     }
 
     @Override
-    public Page<Movie> getAllByCategoriesLike(int page, int total,String categories) {
+    public List<Movie> getAllByCategoriesLike(int page, int total,String categories) {
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
-        return movieRepository.findByCategoriesLike(categories,pageable);
+        return movieRepository.findByCategoriesLike(categories,pageable).getContent();
     }
 
     @Override
-    public Page<Movie> getAllByDescriptionLike(int page, int total, String description) {
+    public List<Movie> getAllByDescriptionLike(int page, int total, String description) {
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
-        return movieRepository.findByDescriptionLike(description,pageable);
+        return movieRepository.findByDescriptionLike(description,pageable).getContent();
     }
 
     @Override
-    public Page<Movie> getAllByLocation(int page, int total, String location) {
+    public List<Movie> getAllByLocation(int page, int total, String location) {
         Pageable pageable = PageRequest.of(page, total, Sort.by("publishTime").descending());
-        return movieRepository.findByLocation(location, pageable);
+        return movieRepository.findByLocation(location, pageable).getContent();
     }
 }

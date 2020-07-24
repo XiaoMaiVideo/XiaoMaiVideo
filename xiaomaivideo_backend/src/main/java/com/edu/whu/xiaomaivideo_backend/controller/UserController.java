@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/22
+ * Update Time: 2020/7/24
  */
 
 
@@ -160,8 +160,32 @@ public class UserController {
 
     //获取一个user可以获取到一个用户需要的全部信息（应该）
     @GetMapping("/user/{id}")
-    public @ResponseBody AjaxResponse getUserById(@PathVariable Long id) {
+    public @ResponseBody AjaxResponse getUserById(@PathVariable Long id,@RequestParam Long userId) {
         User user = userRestService.getUserById(id);
+        User user1=userRestService.getUserById(userId);
+        if (user.getFollowers().contains(user1)){
+            user.setIsFollow(true);
+        }else {
+            user.setIsFollow(false);
+        }
+        List<Movie> publishMovies=user.getMovies();
+        for (Movie movie:publishMovies){
+            if (user1.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        user.setMovies(publishMovies);
+        List<Movie> likeMovies=user.getLikeMovies();
+        for (Movie movie:likeMovies){
+            if (user1.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        user.setLikeMovies(likeMovies);
         return AjaxResponse.success(user);
     }
 

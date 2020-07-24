@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/8
- * Update Time: 2020/7/22
+ * Update Time: 2020/7/24
  */
 
 
@@ -38,6 +38,10 @@ public class User {
     private boolean canAcceptFollowMessage; // 是否接收新粉丝消息
     private boolean isPrivateUser; // 是否为私密账户，若是则只能看到头像与昵称，不能看到其他个人信息
     private boolean isFollowListAccessible; // 是否允许别人看关注/粉丝列表
+
+    @Transient
+    private boolean isFollow;//用户是否关注
+
 
     @JsonIgnoreProperties(value = {"publisher","likers","comments"})
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher")
@@ -77,6 +81,14 @@ public class User {
 
     public List<Share> getShares() {
         return shares;
+    }
+
+    public boolean getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(boolean follow) {
+        isFollow = follow;
     }
 
     public void setShares(List<Share> shares) {

@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/22
+ * Update Time: 2020/7/24
  */
 
 
@@ -33,6 +33,9 @@ public class Movie {
     private int commentnum;
     private int sharenum;
 
+    @Transient
+    private boolean isLike;//用户是否点赞
+
     @JsonIgnoreProperties(value = {"comments","likeMovies","movies","sendmsgs","following","followers","receivemsgs","shares"})
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -53,6 +56,14 @@ public class Movie {
 
     public void setLikednum(int likenum) {
         this.likednum = likednum;
+    }
+
+    public boolean getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(boolean like) {
+        isLike = like;
     }
 
     public int getCommentnum() {

@@ -1,7 +1,7 @@
 /**
  * Author: 张俊杰，叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/22
+ * Update Time: 2020/7/24
  */
 
 
@@ -46,23 +46,67 @@ public class MovieController {
     }
 
     @GetMapping("/getMovies")
-    public @ResponseBody AjaxResponse getMovies(@RequestParam int page, @RequestParam int total) {
-        return AjaxResponse.success(movieRestService.getAll(page, total));
+    public @ResponseBody AjaxResponse getMovies(@RequestParam int page, @RequestParam int total,
+                                                @RequestParam long userId) {
+        List<Movie> movies=movieRestService.getAll(page, total);
+        User user=userRestService.getUserById(userId);
+
+        for (Movie movie:movies){
+            if (user.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        return AjaxResponse.success(movies);
     }
 
     @GetMapping("/getMoviesByCategoriesLike")
-    public @ResponseBody AjaxResponse getMoviesByCategoriesLike(@RequestParam int page, @RequestParam int total,@RequestParam String categories) {
-        return AjaxResponse.success(movieRestService.getAllByCategoriesLike(page, total,"%"+categories+"%"));
+    public @ResponseBody AjaxResponse getMoviesByCategoriesLike(@RequestParam int page, @RequestParam int total,
+                                                                @RequestParam String categories,@RequestParam Long userId) {
+        List<Movie> movies=movieRestService.getAllByCategoriesLike(page, total,"%"+categories+"%");
+        User user=userRestService.getUserById(userId);
+
+        for (Movie movie:movies){
+            if (user.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        return AjaxResponse.success(movies);
     }
 
     @GetMapping("/getMoviesByDescriptionLike")
-    public @ResponseBody AjaxResponse getMoviesByDescriptionLike(@RequestParam int page, @RequestParam int total,@RequestParam String description) {
-        return AjaxResponse.success(movieRestService.getAllByDescriptionLike(page, total,"%"+description+"%"));
+    public @ResponseBody AjaxResponse getMoviesByDescriptionLike(@RequestParam int page, @RequestParam int total,
+                                                                 @RequestParam String description,@RequestParam Long userId) {
+        List<Movie> movies=movieRestService.getAllByDescriptionLike(page, total,"%"+description+"%");
+        User user=userRestService.getUserById(userId);
+
+        for (Movie movie:movies){
+            if (user.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        return AjaxResponse.success(movies);
     }
 
     @GetMapping("/getMoviesByLocation")
-    public @ResponseBody AjaxResponse getMoviesByLocation(@RequestParam int page, @RequestParam int total,@RequestParam String location) {
-        return AjaxResponse.success(movieRestService.getAllByLocation(page, total, location));
+    public @ResponseBody AjaxResponse getMoviesByLocation(@RequestParam int page, @RequestParam int total,
+                                                          @RequestParam String location,@RequestParam Long userId) {
+        List<Movie> movies=movieRestService.getAllByLocation(page, total, location);
+        User user=userRestService.getUserById(userId);
+
+        for (Movie movie:movies){
+            if (user.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
+        return AjaxResponse.success(movies);
     }
 
     //获取关注粉丝的视频
@@ -84,6 +128,13 @@ public class MovieController {
                 return m2.getPublishTime().compareTo(m1.getPublishTime());
             }
         });
+        for (Movie movie:movies){
+            if (user.getLikeMovies().contains(movie)){
+                movie.setIsLike(true);
+            }else {
+                movie.setIsLike(false);
+            }
+        }
         return AjaxResponse.success(movies);
     }
 }
