@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Author：付浩、李季东 -->
+<!-- Create Time: 未知-->
+<!-- Update Time: 2020/7/24-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,6 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.edu.whu.xiaomaivideo.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableFooterTranslationContent="true"
+            app:srlPrimaryColor="@color/colorTextContent"
+            app:srlEnableAutoLoadMore="false">
+            <com.edu.whu.xiaomaivideo.MaterialHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
@@ -24,5 +37,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+            <com.edu.whu.xiaomaivideo.MaterialHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.edu.whu.xiaomaivideo.SmartRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

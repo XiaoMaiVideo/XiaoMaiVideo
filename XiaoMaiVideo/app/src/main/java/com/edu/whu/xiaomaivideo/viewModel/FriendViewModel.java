@@ -10,8 +10,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+
 public class FriendViewModel extends ViewModel {
     public MutableLiveData<String> mText;
+    public RefreshLayout refreshLayout;
 
     public FriendViewModel() {
         mText = new MutableLiveData<>();

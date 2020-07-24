@@ -1,7 +1,7 @@
 /**
- * Author: 付浩、叶俊豪
+ * Author: 付浩、叶俊豪、李季东
  * Create Time: 2020/7/9
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/24
  */
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
@@ -58,6 +58,11 @@ import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -76,6 +81,9 @@ public class  HotFragment extends Fragment {
     List<Movie> movieList;
     MovieRecyclerView movieRecyclerView;
 
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         hotViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(HotViewModel.class);
@@ -91,6 +99,23 @@ public class  HotFragment extends Fragment {
                 movieList = movies;
                 setRecyclerView();
                 dialog.dismiss();
+            }
+        });
+
+
+        //刷新
+        fragmentHotBinding.refreshLayout.setRefreshHeader(new ClassicsHeader(this.getContext()));
+        fragmentHotBinding.refreshLayout.setRefreshFooter(new ClassicsFooter(this.getContext()));
+        fragmentHotBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        fragmentHotBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
         return fragmentHotBinding.getRoot();
