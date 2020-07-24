@@ -117,7 +117,7 @@ public class MovieController {
         }
         User user=userRestService.getUserById(userId);
 
-        for (Movie movie:movies){
+        for (Movie movie:movies) {
             if (user.getLikeMovies().contains(movie)){
                 movie.setIsLike(true);
             }else {

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,7 +80,7 @@ public class LCFMessageActivity extends AppCompatActivity {
         }
         newMessageVOs = new ArrayList<>();
         oldMessageVOs = new ArrayList<>();
-        List<MessageVO> tempMsgList = LitePal.where("msgType = ?", mType).find(MessageVO.class);
+        List<MessageVO> tempMsgList = LitePal.where("msgType = ? and receiverId = ?", mType, String.valueOf(Constant.currentUser.getUserId())).find(MessageVO.class);
         for (int i=tempMsgList.size()-1; i>=0; i--) {
             if (tempMsgList.size()-i-1<newMessageCount) {
                 newMessageVOs.add(tempMsgList.get(i));

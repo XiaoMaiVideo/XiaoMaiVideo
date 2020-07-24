@@ -114,20 +114,20 @@ public class MainActivity extends FragmentActivity {
     private void stopWebSocketService() {
         // 如果以前登录了，先关闭以前的WebSocket
         if (webSocketService != null) {
-            stopService(webSocketService);
-            webSocketService = null;
             initView();
             EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
+            stopService(webSocketService);
+            webSocketService = null;
         }
     }
 
     private void startWebSocketService() {
         // 再开启新的WebSocket
         if (webSocketService == null) {
-            webSocketService = new Intent(MainActivity.this, JWebSocketService.class);
-            startService(webSocketService);
             initView();
             EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
+            webSocketService = new Intent(MainActivity.this, JWebSocketService.class);
+            startService(webSocketService);
         }
     }
 

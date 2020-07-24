@@ -35,6 +35,8 @@ import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
 import com.edu.whu.xiaomaivideo.viewModel.ChatViewModel;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -62,7 +64,9 @@ public class ChatActivity extends AppCompatActivity {
         activityChatBinding.setLifecycleOwner(this);
         EventBus.getDefault().register(this);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
         // 访问网络，获取消息
+        BasePopupView popupView = new XPopup.Builder(this).asLoading().setTitle("加载中...").show();
         MessageRestService.getMessages(Constant.currentChattingId, new MessageRestCallback() {
             @Override
             public void onSuccess(int resultCode, List<Message> messages) {
@@ -75,9 +79,10 @@ public class ChatActivity extends AppCompatActivity {
                 chatAdapter = new ChatAdapter(ChatActivity.this, messageList);
                 setRecyclerView();
                 setSubmitListener();
+                popupView.dismiss();
             }
         });
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
+
     }
 
     public void setRecyclerView() {

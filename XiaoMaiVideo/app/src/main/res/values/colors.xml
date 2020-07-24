@@ -12,7 +12,8 @@
     <!-- Create Time: 2020/7/17-->
     <!-- Update Time: 2020/7/24-->
 
-    <color name="warmyellow">#FADA5B</color><!--暖黄 -->
+    <!-- FADA5B -->
+    <color name="warmyellow">#E2B366</color><!--暖黄 -->
     <color name="black">#000000</color><!--黑色 -->
     <color name="white">#FFFFFF</color><!--白色-->
     <color name="snow">#fffafa</color><!--雪白色 -->

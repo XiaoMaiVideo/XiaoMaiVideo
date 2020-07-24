@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.User;
 import com.edu.whu.xiaomaivideo.restcallback.MovieRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
+import com.edu.whu.xiaomaivideo.ui.dialog.LikersDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ProgressDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShareDialog;
 import com.edu.whu.xiaomaivideo.ui.dialog.ShowCommentDialog;
@@ -105,6 +107,8 @@ public class VideoDetailActivity extends AppCompatActivity {
 
         // 有些信息可能没获取到，需要再访问网络，就在这里访问一下
         videoDetailModel.setMovie(movie);
+
+        BasePopupView popupView = new XPopup.Builder(this).asLoading().setTitle("加载中...").show();
         MovieRestService.getMovieByID(movie.getMovieId(), new MovieRestCallback() {
             @Override
             public void onSuccess(int resultCode, Movie movie) {
@@ -112,6 +116,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                 if (resultCode == Constant.RESULT_SUCCESS) {
                     videoDetailModel.setMovie(movie);
                     setView();
+                    popupView.dismiss();
                 }
             }
         });
@@ -197,7 +202,9 @@ public class VideoDetailActivity extends AppCompatActivity {
         activityVideoDetailBinding.detailLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 弹出点赞用户弹窗
+                new XPopup.Builder(VideoDetailActivity.this)
+                        .asCustom(new LikersDialog(VideoDetailActivity.this, videoDetailModel.getMovie().getValue()))
+                        .show();
             }
         });
 

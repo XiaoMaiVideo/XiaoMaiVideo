@@ -40,10 +40,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Author: 李季东、付浩、李季东
+ * Author: 李季东、付浩
  * Create Time: 2020/7/8
  * Update Time: 2020/7/24
- * 视频详情页面
  */
 public class FriendFragment extends Fragment {
 

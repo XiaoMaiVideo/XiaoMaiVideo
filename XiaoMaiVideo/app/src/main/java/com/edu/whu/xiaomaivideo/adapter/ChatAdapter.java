@@ -27,6 +27,8 @@ import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.Message;
 import com.edu.whu.xiaomaivideo.model.MessageVO;
 import com.edu.whu.xiaomaivideo.model.Movie;
+import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.ui.activity.VideoDetailActivity;
 import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
@@ -77,6 +79,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(((ChatAdapterViewHolder) holder).avatar);
+            ((ChatAdapterViewHolder) holder).avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, UserInfoActivity.class);
+                    intent.putExtra("user", Parcels.wrap(User.class, msgs.get(position).getSender()));
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         if (msgs.get(position).getMsgType().equals("msg")) {

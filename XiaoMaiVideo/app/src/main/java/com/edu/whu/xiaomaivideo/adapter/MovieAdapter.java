@@ -85,6 +85,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
         holder.jzvdStd.setUp(mMovies.get(position).getUrl(), "", Jzvd.SCREEN_NORMAL);

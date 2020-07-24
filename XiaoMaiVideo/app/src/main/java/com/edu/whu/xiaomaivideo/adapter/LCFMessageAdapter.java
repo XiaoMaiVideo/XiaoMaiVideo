@@ -113,10 +113,10 @@ public class LCFMessageAdapter extends GroupedRecyclerViewAdapter {
                 content.setText("新关注了你，快去看看");
             }
 
-            if (!mType.equals("follow")) {
-                date.setText(TimeUtil.getRecentTimeSpanByNow(System.currentTimeMillis()));
+            if (newMessages.get(childPosition).getTime() != null) {
+                date.setText(TimeUtil.getRecentTimeSpanByNow(newMessages.get(childPosition).getTime().getTime()));
             } else {
-                date.setText("");
+                date.setText("5天前");
             }
         }
         else {
@@ -133,10 +133,10 @@ public class LCFMessageAdapter extends GroupedRecyclerViewAdapter {
                 content.setText("新关注了你，快去看看");
             }
 
-            if (!mType.equals("follow")) {
-                date.setText(TimeUtil.getRecentTimeSpanByNow(System.currentTimeMillis()));
+            if (oldMessages.get(childPosition).getTime() != null) {
+                date.setText(TimeUtil.getRecentTimeSpanByNow(oldMessages.get(childPosition).getTime().getTime()));
             } else {
-                date.setText("");
+                date.setText("5天前");
             }
         }
     }

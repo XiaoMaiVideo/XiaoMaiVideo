@@ -18,10 +18,13 @@
         <com.llollox.androidtoggleswitch.widgets.ToggleSwitch
             android:id="@+id/searchType"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textSize="14dp"
+            app:checkedBackgroundColor="@color/warmyellow"
+            app:checkedTextColor="@color/white"
             app:textToggleLeft="视频"
             app:textToggleRight="用户" />
 

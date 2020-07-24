@@ -51,6 +51,8 @@ import com.edu.whu.xiaomaivideo.viewModel.UserInfoViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.jiajie.load.LoadingDialog;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -90,8 +92,7 @@ public class UserInfoActivity extends FragmentActivity {
 
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
 
-        LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
-        dialog.show();
+        BasePopupView popupView = new XPopup.Builder(this).asLoading().setTitle("加载中...").show();
         UserRestService.getUserByID(userInfoViewModel.getUser().getValue().getUserId(), new UserRestCallback() {
             @Override
             public void onSuccess(int resultCode, User user) {
@@ -102,7 +103,7 @@ public class UserInfoActivity extends FragmentActivity {
                 setRecyclerView();
                 setUserSFNumClickListener();
                 setOnButtonClickListener();
-                dialog.dismiss();
+                popupView.dismiss();
             }
         });
     }
@@ -208,7 +209,7 @@ public class UserInfoActivity extends FragmentActivity {
             activityUserInfoBinding.subscribeButton.setVisibility(View.VISIBLE);
             activityUserInfoBinding.chatButton.setVisibility(View.VISIBLE);
         }
-        if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+        if (userInfoViewModel.getUser().getValue().isFollow()) {
             // 本来关注了，那按钮就是取消关注
             activityUserInfoBinding.subscribeButton.setText("取消关注");
         }
@@ -219,13 +220,14 @@ public class UserInfoActivity extends FragmentActivity {
         activityUserInfoBinding.subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonUtil.isUserFollowedByCurrentUser(userInfoViewModel.getUser().getValue())) {
+                if (userInfoViewModel.getUser().getValue().isFollow()) {
                     MessageVO message = new MessageVO();
                     message.setMsgType("unfollow");
                     message.setSenderId(Constant.currentUser.getUserId());
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("关注");
+                    userInfoViewModel.getUser().getValue().setFollow(false);
                 }
                 else {
                     // 本来没关注，那按钮就是关注
@@ -235,8 +237,8 @@ public class UserInfoActivity extends FragmentActivity {
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("取消关注");
+                    userInfoViewModel.getUser().getValue().setFollow(true);
                 }
-                // TODO: 因为是根据CurrentUser的关注列表判断是否关注的，所以此处可能会有BUG，后面再修了
             }
         });
         // 聊天功能

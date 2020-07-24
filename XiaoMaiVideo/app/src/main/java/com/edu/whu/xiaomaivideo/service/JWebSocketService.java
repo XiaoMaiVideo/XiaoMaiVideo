@@ -116,6 +116,7 @@ public class JWebSocketService extends Service {
                         // 点赞，发送点赞通知
                         Log.e("JWebSocketClientService", "收到的消息：点赞");
                         // 消息统一存到本地数据库里，打开消息提醒页面以后再加载
+                        messageVO.setTime(new Date());
                         messageVO.save();
                         // 先存到暂存池里，打开“消息”页面直接加载
                         // MessageVOPool.addMessageVO("like", messageVO);
@@ -127,6 +128,7 @@ public class JWebSocketService extends Service {
                 else if (messageVO.getMsgType().equals("comment")) {
                     if (Constant.currentUser.isCanAcceptCommentMessage()) {
                         Log.e("JWebSocketClientService", "收到的消息：评论");
+                        messageVO.setTime(new Date());
                         messageVO.save();
                         // MessageVOPool.addMessageVO("comment", messageVO);
                         Constant.currentCommentMessage.postValue(Constant.currentCommentMessage.getValue()+1);
@@ -136,6 +138,7 @@ public class JWebSocketService extends Service {
                 else if (messageVO.getMsgType().equals("follow")) {
                     if (Constant.currentUser.isCanAcceptFollowMessage()) {
                         Log.e("JWebSocketClientService", "收到的消息：关注");
+                        messageVO.setTime(new Date());
                         messageVO.save();
                         // MessageVOPool.addMessageVO("follow", messageVO);
                         Constant.currentFollowMessage.postValue(Constant.currentFollowMessage.getValue()+1);

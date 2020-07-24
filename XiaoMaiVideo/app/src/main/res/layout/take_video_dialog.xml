@@ -140,6 +140,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"
         app:endIconMode="clear_text"
+        app:boxBackgroundColor="@color/maincolor"
         app:helperText="请输入视频描述"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -17,6 +17,7 @@ public class MessageVO extends LitePalSupport {
     private String text;
     private String msgType;
     private Long movieId;
+    private Date time;
 
     public MessageVO() {
     }
@@ -67,5 +68,13 @@ public class MessageVO extends LitePalSupport {
 
     public void setMovieId(Long movieId) {
         this.movieId = movieId;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

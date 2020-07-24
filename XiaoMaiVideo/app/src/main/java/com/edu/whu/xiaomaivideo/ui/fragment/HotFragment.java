@@ -56,6 +56,7 @@ import com.edu.whu.xiaomaivideo.viewModel.HotViewModel;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -69,6 +70,7 @@ import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,9 +83,8 @@ public class  HotFragment extends Fragment {
     FragmentHotBinding fragmentHotBinding;
     List<Movie> movieList;
     MovieRecyclerView movieRecyclerView;
-
-
-
+    MovieAdapter mAdapter;
+    int currentMaxPageNum = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -93,13 +94,14 @@ public class  HotFragment extends Fragment {
         fragmentHotBinding.setLifecycleOwner(getActivity());
         LoadingDialog dialog = new LoadingDialog.Builder(getActivity()).loadText("加载中...").build();
         dialog.show();
-        MovieRestService.getMovies(0, new MovieRestCallback() {
+        MovieRestService.getMovies(currentMaxPageNum, new MovieRestCallback() {
             @Override
             public void onSuccess(int resultCode, List<Movie> movies) {
                 super.onSuccess(resultCode, movies);
                 movieList = movies;
                 setRecyclerView();
                 dialog.dismiss();
+                currentMaxPageNum++;
             }
         });
 
@@ -107,8 +109,9 @@ public class  HotFragment extends Fragment {
     }
 
     private void setRecyclerView() {
+        mAdapter = new MovieAdapter(getActivity(), movieList);
         fragmentHotBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentHotBinding.recyclerView.setAdapter(new MovieAdapter(getActivity(), movieList));
+        fragmentHotBinding.recyclerView.setAdapter(mAdapter);
         movieRecyclerView = new MovieRecyclerView(fragmentHotBinding.recyclerView);
         //刷新
         fragmentHotBinding.refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -116,13 +119,42 @@ public class  HotFragment extends Fragment {
         fragmentHotBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NotNull RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                MovieRestService.getMovies(0, new MovieRestCallback() {
+                    @Override
+                    public void onSuccess(int resultCode, List<Movie> movies) {
+                        super.onSuccess(resultCode, movies);
+                        List<Movie> newMovies = new ArrayList<>();
+                        for (Movie movie: movies) {
+                            if (movie.getMovieId() > movieList.get(0).getMovieId()) {
+                                newMovies.add(movie);
+                            }
+                        }
+                        movieList.addAll(0, newMovies);
+                        mAdapter.notifyItemRangeInserted(0, newMovies.size());
+                        refreshlayout.finishRefresh();
+                    }
+                });
             }
         });
         fragmentHotBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NotNull RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                MovieRestService.getMovies(currentMaxPageNum, new MovieRestCallback() {
+                    @Override
+                    public void onSuccess(int resultCode, List<Movie> movies) {
+                        super.onSuccess(resultCode, movies);
+                        List<Movie> newMovies = new ArrayList<>();
+                        for (Movie movie: movies) {
+                            if (movie.getMovieId() < movieList.get(movieList.size()-1).getMovieId()) {
+                                newMovies.add(movie);
+                            }
+                        }
+                        movieList.addAll(newMovies);
+                        mAdapter.notifyItemRangeInserted(movieList.size()-newMovies.size(), newMovies.size());
+                        currentMaxPageNum++;
+                        refreshlayout.finishLoadMore();
+                    }
+                });
             }
         });
     }

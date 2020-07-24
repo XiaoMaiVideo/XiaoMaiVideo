@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -36,7 +36,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="username"
-            android:textSize="24sp"
+            android:textSize="18sp"
+            android:textColor="@color/black_21"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,6 +52,7 @@
             android:layout_marginBottom="16dp"
             android:ellipsize="end"
             android:text="TextView"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
