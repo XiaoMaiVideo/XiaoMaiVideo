@@ -24,6 +24,9 @@ public class Movie {
     @JSONField(serialize = false)
     private List<String> categoryList;
 
+    @JSONField(serialize = false)
+    private boolean isLike;
+
     private User publisher;
     private String categories;
     private List<User> likers;
@@ -146,5 +149,13 @@ public class Movie {
 
     public void setCategoryList(List<String> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
     }
 }

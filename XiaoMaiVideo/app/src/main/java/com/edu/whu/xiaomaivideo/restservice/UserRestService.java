@@ -76,8 +76,9 @@ public class UserRestService {
             UserRestCallback callback = restCallback;
             @Override
             protected String doInBackground(Long... number) {
-                String url = Constant.BASEURL+"user/"+ number[0];
-                return HttpUtil.sendGetRequest(url);
+                Uri.Builder builder = Uri.parse(Constant.BASEURL+"user/"+number[0]).buildUpon();
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
+                return HttpUtil.sendGetRequest(builder.toString());
             }
 
             @Override

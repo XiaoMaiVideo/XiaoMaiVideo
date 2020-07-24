@@ -40,18 +40,27 @@ public class MovieController {
     }
 
     @GetMapping( "/movie/{id}")
-    public @ResponseBody AjaxResponse getMovieById(@PathVariable Long id) {
+    public @ResponseBody AjaxResponse getMovieById(@PathVariable Long id, @RequestParam Long userId) {
         Movie movie = movieRestService.getMovieById(id);
+        if (userId == 0) {
+            return AjaxResponse.success(movie);
+        }
+        User user = userRestService.getUserById(userId);
+        movie.setIsLike(user.getLikeMovies().contains(movie));
         return AjaxResponse.success(movie);
     }
 
     @GetMapping("/getMovies")
     public @ResponseBody AjaxResponse getMovies(@RequestParam int page, @RequestParam int total,
                                                 @RequestParam long userId) {
-        List<Movie> movies=movieRestService.getAll(page, total);
-        User user=userRestService.getUserById(userId);
 
-        for (Movie movie:movies){
+        List<Movie> movies = movieRestService.getAll(page, total);
+        if (userId == 0) {
+            return AjaxResponse.success(movies);
+        }
+        User user = userRestService.getUserById(userId);
+
+        for (Movie movie:movies) {
             if (user.getLikeMovies().contains(movie)){
                 movie.setIsLike(true);
             }else {
@@ -65,9 +74,12 @@ public class MovieController {
     public @ResponseBody AjaxResponse getMoviesByCategoriesLike(@RequestParam int page, @RequestParam int total,
                                                                 @RequestParam String categories,@RequestParam Long userId) {
         List<Movie> movies=movieRestService.getAllByCategoriesLike(page, total,"%"+categories+"%");
-        User user=userRestService.getUserById(userId);
+        if (userId == 0) {
+            return AjaxResponse.success(movies);
+        }
 
-        for (Movie movie:movies){
+        User user=userRestService.getUserById(userId);
+        for (Movie movie:movies) {
             if (user.getLikeMovies().contains(movie)){
                 movie.setIsLike(true);
             }else {
@@ -81,6 +93,9 @@ public class MovieController {
     public @ResponseBody AjaxResponse getMoviesByDescriptionLike(@RequestParam int page, @RequestParam int total,
                                                                  @RequestParam String description,@RequestParam Long userId) {
         List<Movie> movies=movieRestService.getAllByDescriptionLike(page, total,"%"+description+"%");
+        if (userId == 0) {
+            return AjaxResponse.success(movies);
+        }
         User user=userRestService.getUserById(userId);
 
         for (Movie movie:movies){
@@ -97,6 +112,9 @@ public class MovieController {
     public @ResponseBody AjaxResponse getMoviesByLocation(@RequestParam int page, @RequestParam int total,
                                                           @RequestParam String location,@RequestParam Long userId) {
         List<Movie> movies=movieRestService.getAllByLocation(page, total, location);
+        if (userId == 0) {
+            return AjaxResponse.success(movies);
+        }
         User user=userRestService.getUserById(userId);
 
         for (Movie movie:movies){
@@ -112,6 +130,9 @@ public class MovieController {
     //获取关注粉丝的视频
     @GetMapping("/getRelatedMoviesById")
     public @ResponseBody AjaxResponse getRelatedMoviesById(@RequestParam Long userId) {
+        if (userId == 0) {
+            return AjaxResponse.success(new ArrayList<Movie>());
+        }
         User user=userRestService.getUserById(userId);
         List<Movie> movies=new ArrayList<>();
         for (User following:user.getFollowing()){

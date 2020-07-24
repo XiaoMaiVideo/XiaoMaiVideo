@@ -100,7 +100,6 @@ public class VideoDetailActivity extends AppCompatActivity {
         // Bundle bundle = getIntent().getExtras();
 
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
-
         // 当前页面显示的Movie对象，可以用它来做数据绑定之类的
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
@@ -154,6 +153,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             }
         });
 
+        activityVideoDetailBinding.detailLikeButton.setChecked(videoDetailModel.getMovie().getValue().isLike());
         activityVideoDetailBinding.detailLikeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(View view, boolean checked) {

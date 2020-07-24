@@ -8,6 +8,8 @@ package com.edu.whu.xiaomaivideo.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MessageAdapter;
 import com.edu.whu.xiaomaivideo.adapter.MsgAdapter;
+import com.edu.whu.xiaomaivideo.adapter.TestAdapter;
 import com.edu.whu.xiaomaivideo.databinding.MessageFragmentBinding;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.EventBusMessage;
@@ -48,6 +51,7 @@ public class MessageFragment extends Fragment {
     private MessageFragmentBinding messageFragmentBinding;
     MessageAdapter mAdapter;
     MsgAdapter msgAdapter;
+    TestAdapter testAdapter;
     List<MessageViewModel.ShowMsg> showMsgs;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,29 +71,23 @@ public class MessageFragment extends Fragment {
         messageFragmentBinding.recyclerView3.setAdapter(mAdapter);
         messageFragmentBinding.recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        msgAdapter = new MsgAdapter(getActivity(), showMsgs);
-        messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
+        // msgAdapter = new MsgAdapter(getActivity(), showMsgs);
+        // messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
+        // messageFragmentBinding.msgRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        testAdapter = new TestAdapter(getActivity(), showMsgs);
         messageFragmentBinding.msgRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        messageFragmentBinding.msgRecyclerView.setAdapter(testAdapter);
 
         messageViewModel.getShowmsgs().observe(getViewLifecycleOwner(), new Observer<List<MessageViewModel.ShowMsg>>() {
             @Override
             public void onChanged(List<MessageViewModel.ShowMsg> showmsgs) {
+                Log.e("MessageFragment", "更新"+showmsgs.size());
                 showMsgs.clear();
                 showMsgs.addAll(showmsgs);
-                msgAdapter.notifyDataSetChanged();
-                //messageFragmentBinding.msgRecyclerView.setAdapter(msgAdapter);
+                testAdapter.notifyDataChanged();
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("MessageFragment", "onResume");
-        showMsgs.clear();
-        showMsgs.addAll(messageViewModel.getShowmsgs().getValue());
-        msgAdapter.notifyDataSetChanged();
-        this.getView().requestLayout();
     }
 
     @Override

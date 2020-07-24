@@ -35,6 +35,9 @@ public class User {
     private boolean isPrivateUser; // 是否为私密账户，若是则只能看到头像与昵称，不能看到其他个人信息
     private boolean isFollowListAccessible; // 是否允许别人看关注/粉丝列表
 
+    @JSONField(serialize = false)
+    private boolean isFollow;
+
     private List<Comment> comments;
     private List<Message> sendmsgs;
     private List<Movie> movies;
@@ -298,5 +301,13 @@ public class User {
             receivemsgs = new ArrayList<>();
         }
         receivemsgs.add(message);
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 }

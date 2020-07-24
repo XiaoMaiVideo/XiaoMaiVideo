@@ -87,7 +87,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
-        // TODO: 加载很慢，原因不明
         holder.jzvdStd.setUp(mMovies.get(position).getUrl(), "", Jzvd.SCREEN_NORMAL);
         Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
 
@@ -98,7 +97,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 .into(holder.userAvatar);
         holder.userNickname.setText(mMovies.get(position).getPublisher().getNickname());
         holder.publishTime.setText(mMovies.get(position).getPublishTime());
-        holder.likeButton.setChecked(Constant.currentUser.isLikeMovie(mMovies.get(position).getMovieId()));
+        holder.likeButton.setChecked(mMovies.get(position).isLike());
         holder.shareNum.setText(mMovies.get(position).getSharenum()+"");
         holder.commentNum.setText(mMovies.get(position).getCommentnum()+"");
         holder.likeNum.setText(mMovies.get(position).getLikednum()+"");

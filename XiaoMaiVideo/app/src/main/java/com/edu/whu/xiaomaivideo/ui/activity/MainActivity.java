@@ -56,12 +56,15 @@ import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -81,7 +84,7 @@ public class MainActivity extends FragmentActivity {
 
     private MyViewPager mViewPager;
     private List<Fragment> mFragments;
-    private FragmentPagerAdapter mAdapter;
+    private FragmentStatePagerAdapter mAdapter;
     private TabLayout mTabLayout;
     private Long exitTime = 0L;
     Intent webSocketService;
@@ -100,8 +103,9 @@ public class MainActivity extends FragmentActivity {
         registerReceiver(setWebSocketMessageReceiver, filter);
         // 设置状态栏
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.gainsboro));
-
-        initView();
+        mViewPager = findViewById(R.id.viewPager);
+        mTabLayout = findViewById(R.id.tab_layout);
+        mFragments = new ArrayList<>(5);
         checkPermission();
         getAddress();
         tryLogin();
@@ -112,6 +116,8 @@ public class MainActivity extends FragmentActivity {
         if (webSocketService != null) {
             stopService(webSocketService);
             webSocketService = null;
+            initView();
+            EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
         }
     }
 
@@ -120,6 +126,8 @@ public class MainActivity extends FragmentActivity {
         if (webSocketService == null) {
             webSocketService = new Intent(MainActivity.this, JWebSocketService.class);
             startService(webSocketService);
+            initView();
+            EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
         }
     }
 
@@ -130,10 +138,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
+        mFragments.clear();
         findFragment = new FindFragment();
-        mViewPager = findViewById(R.id.viewPager);
-        mTabLayout = findViewById(R.id.tab_layout);
-        mFragments = new ArrayList<>(5);
         mFragments.add(new HomeFragment()); // 第一个tab
         mFragments.add(new MessageFragment()); // 第二个tab
         mFragments.add(new BlankFragment()); // 没用，占个位置
@@ -141,6 +147,7 @@ public class MainActivity extends FragmentActivity {
         mFragments.add(new MeFragment()); // 第四个tab
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
+        mTabLayout.selectTab(mTabLayout.getTabAt(0));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -177,9 +184,7 @@ public class MainActivity extends FragmentActivity {
             popupView.delayDismiss(1500);*/
             return;
         }
-        // Intent intent = new Intent(this, TakeVideoActivity.class);
-        // startActivityForResult(intent, Constant.TAKE_VIDEO);
-        /*BasePopupView popupView = new XPopup.Builder(this)
+        BasePopupView popupView = new XPopup.Builder(this)
                 .atView(mTabLayout)
                 .isCenterHorizontal(true)
                 .asCustom(new TakeVideoSelectionDialog(this, new TakeVideoSelectionDialog.OnItemClickListener() {
@@ -198,9 +203,6 @@ public class MainActivity extends FragmentActivity {
                         selectVideo();
                     }
                 }))
-                .show();*/
-        BasePopupView popupView = new XPopup.Builder(this)
-                .asCustom(new TakeVideoDialog(this, "", ""))
                 .show();
     }
 
@@ -297,7 +299,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public class MyAdapter extends FragmentPagerAdapter {
+    public class MyAdapter extends FragmentStatePagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -314,7 +316,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //super.destroyItem(container, position, object);
+            // super.destroyItem(container, position, object);
         }
     }
 
@@ -323,6 +325,7 @@ public class MainActivity extends FragmentActivity {
         String username = sp.getString("username", "");
         String password = sp.getString("password", "");
         if (username.equals("") || password.equals("")) {
+            initView();
             return;
         }
 

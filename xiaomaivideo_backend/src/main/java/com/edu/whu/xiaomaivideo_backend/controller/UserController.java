@@ -165,8 +165,11 @@ public class UserController {
 
     //获取一个user可以获取到一个用户需要的全部信息（应该）
     @GetMapping("/user/{id}")
-    public @ResponseBody AjaxResponse getUserById(@PathVariable Long id,@RequestParam Long userId) {
+    public @ResponseBody AjaxResponse getUserById(@PathVariable Long id, @RequestParam Long userId) {
         User user = userRestService.getUserById(id);
+        if (userId == 0) {
+            return AjaxResponse.success(user);
+        }
         User user1=userRestService.getUserById(userId);
         if (user.getFollowers().contains(user1)){
             user.setIsFollow(true);

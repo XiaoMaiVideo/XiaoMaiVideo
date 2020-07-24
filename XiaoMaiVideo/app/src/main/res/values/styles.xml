@@ -73,4 +73,9 @@
         <item name="colorControlNormal">#ffffff</item>
     </style>
 
+    <style name="AppTheme.MaterialButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/maincolor</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

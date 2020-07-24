@@ -249,7 +249,7 @@ public class MeFragment extends Fragment {
         getActivity().sendBroadcast(intent);
 
         // 提示更新消息列表
-        EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
+        // EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
     }
 
     // 刚刚登录的操作
@@ -266,7 +266,7 @@ public class MeFragment extends Fragment {
         Constant.currentUser.setEnter_uesr_center("进入个人中心>>");
 
         // 提示更新消息列表
-        EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
+        // EventBus.getDefault().post(new EventBusMessage(Constant.UPDATE_MESSAGE_LIST, ""));
 
         meViewModel.setUser(Constant.currentUser);
         menuItems.add(new Pair<>("设置个人信息", R.drawable.modify_user_info));

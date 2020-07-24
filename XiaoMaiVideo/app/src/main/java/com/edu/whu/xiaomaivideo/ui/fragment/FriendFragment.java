@@ -6,7 +6,6 @@
 
 package com.edu.whu.xiaomaivideo.ui.fragment;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
@@ -30,7 +27,6 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.FriendViewModel;
 import com.edu.whu.xiaomaivideo.widget.MovieRecyclerView;
-import com.googlecode.mp4parser.authoring.tracks.Avc1ToAvc3TrackImpl;
 import com.jiajie.load.LoadingDialog;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -42,9 +38,6 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 
 /**
  * Author: 李季东、付浩、李季东
@@ -69,7 +62,7 @@ public class FriendFragment extends Fragment {
         dialog.show();
         if (Constant.currentUser.getUserId() != 0) {
             //已登录
-            MovieRestService.getRealtedMovies(Constant.currentUser.getUserId(), new MovieRestCallback() {
+            MovieRestService.getRelatedMovies(Constant.currentUser.getUserId(), new MovieRestCallback() {
                 @Override
                 public void onSuccess(int resultCode, List<Movie> movies) {
                     super.onSuccess(resultCode, movies);

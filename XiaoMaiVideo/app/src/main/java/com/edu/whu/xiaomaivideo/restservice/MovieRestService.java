@@ -31,11 +31,12 @@ public class MovieRestService {
     public static void getMovieByID(final long movieId, final MovieRestCallback restCallback) {
 
         new AsyncTask<Long, Integer, String>() {
-            MovieRestCallback movieRestCallback=restCallback;
+            MovieRestCallback movieRestCallback = restCallback;
             @Override
             protected String doInBackground(Long... number) {
                 // URL参数拼接用下面的方法
                 Uri.Builder builder = Uri.parse(Constant.BASEURL+"movie/"+movieId).buildUpon();
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
                 return HttpUtil.sendGetRequest(builder.toString());
             }
             @Override
@@ -100,6 +101,8 @@ public class MovieRestService {
                 Uri.Builder builder = Uri.parse(Constant.BASEURL+"getMovies").buildUpon();
                 builder.appendQueryParameter("page", String.valueOf(pageNum));
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
+                Log.e("MovieRestService--getMovies发送", builder.toString()+"_");
                 return HttpUtil.sendGetRequest(builder.toString());
             }
 
@@ -109,8 +112,7 @@ public class MovieRestService {
                 Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                JSONObject dataObject = jsonObject.getJSONObject("data");
-                JSONArray jsonArray = dataObject.getJSONArray("content");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
                 List<Movie> movies = new ArrayList<>();
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
@@ -134,7 +136,7 @@ public class MovieRestService {
     }
 
     //获取关注粉丝的视频
-    public static void getRealtedMovies(final Long userId, final MovieRestCallback restCallback) {
+    public static void getRelatedMovies(final Long userId, final MovieRestCallback restCallback) {
         new AsyncTask<Long, Integer, String>() {
             MovieRestCallback movieRestCallback = restCallback;
             @Override
@@ -187,6 +189,7 @@ public class MovieRestService {
                 builder.appendQueryParameter("page", String.valueOf(pageNum));
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
                 builder.appendQueryParameter("categories", type);
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
                 return HttpUtil.sendGetRequest(builder.toString());
             }
 
@@ -196,8 +199,7 @@ public class MovieRestService {
                 Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                JSONObject dataObject = jsonObject.getJSONObject("data");
-                JSONArray jsonArray = dataObject.getJSONArray("content");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
                 List<Movie> movies = new ArrayList<>();
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
@@ -231,6 +233,7 @@ public class MovieRestService {
                 builder.appendQueryParameter("page", String.valueOf(pageNum));
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
                 builder.appendQueryParameter("location", location);
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
                 return HttpUtil.sendGetRequest(builder.toString());
             }
 
@@ -240,8 +243,7 @@ public class MovieRestService {
                 Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                JSONObject dataObject = jsonObject.getJSONObject("data");
-                JSONArray jsonArray = dataObject.getJSONArray("content");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
                 List<Movie> movies = new ArrayList<>();
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
@@ -269,13 +271,12 @@ public class MovieRestService {
             MovieRestCallback movieRestCallback = restCallback;
             @Override
             protected String doInBackground(String... strings) {
-                // TODO: 改URL
                 Uri.Builder builder = Uri.parse(Constant.BASEURL+"/getMoviesByDescriptionLike").buildUpon();
                 builder.appendQueryParameter("page", "0");
                 builder.appendQueryParameter("total", Constant.PAGE_LIMIT);
                 builder.appendQueryParameter("description", strings[0]);
+                builder.appendQueryParameter("userId", String.valueOf(Constant.currentUser.getUserId()));
                 return HttpUtil.sendGetRequest(builder.toString());
-                // return "";
             }
 
             @Override
@@ -284,8 +285,7 @@ public class MovieRestService {
                 Log.e(TAG, s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
-                JSONObject dataObject = jsonObject.getJSONObject("data");
-                JSONArray jsonArray = dataObject.getJSONArray("content");
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
                 List<Movie> movies = new ArrayList<>();
                 for (int i=0;i<jsonArray.size();i++) {
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
