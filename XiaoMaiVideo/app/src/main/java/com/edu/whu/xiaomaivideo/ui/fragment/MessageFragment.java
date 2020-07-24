@@ -85,9 +85,11 @@ public class MessageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("MessageFragment", "onResume");
         showMsgs.clear();
         showMsgs.addAll(messageViewModel.getShowmsgs().getValue());
         msgAdapter.notifyDataSetChanged();
+        this.getView().requestLayout();
     }
 
     @Override

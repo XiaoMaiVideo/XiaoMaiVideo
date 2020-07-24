@@ -149,6 +149,7 @@
     <color name="palevioletred">#db7093</color><!--苍紫罗兰色 -->
     <color name="darkviolet">#9400d3</color><!--暗紫罗兰色 -->
     <color name="mediumorchid">#ba55d3</color><!--中粉紫色 -->
+    <color name="maincolor">#ffd200</color>
 
     <!--刷新所需颜色 0724 李季东-->
     <color name="colorPrimaryOverlay">#cc0094ff</color>

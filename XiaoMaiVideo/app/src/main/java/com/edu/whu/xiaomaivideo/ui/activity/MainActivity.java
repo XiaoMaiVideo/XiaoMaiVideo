@@ -75,6 +75,7 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import qiu.niorgai.StatusBarCompat;
 
 public class MainActivity extends FragmentActivity {
 
@@ -97,6 +98,8 @@ public class MainActivity extends FragmentActivity {
         setWebSocketMessageReceiver = new SetWebSocketMessageReceiver();
         IntentFilter filter = new IntentFilter(Constant.SET_WEBSOCKET);
         registerReceiver(setWebSocketMessageReceiver, filter);
+        // 设置状态栏
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.white));
 
         initView();
         checkPermission();
