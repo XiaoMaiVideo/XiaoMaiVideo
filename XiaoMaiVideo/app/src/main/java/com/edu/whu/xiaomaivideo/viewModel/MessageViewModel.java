@@ -97,6 +97,10 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void refreshUser(){
+        if (Constant.currentUser.getUserId()==0){
+            updateShowmsgs();
+            return;
+        }
         UserRestService.getUserByID(Constant.currentUser.getUserId(), new UserRestCallback() {
             @Override
             public void onSuccess(int resultCode, User user) {
