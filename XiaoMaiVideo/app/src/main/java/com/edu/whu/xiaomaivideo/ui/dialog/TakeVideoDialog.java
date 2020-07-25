@@ -1,6 +1,6 @@
 /**
- * Author:
- * Create Time:
+ * Author: 叶俊豪
+ * Create Time: 2020/7/24
  * Update Time: 2020/7/25
  */
 package com.edu.whu.xiaomaivideo.ui.dialog;
@@ -25,7 +25,6 @@ import com.edu.whu.xiaomaivideo.adapter.SelectLabelAdapter;
 import com.edu.whu.xiaomaivideo.model.Movie;
 import com.edu.whu.xiaomaivideo.restcallback.RestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
-import com.edu.whu.xiaomaivideo.ui.activity.TakeVideoActivity;
 import com.edu.whu.xiaomaivideo.util.CommonUtil;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.util.HttpUtil;

@@ -24,9 +24,9 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
- * Author:李季东
+ * Author:李季东，叶俊豪
  * Create Time: 2020/7/15
- * Update Time: 2020/7/15
+ * Update Time: 2020/7/23
  * 消息adapter。
  * item分为“@我的”，“评论”，“赞”，“订阅消息”和其他用户私聊。
  */

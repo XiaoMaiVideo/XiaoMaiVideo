@@ -35,9 +35,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Author: 李季东（修改）
- * Create Time: 未知
- * Update Time: 2020/7/15
+ * Author: 李季东、叶俊豪、张俊杰
+ * Create Time: 2020/7/14
+ * Update Time: 2020/7/25
  * 视频详情页面
  */
 public class MessageFragment extends Fragment {

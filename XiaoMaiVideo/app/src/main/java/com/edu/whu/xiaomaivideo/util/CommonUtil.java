@@ -1,7 +1,7 @@
 /**
  * Author: 何慷、叶俊豪
  * Create Time: 2020/7/12
- * Update Time: 2020/7/17
+ * Update Time: 2020/7/24
  */
 
 package com.edu.whu.xiaomaivideo.util;
@@ -213,24 +213,6 @@ public class CommonUtil {
             e.printStackTrace();
             Toast.makeText(BaseApplication.getContext(),"保存失败",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    // 判断用户user是否被当前登录用户（CurrentUser）关注
-    public static boolean isUserFollowedByCurrentUser(User user) {
-        if (user.getUserId() == Constant.currentUser.getUserId()) {
-            return false;
-        }
-        // 用户粉丝为0，不被当前用户关注
-        if (user.getFollowers() == null) {
-            return false;
-        }
-        // 看关注列表里面有没有这个user
-        for (User following: Constant.currentUser.getFollowing()) {
-            if (following.getUserId() == user.getUserId()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static List<Map<String,String>> addressResolution(String address) {

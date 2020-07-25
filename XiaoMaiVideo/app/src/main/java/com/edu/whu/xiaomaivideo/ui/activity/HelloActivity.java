@@ -1,7 +1,7 @@
 /**
- * Author:
- * Create Time:
- * Update Time: 2020/7/25
+ * Author: 叶俊豪、方胜强
+ * Create Time: 2020/7/23
+ * Update Time: 2020/7/24
  */
 package com.edu.whu.xiaomaivideo.ui.activity;
 

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +28,6 @@ import com.edu.whu.xiaomaivideo.restcallback.UserRestCallback;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MentionedModel;
-import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 
@@ -43,9 +41,9 @@ import java.util.Objects;
 import qiu.niorgai.StatusBarCompat;
 
 /**
- * Author: 李季东、叶俊豪
+ * Author: 李季东、叶俊豪、方胜强
  * Create Time: 2020/7/15
- * Update Time: 2020/7/18
+ * Update Time: 2020/7/23
  * 点赞/评论/新粉丝的提醒页面
  */
 public class LCFMessageActivity extends AppCompatActivity {
@@ -114,7 +112,6 @@ public class LCFMessageActivity extends AppCompatActivity {
                     newUsers.add(users.get(i));
                 }
                 initAdapter();
-                BasePopupView popupView = new XPopup.Builder(LCFMessageActivity.this).asLoading().setTitle("加载中...").show();
                 if (mType.equals("like")) {
                     Constant.currentLikeMessage.setValue(0);
                 }
@@ -124,6 +121,7 @@ public class LCFMessageActivity extends AppCompatActivity {
                 else if (mType.equals("follow")) {
                     Constant.currentFollowMessage.setValue(0);
                 }
+                popupView.dismiss();
             }
         });
 

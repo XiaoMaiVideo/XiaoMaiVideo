@@ -1,7 +1,7 @@
 /**
- * Author: 张俊杰
+ * Author: 张俊杰、叶俊豪
  * Create Time: 2020/7/16
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/22
  */
 
 package com.edu.whu.xiaomaivideo.ui.dialog;

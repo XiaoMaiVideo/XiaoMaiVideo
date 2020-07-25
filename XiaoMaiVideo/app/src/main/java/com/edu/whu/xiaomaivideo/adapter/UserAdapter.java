@@ -1,12 +1,13 @@
 /**
- * Author: 张俊杰、李季东
+ * Author: 张俊杰、李季东、叶俊豪
  * Create Time: 2020/7/17
- * Update Time: 2020/7/21
+ * Update Time: 2020/7/23
  */
 
 package com.edu.whu.xiaomaivideo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,10 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.model.User;
+import com.edu.whu.xiaomaivideo.ui.activity.UserInfoActivity;
 import com.edu.whu.xiaomaivideo.util.Constant;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -56,6 +60,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (users.get(position).getDescription() != null && !users.get(position).getDescription().equals("")) {
             viewHolder.description.setText(users.get(position).getDescription());
         }
+        else {
+            viewHolder.description.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -78,7 +85,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // 跳转到用户个人主页
+                    Intent intent = new Intent(mContext, UserInfoActivity.class);
+                    intent.putExtra("user", Parcels.wrap(User.class, users.get(getAdapterPosition())));
+                    mContext.startActivity(intent);
                 }
             });
         }

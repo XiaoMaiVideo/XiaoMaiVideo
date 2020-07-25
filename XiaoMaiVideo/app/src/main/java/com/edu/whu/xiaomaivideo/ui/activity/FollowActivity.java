@@ -1,7 +1,7 @@
 /**
- * Author: 张俊杰、李季东
+ * Author: 张俊杰、李季东、叶俊豪、方胜强
  * Create Time: 2020/7/16
- * Update Time: 2020/7/21
+ * Update Time: 2020/7/23
  */
 
 package com.edu.whu.xiaomaivideo.ui.activity;

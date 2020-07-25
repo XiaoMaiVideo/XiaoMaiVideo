@@ -1,7 +1,7 @@
 /**
  * Author: 叶俊豪
  * Create Time: 2020/7/11
- * Update Time: 2020/7/16
+ * Update Time: 2020/7/25
  */
 
 package com.edu.whu.xiaomaivideo.restservice;
@@ -51,7 +51,6 @@ public class UserRestService {
         }.execute(user);
     }
 
-    // TODO: 好像有时候修改个人信息会有BUG，观望
     public static void modifyUser(final User user, final RestCallback restCallback) {
         new AsyncTask<User, Integer, String>() {
             RestCallback Callback = restCallback;

@@ -1,11 +1,13 @@
 /**
- * Author:
- * Create Time:
- * Update Time: 2020/7/25
+ * Author: 叶俊豪
+ * Create Time: 2020/7/23
+ * Update Time: 2020/7/23
  */
 package com.edu.whu.xiaomaivideo.ui.dialog;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +46,13 @@ public class LikersDialog extends BottomPopupView {
     @Override
     protected void onCreate() {
         super.onCreate();
+        ImageView imageView = findViewById(R.id.dialog_bottomsheet_iv_close);
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LikersDialog.this.dismiss();
+            }
+        });
         setRecyclerView();
     }
 

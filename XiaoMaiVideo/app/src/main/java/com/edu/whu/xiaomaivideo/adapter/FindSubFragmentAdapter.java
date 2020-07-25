@@ -1,6 +1,7 @@
 /**
- * author:何慷
- * createTime:2020/7/14
+ * Author: 何慷、叶俊豪
+ * Create Time: 2020/7/14
+ * Update Time: 2020/7/19
  */
 
 package com.edu.whu.xiaomaivideo.adapter;

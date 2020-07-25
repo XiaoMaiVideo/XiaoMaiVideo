@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Author：张俊杰 -->
+<!-- Author：张俊杰、李季东、叶俊豪 -->
 <!-- Create Time: 2020/7/10-->
-<!-- Update Time: 2020/7/10-->
+<!-- Update Time: 2020/7/24-->
 
-
-<!--
- * Author: 李季东（修改）
- * Create Time:  未知
- * Update Time: 2020/7/14
--->
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">

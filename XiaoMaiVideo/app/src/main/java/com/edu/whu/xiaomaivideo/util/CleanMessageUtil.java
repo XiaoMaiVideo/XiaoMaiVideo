@@ -1,7 +1,5 @@
 /**
- * Author:
- * Create Time:
- * Update Time: 2020/7/25
+ * 本代码并非由团队成员完成
  */
 package com.edu.whu.xiaomaivideo.util;
 
@@ -10,10 +8,6 @@ import android.content.Context;
 import android.os.Environment;
 import java.io.File;
 import java.math.BigDecimal;
-
-/**
- * 本代码并非由团队成员完成
- */
 
 public class CleanMessageUtil {
     /**

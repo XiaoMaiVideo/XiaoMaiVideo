@@ -1,7 +1,7 @@
 /**
- * Author: 方胜强
+ * Author: 叶俊豪、方胜强
  * Create Time: 2020/7/21
- * Update Time: 2020/7/21
+ * Update Time: 2020/7/23
  */
 package com.edu.whu.xiaomaivideo.ui.activity;
 
@@ -69,7 +69,7 @@ public class MovieTypeActivity extends Activity {
     private int currentItem; //当前页面
     private ScheduledExecutorService scheduledExecutorService;
     //图片标题
-    private String titles[] = new String[]{"小麦1", "小麦2", "小麦3", "小麦4", "小麦5"};
+    private String titles[] = new String[]{"sunset-field-of-grain", "sea-horizon", "agriculture-barley-field-beautiful-close-up", "food-landscape-nature-sky", "wheat-grains-closeup-photography"};
     private ArrayList<View> dots = new ArrayList<View>();;
     private TextView title;
 

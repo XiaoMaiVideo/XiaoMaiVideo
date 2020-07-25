@@ -2,10 +2,9 @@
 
 <!--
 /**
-* Author: 李季东,张俊杰
+* Author: 李季东、张俊杰、叶俊豪
 * Create Time: 2020/7/15
-* Update Time: 2020/7/15UI
-*被@到界面RecyclerView的item
+* Update Time: 2020/7/22
 */
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,17 +16,25 @@
 
     <TextView
         android:id="@+id/mentioned_new_past"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:text="TextView"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitCenter"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/down_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

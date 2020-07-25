@@ -1,12 +1,13 @@
 /**
- * Author:
- * Create Time:
- * Update Time: 2020/7/25
+ * Author: 叶俊豪
+ * Create Time: 2020/7/21
+ * Update Time: 2020/7/21
  */
 package com.edu.whu.xiaomaivideo.ui.dialog;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,13 @@ public class SettingDialog extends BottomPopupView {
         LoadingButton confirmButton = findViewById(R.id.saveSettingBtn);
         TextView textView = findViewById(R.id.settingTitle);
         textView.setText(mSettingTitle);
+        ImageView imageView = findViewById(R.id.dialog_bottomsheet_iv_close);
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SettingDialog.this.dismiss();
+            }
+        });
         confirmButton.setButtonOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
