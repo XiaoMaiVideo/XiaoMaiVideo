@@ -26,6 +26,7 @@ import com.edu.whu.xiaomaivideo.util.Constant;
 import com.edu.whu.xiaomaivideo.viewModel.MentionedModel;
 import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.litepal.LitePal;
 import org.parceler.Parcels;
@@ -63,9 +64,7 @@ public class LCFMessageActivity extends AppCompatActivity {
         mType = getIntent().getStringExtra("type");
         setTitle();
 
-        LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
-        dialog.show();
-
+        BasePopupView popupView = new XPopup.Builder(this).asLoading().setTitle("加载中...").show();
         // 从本地数据库获取对应的信息，把后面几个当成新的消息来看待
         // List<MessageVO> tempNewMsgList = MessageVOPool.getMessageVOs(mType);
         int newMessageCount = 0;
@@ -110,7 +109,7 @@ public class LCFMessageActivity extends AppCompatActivity {
                     newUsers.add(users.get(i));
                 }
                 initAdapter();
-                dialog.dismiss();
+                BasePopupView popupView = new XPopup.Builder(LCFMessageActivity.this).asLoading().setTitle("加载中...").show();
                 if (mType.equals("like")) {
                     Constant.currentLikeMessage.setValue(0);
                 }

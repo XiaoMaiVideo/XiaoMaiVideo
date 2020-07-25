@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.edu.whu.xiaomaivideo.R;
 import com.edu.whu.xiaomaivideo.adapter.MovieAdapter;
@@ -27,6 +28,7 @@ import com.jiajie.load.LoadingDialog;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -67,7 +69,7 @@ public class FindSubFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_find_sub, container, false);
         mRecyclerView = rootView.findViewById(R.id.findRecyclerView);
-        BasePopupView popupView = new XPopup.Builder(getActivity()).asLoading().setTitle("加载中...").show();
+        // BasePopupView popupView = new XPopup.Builder(getActivity()).asLoading().setTitle("加载中...").show();
         if (mType.equals(Constant.RECOMMEND)) {
             // 推荐算法得到的影片
             MovieRestService.getMovies(0, new MovieRestCallback() {
@@ -76,7 +78,7 @@ public class FindSubFragment extends Fragment {
                     super.onSuccess(resultCode, movies);
                     movieList = movies;
                     setRecyclerView();
-                    popupView.dismiss();
+                    // popupView.dismiss();
                 }
             });
         }
@@ -86,7 +88,11 @@ public class FindSubFragment extends Fragment {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // 提示没有定位
-            } else {
+                movieList = new ArrayList<>();
+                Toast.makeText(getActivity(), "你未开启定位权限，不能查看本地热点哦！", Toast.LENGTH_LONG).show();
+                setRecyclerView();
+            }
+            else {
                 // 定位没准备好
                 if (Constant.currentLocation.getValue().equals("")) {
                     Constant.currentLocation.observe(getActivity(), new Observer<String>() {
@@ -99,7 +105,7 @@ public class FindSubFragment extends Fragment {
                                         super.onSuccess(resultCode, movies);
                                         movieList = movies;
                                         setRecyclerView();
-                                        popupView.dismiss();
+                                        // popupView.dismiss();
                                     }
                                 });
                             }
@@ -114,7 +120,7 @@ public class FindSubFragment extends Fragment {
                             super.onSuccess(resultCode, movies);
                             movieList = movies;
                             setRecyclerView();
-                            popupView.dismiss();
+                            // popupView.dismiss();
                         }
                     });
                 }

@@ -240,7 +240,7 @@ public class MovieRestService {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Log.e(TAG, s);
+                Log.e(TAG+"--Location", s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 int responseNum = jsonObject.getInteger("code");
                 JSONArray jsonArray = jsonObject.getJSONArray("data");

@@ -212,9 +212,11 @@ public class UserInfoActivity extends FragmentActivity {
         if (userInfoViewModel.getUser().getValue().isFollow()) {
             // 本来关注了，那按钮就是取消关注
             activityUserInfoBinding.subscribeButton.setText("取消关注");
+            activityUserInfoBinding.subscribeButton.setIcon(getResources().getDrawable(R.drawable.cancel));
         }
         else {
             activityUserInfoBinding.subscribeButton.setText("关注");
+            activityUserInfoBinding.subscribeButton.setIcon(getResources().getDrawable(R.drawable.follow));
         }
         // 关注功能
         activityUserInfoBinding.subscribeButton.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +229,7 @@ public class UserInfoActivity extends FragmentActivity {
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("关注");
+                    activityUserInfoBinding.subscribeButton.setIcon(getResources().getDrawable(R.drawable.follow));
                     userInfoViewModel.getUser().getValue().setFollow(false);
                 }
                 else {
@@ -237,6 +240,7 @@ public class UserInfoActivity extends FragmentActivity {
                     message.setReceiverId(userInfoViewModel.getUser().getValue().getUserId());
                     EventBus.getDefault().post(new EventBusMessage(Constant.SEND_MESSAGE, JSON.toJSONString(message)));
                     activityUserInfoBinding.subscribeButton.setText("取消关注");
+                    activityUserInfoBinding.subscribeButton.setIcon(getResources().getDrawable(R.drawable.cancel));
                     userInfoViewModel.getUser().getValue().setFollow(true);
                 }
             }

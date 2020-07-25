@@ -85,7 +85,7 @@ public class TakeVideoDialog extends BottomPopupView {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(mContext, "未开启定位权限，不能上传位置信息哦！", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "你未开启定位权限，不能上传位置信息哦！", Toast.LENGTH_LONG).show();
                         locationSelector.setChecked(false);
                     }
                 }

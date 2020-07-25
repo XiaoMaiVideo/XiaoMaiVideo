@@ -19,6 +19,8 @@ import com.edu.whu.xiaomaivideo.restservice.MovieRestService;
 import com.edu.whu.xiaomaivideo.restservice.UserRestService;
 import com.jiajie.load.LoadingDialog;
 import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import java.util.List;
 
@@ -81,8 +83,7 @@ public class SearchResultActivity extends Activity {
     }
 
     private void init() {
-        LoadingDialog dialog = new LoadingDialog.Builder(this).loadText("加载中...").build();
-        dialog.show();
+        BasePopupView popupView = new XPopup.Builder(this).asLoading().setTitle("加载中...").show();
         if (mType.equals("movie")) {
             MovieRestService.searchMovie(mKeyword, new MovieRestCallback() {
                 @Override
@@ -90,7 +91,7 @@ public class SearchResultActivity extends Activity {
                     super.onSuccess(resultCode, movies);
                     movieList = movies;
                     setMovieRecyclerView();
-                    dialog.dismiss();
+                    popupView.dismiss();
                 }
             });
         }
@@ -101,7 +102,7 @@ public class SearchResultActivity extends Activity {
                     super.onSuccess(resultCode, users);
                     userList = users;
                     setUserRecyclerView();
-                    dialog.dismiss();
+                    popupView.dismiss();
                 }
             });
         }

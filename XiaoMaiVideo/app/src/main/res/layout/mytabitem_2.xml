@@ -22,6 +22,7 @@
         android:textSize="14sp"
         android:layout_marginStart="0dp"
         android:text="消息"
+        android:textColor="@color/colorTextContent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 </LinearLayout>
