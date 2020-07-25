@@ -1,4 +1,7 @@
 <resources>
+    <!-- Author： -->
+    <!-- Create Time: -->
+    <!-- Update Time: 2020/7/25-->
     <string name="app_name">小麦视频</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
